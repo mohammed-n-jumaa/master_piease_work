@@ -1,0 +1,305 @@
+/* Navbar */
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    padding: 0; /* إزالة الحشوة الزائدة */
+}
+
+.navbar {
+    background-color: transparent !important;
+    border: none;
+    padding-top: 0.5rem; 
+    padding-bottom: 0.5rem; 
+    height: 80px; /* ضبط ارتفاع الناف بار */
+
+}
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+}
+
+.navbar .nav-link, .navbar .navbar-brand, .navbar .btn-register {
+    color: #fff !important; /* لون النص */
+}
+
+.navbar .nav-link:hover, .navbar .btn-register:hover {
+    color: #d4af37 !important; /* لون الروابط عند التمرير */
+}
+
+.btn-register {
+    display: inline-block !important;
+    background-color: #d4af37;
+    color: #1b1b1b;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+    margin-left: 15px;
+}
+
+.btn-register:hover {
+    background-color: #c29d2d;
+    color: #fff;
+}
+
+/* تكبير حجم الشعار */
+/* Navbar */
+.navbar-brand img {
+    height: 200px !important; /* تحديد ارتفاع الشعار ليكون كبيرًا نسبيًا */
+    width: auto;
+    display: block !important;
+    visibility: visible !important;
+}
+
+
+
+/* Dropdown Styling */
+.nav-item .dropdown-menu {
+    background-color: #1b1b1b; /* لون خلفية داكن متناسق مع التصميم */
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 0;
+}
+
+.nav-item .dropdown-item {
+    color: #d4af37; /* لون النص */
+    padding: 10px 20px;
+    font-size: 14px;
+    text-transform: uppercase;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-item .dropdown-item:hover {
+    background-color: #c29d2d; /* لون داكن عند التمرير */
+    color: #fff; /* لون النص عند التمرير */
+}
+
+/* Statistics Section */
+.statistics-section {
+    padding: 60px 0;
+    background-color: #1b1b1b;
+    text-align: center;
+}
+
+.statistics-section .container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.stat-item {
+    color: #d4af37;
+    text-align: center;
+    flex: 1;
+    padding: 20px;
+    max-width: 200px;
+}
+
+.stat-icon {
+    width: 80px;
+    height: 80px;
+    background-color: #d4af37;
+    color: #1b1b1b;
+    font-size: 36px;
+    line-height: 80px;
+    border-radius: 50%;
+    margin: 0 auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-item h3 {
+    font-size: 36px;
+    color: #fff;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.stat-item p {
+    font-size: 14px;
+    color: #bfbfbf;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin: 0;
+    font-weight: 300;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .statistics-section .container {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+/* Service Section */
+.row .col-lg-4,
+.row .col-md-6 {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px; /* إضافة فراغ ثابت بين البطاقات */
+}
+
+.service-item {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    text-align: center;
+    background-color: #1b1b1b;
+    color: #d4af37;
+    border: 1px solid #333;
+    transition: transform 0.3s ease;
+    margin: 10px; /* فراغ صغير حول كل بطاقة */
+}
+
+.service-icon {
+    font-size: 40px;
+    color: #d4af37;
+    margin-bottom: 15px;
+}
+
+.service-item h3 {
+    font-size: 20px;
+    color: #fff;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.service-item p {
+    font-size: 14px;
+    color: #bfbfbf;
+    flex-grow: 1;
+    margin-bottom: 15px;
+}
+
+.service-item .btn {
+    background-color: #d4af37;
+    color: #1b1b1b;
+    padding: 8px 16px;
+    text-transform: uppercase;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.service-item .btn:hover {
+    background-color: #c29d2d;
+    color: #fff;
+}
+
+/* Footer */
+.footer {
+    background-color: #111;
+    color: #aaa;
+    padding-top: 30px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 30px;
+}
+
+.footer h2 {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: #d3a756;
+}
+
+.footer .footer-about,
+.footer .footer-link {
+    margin-bottom: 0;
+    padding: 0;
+}
+
+.footer .footer-link ul,
+.footer .footer-about p {
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.footer .footer-link ul li {
+    padding: 2px 0;
+}
+
+.footer-menu {
+    background-color: #111;
+    padding: 10px 0;
+    font-size: 13px;
+    text-align: center;
+    width: 100%;
+}
+
+.footer-menu .f-menu {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.footer-menu .f-menu a {
+    color: #aaa;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.footer-menu .f-menu a:hover {
+    color: #d3a756;
+}
+.contact .contact-info,
+.contact .contact-form {
+    background-color: #1b1b1b;
+    color: #d4af37;
+    border: 1px solid #333;
+    padding: 20px;
+    height: 100%;
+}
+
+.contact .contact-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.contact .contact-item {
+    margin-bottom: 20px;
+}
+
+.contact .contact-text h2 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.contact .contact-text p {
+    margin: 5px 0;
+}
+
+.contact .row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+
+.contact .col-md-6 {
+    flex: 1;
+    max-width: 50%;
+}
+
+@media (max-width: 768px) {
+    .contact .col-md-6 {
+        max-width: 100%;
+    }
+}
