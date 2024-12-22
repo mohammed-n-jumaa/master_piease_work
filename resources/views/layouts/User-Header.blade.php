@@ -61,7 +61,7 @@
     <div class="container-fluid">
         <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #000000;">
             <!-- شعار الموقع -->
-            <a href="{{ route('home') }}" class="logo-container">
+            <a href="{{ route('user.home') }}" class="logo-container">
                 <img src="{{ asset('user/img/logo.png') }}" class="logo" alt="logo">
             </a>
 
@@ -75,14 +75,14 @@
                     <div class="nav-item dropdown">
                         <a href="/consultations" class="nav-link dropdown-toggle" data-toggle="dropdown">Consultations</a>
                         <div class="dropdown-menu">
-                            <a href="{{ route('consultations.index') }}" class="dropdown-item">All Consultations</a>
-                            <a href="{{ route('consultations.create') }}" class="dropdown-item">Add Consultation</a>
+                            <a href="{{ route('user.consultations.index') }}" class="dropdown-item">All Consultations</a>
+                            <a href="{{ route('user.consultations.create') }}" class="dropdown-item">Add Consultation</a>
                         </div>
                         
                     </div>
-                    <a href="{{ route('legal-library') }}" class="nav-item nav-link">Legal Library</a>
-                    <a href="/about" class="nav-item nav-link">About Us</a>
-                    <a href="{{ route('contact') }}" class="nav-item nav-link">Contact Us</a>
+                    <a href="{{ route('user.legal-library') }}" class="nav-item nav-link">Legal Library</a>
+                    <a href="{{ route('user.about') }}" class="nav-item nav-link">About us</a>
+                    <a href="{{ route('user.contact') }}" class="nav-item nav-link">Contact Us</a>
                 </div>
 
                 <!-- الأزرار في أقصى اليمين -->

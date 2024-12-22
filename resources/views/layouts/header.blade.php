@@ -43,7 +43,7 @@ svg {
 </style>
 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
     <div class="navbar-brand-wrapper">
-        <a href="{{ route('dashboard') }}" class="logo-container">
+        <a href="{{ route('admin.dashboard') }}" class="logo-container">
 
             <svg xmlns="" viewBox="0 0 2000 125" width="150" height="50">
                 <g transform="translate(10 2.228)scale(.96435)">
@@ -115,10 +115,11 @@ svg {
             </a>
             
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                  <a class="dropdown-item" href="{{ route('profile.edit') }}">
-                      <i class="ti-settings text-primary"></i>
-                      Settings
-                  </a>
+                <a class="dropdown-item" href="{{ route('admin.profile.edit') }}">
+                    <i class="ti-settings text-primary"></i>
+                    Settings
+                </a>
+                
                   <form method="POST" action="{{ route('logout') }}">
                       @csrf
                       <button type="submit" class="dropdown-item">

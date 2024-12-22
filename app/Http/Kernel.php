@@ -66,8 +66,10 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
     protected $routeMiddleware = [
-        // Other middlewares
-        'role.check' => \App\Http\Middleware\RoleCheck::class,
+        'role.check' => \App\Http\Middleware\RoleCheck::class, // التأكد من دور الأدمن
+        'prevent.admin.access' => \App\Http\Middleware\PreventAdminAccess::class, // منع الأدمن من دخول صفحات المستخدم
+        'user.lawyer.only' => \App\Http\Middleware\UserLawyerOnly::class,
     ];
+    
     
 }

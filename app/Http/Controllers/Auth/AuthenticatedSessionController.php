@@ -19,39 +19,43 @@ class AuthenticatedSessionController extends Controller
     {
         return view('auth.login');
     }
-
+    public function showUserRegisterForm()
+    {
+        return view('auth.register-user');
+    }
+    
+    public function showLawyerRegisterForm()
+    {
+        return view('auth.register-lawyer');
+    }
+    
     /**
      * Handle an incoming authentication request.
      */
-   public function store(Request $request): RedirectResponse
-{
-    $request->validate([
-        'email' => ['required', 'email'],
-        'password' => ['required'],
-    ]);
-
-    if (!Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
+    public function store(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+    
+        if (Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
+            $request->session()->regenerate();
+    
+            // تحقق من دور المستخدم لتحديد الصفحة المناسبة
+            $user = Auth::user();
+            if ($user->role === 'admin' || $user->role === 'super_admin') {
+                return redirect()->intended('/admin/dashboard');
+            }
+    
+            return redirect()->intended('/user/home'); // للمستخدمين
+        }
+    
         return back()->withErrors([
-            'email' => 'The credentials you entered do not match our records. Please try again.',
-        ])->onlyInput('email');
+            'email' => 'The provided credentials do not match our records.',
+        ]);
     }
-
-    $user = Auth::user();
-
-    // Check if the user is not admin or super_admin
-    if (!in_array($user->role, ['admin', 'super_admin'])) {
-        Auth::logout();
-        return back()->withErrors([
-            'email' => 'Access denied. Only admins are allowed to log in.',
-        ])->onlyInput('email');
-    }
-
-    $request->session()->regenerate();
-
-    return redirect()->intended(RouteServiceProvider::HOME);
-}
-
-
+    
     /**
      * Destroy an authenticated session.
      */

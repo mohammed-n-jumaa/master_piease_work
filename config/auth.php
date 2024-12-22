@@ -36,11 +36,18 @@ return [
     */
 
     'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
+    'web' => [
+        'driver' => 'session',
+        'provider' => 'users',
     ],
+
+    'lawyer' => [
+        'driver' => 'session',
+        'provider' => 'lawyers',
+    ],
+],
+
+
 
     /*
     |--------------------------------------------------------------------------
@@ -60,16 +67,17 @@ return [
     */
 
     'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\User::class,
-        ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+    'users' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\User::class,
     ],
+
+    'lawyers' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\Lawyer::class,
+    ],
+],
+
 
     /*
     |--------------------------------------------------------------------------
@@ -93,6 +101,13 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+        'lawyers' => [
+            'provider' => 'lawyers',
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,

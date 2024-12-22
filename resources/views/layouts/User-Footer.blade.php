@@ -32,12 +32,12 @@
         <h2 class="mb-3">Service Areas</h2>
         <ul class="list-unstyled">
             <li>
-                <a href="{{ route('consultations.index') }}" class="dropdown-item">
+                <a href="{{ route('user.consultations.index') }}" class="dropdown-item">
                     All Consultations
                 </a>
             </li>
             <li>
-                <a href="{{ route('consultations.create') }}" class="dropdown-item">
+                <a href="{{ route('user.consultations.create') }}" class="dropdown-item">
                     Add Consultation
                 </a>
             </li>
@@ -51,10 +51,10 @@
                 <div class="footer-link">
                     <h2 class="mb-3">Useful Links</h2>
                     <ul class="list-unstyled">
-                        <li><a href="{{ route('about') }}">About Us</a></li>
-                        <li><a href="{{ route('consultations.index') }}">Consultations</a></li>
-                        <li><a href="{{ route('contact') }}">Contact Us</a></li>
-                        <li><a href="{{ route('legal-library') }}">Legal Library</a></li>
+                        <li><a href="{{ route('user.about') }}">About Us</a></li>
+                        <li><a href="{{ route('user.consultations.index') }}">Consultations</a></li>
+                        <li><a href="{{ route('user.contact') }}">Contact Us</a></li>
+                        <li><a href="{{ route('user.legal-library') }}">Legal Library</a></li>
                     </ul>
                 </div>
             </div>
@@ -65,9 +65,9 @@
     <div class="container footer-menu text-center py-2">
         <div class="f-menu">
             <a href="/terms">Terms of Use</a> |
-            <a href="{{ route('privacy') }}">Privacy Policy</a>
+            <a href="{{ route('user.privacy') }}">Privacy Policy</a>
             <a href="/cookies">Cookies</a> |
-            <a href="{{ route('faq') }}">Help</a> 
+            <a href="{{ route('user.faq') }}">Help</a> 
         </div>
         <div class="text-center footer-rights mt-3">
             <p>© 2024 Mustashark. All rights reserved.</p>

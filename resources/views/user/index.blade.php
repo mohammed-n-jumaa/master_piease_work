@@ -120,7 +120,7 @@
                 <div class="text-center" style="position: relative;">
                     <h1 class="animated fadeInLeft">Empowering Your Legal Rights</h1>
                     <p class="animated fadeInRight">We provide free and professional legal consultations across all fields of law.</p>
-                    <a class="btn btn-primary animated fadeInUp" href="{{ route('consultations.create') }}" 
+                    <a class="btn btn-primary animated fadeInUp" href="{{ route('user.consultations.create') }}" 
                        style="z-index: 11; position: relative; display: inline-block;"
                        onmouseover="this.style.backgroundColor='#a99065'" 
                        onmouseout="this.style.backgroundColor='#121518'">
@@ -137,7 +137,7 @@
                 <div class="text-center" style="position: relative;">
                     <h1 class="animated fadeInLeft">Expert Advice, Anytime, Anywhere</h1>
                     <p class="animated fadeInRight">Our platform connects you with top lawyers for reliable legal guidance.</p>
-                    <a class="btn btn-primary animated fadeInUp" href="{{ route('consultations.create') }}" 
+                    <a class="btn btn-primary animated fadeInUp" href="{{ route('user.consultations.create') }}" 
                        style="z-index: 11; position: relative; display: inline-block;"
                        onmouseover="this.style.backgroundColor='#a99065'" 
                        onmouseout="this.style.backgroundColor='#121518'">
@@ -154,7 +154,7 @@
                 <div class="text-center" style="position: relative;">
                     <h1 class="animated fadeInLeft">Your Trusted Legal Companion</h1>
                     <p class="animated fadeInRight">Access our network of experienced attorneys to protect your rights.</p>
-                    <a class="btn btn-primary animated fadeInUp" href="{{ route('consultations.create') }}" 
+                    <a class="btn btn-primary animated fadeInUp" href="{{ route('user.consultations.create') }}" 
                        style="z-index: 11; position: relative; display: inline-block;"
                        onmouseover="this.style.backgroundColor='#a99065'" 
                        onmouseout="this.style.backgroundColor='#121518'">
@@ -180,7 +180,7 @@
 
 
    <!-- Statistics Section Start -->
-<div class="statistics-section">
+   <div class="statistics-section">
     <div class="container">
         <!-- Total Consultations -->
         <div class="stat-item">
@@ -223,10 +223,6 @@
 </div>
 <!-- Statistics Section End -->
 
-
-
-
-
         <!-- About Start -->
         <div class="about">
             <div class="container">
@@ -250,7 +246,7 @@
                                 Additionally, the platform allows attorneys to register and join as experts, offering
                                 their consultations and sharing their expertise with others.
                             </p>
-                            <a class="btn" href="{{ route('about') }}">Learn More</a>
+                            <a class="btn" href="{{ route('user.about') }}">Learn More</a>
                         </div>
                     </div>
                 </div>
@@ -289,7 +285,7 @@
                     <!-- وصف التصنيف -->
                     <p>{{ $category->description ?? 'Explore this category for more details.' }}</p>
                     <!-- زر يوجه إلى صفحة إضافة الاستشارة مع تمرير category_id -->
-                    <a class="btn" href="{{ route('consultations.create', ['category_id' => $category->id]) }}">Add Consultation</a>
+                    <a class="btn" href="{{ route('user.consultations.create', ['category_id' => $category->id]) }}">Add Consultation</a>
                 </div>
             </div>
             @endforeach
@@ -390,7 +386,7 @@
                             </div>
                         @endforeach
                     </div>
-                    <a class="btn" href="{{ route('faq') }}">Ask More Questions</a>
+                    <a class="btn" href="{{ route('user.faq') }}">Ask More Questions</a>
                 </div>
             </div>
         </div>
@@ -446,7 +442,7 @@
             <h2>Add Your Review</h2>
     
             <!-- Form for Submitting Review -->
-            <form method="POST" action="{{ route('testimonials.store') }}">
+            <form method="POST" action="{{ route('user.testimonials.store') }}">
                 @csrf
                 <!-- Name -->
                 <label for="name">Name</label>
@@ -490,39 +486,46 @@
 <!-- Count Up Script -->
 <script>
    
-    function startCounting(element, targetNumber, duration) {
-        let count = 0; 
-        let step = targetNumber / (duration /5); 
-    
-        let interval = setInterval(function() {
-            count += step;
-            if (count >= targetNumber) { 
-                count = targetNumber;
-                clearInterval(interval);
+   function startCounting(element, targetNumber, duration) {
+    let count = 0; 
+    const step = targetNumber / (duration / 20); // تقليل الخطوة لجعل العد أبطأ
+
+    const interval = setInterval(function() {
+        count += step;
+        if (count >= targetNumber) { 
+            count = targetNumber; // ضمان الوصول إلى الرقم النهائي
+            clearInterval(interval); // إيقاف العد عند الاكتمال
+        }
+        element.innerText = Math.floor(count); // تحديث الرقم في العنصر
+    }, 50); // تحديث الرقم كل 50 مللي ثانية لجعل العد أبطأ
+}
+
+function updateCounters() {
+    fetch('/get-updated-counts')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
             }
-            element.innerText = Math.floor(count); 
-        }, 10);
-    }
-    
-    function updateCounters() {
+            return response.json();
+        })
+        .then(data => {
+            console.log('Data fetched:', data); // عرض القيم في الكونسول
+            startCounting(document.querySelector(".consultations-count"), data.consultationsCount, 2000); // مدة أطول (2 ثانية)
+            startCounting(document.querySelector(".clients-count"), data.clientsCount, 2000);
+            startCounting(document.querySelector(".comments-count"), data.commentsCount, 2000);
+            startCounting(document.querySelector(".lawyers-count"), data.lawyersCount, 2000);
+        })
+        .catch(error => console.error('Error fetching counts:', error));
+}
 
-        fetch('/get-updated-counts')
-            .then(response => response.json())
-            .then(data => {
-                startCounting(document.querySelector(".consultations-count"), data.consultationsCount, 1000);
-                startCounting(document.querySelector(".clients-count"), data.clientsCount, 1000);
-                startCounting(document.querySelector(".comments-count"), data.commentsCount, 1000);
-                startCounting(document.querySelector(".lawyers-count"), data.lawyersCount, 1000);
-            })
-            .catch(error => console.error('Error:', error));
-    }
+setInterval(updateCounters, 10000); // تحديث كل 10 ثوانٍ
 
-    setInterval(updateCounters, 10000); 
-    
-    window.onload = function() {
-        updateCounters();
-    }
+window.onload = function() {
+    updateCounters();
+}
+
 </script>
+
 <script>
     // Function to Open Modal
     function openReviewModal() {

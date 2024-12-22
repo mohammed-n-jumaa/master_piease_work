@@ -125,7 +125,7 @@
  <!-- Add Comment Form -->
  <div class="mt-4">
     <h5>Add a Comment</h5>
-    <form id="comment-form" method="POST" action="{{ route('comments.store') }}">
+    <form id="comment-form" method="POST" action="{{ route('user.comments.store') }}">
         @csrf
         <input type="hidden" name="consultation_id" value="{{ $consultation->id }}">
         <div class="mb-3">

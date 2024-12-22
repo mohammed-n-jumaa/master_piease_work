@@ -44,8 +44,8 @@
                         <h2>About Us</h2>
                     </div>
                     <div class="col-12">
-                        <a href="{{ route('home') }}">Home</a>
-                        <a href="{{ route('about') }}">About Us</a>
+                        <a href="{{ route('user.home') }}">Home</a>
+                        <a href="{{ route('user.about') }}">About Us</a>
                     </div>
                 </div>
             </div>

@@ -168,8 +168,8 @@
                         <h2>Consultations</h2>
                     </div>
                     <div class="col-12">
-                        <a href="{{ route('home') }}">Home</a> 
-                        <a href="{{ route('consultations.index') }}">Consultations</a> 
+                        <a href="{{ route('user.home') }}">Home</a> 
+                        <a href="{{ route('user.consultations.index') }}">Consultations</a> 
                         
                     </div>
                 </div>
@@ -181,7 +181,7 @@
 <div class="container mb-4">
     <div class="d-flex justify-content-between align-items-start">
         <!-- الفلتر على اليسار -->
-        <form action="{{ route('consultations.index') }}" method="GET" class="mb-0">
+        <form action="{{ route('user.consultations.index') }}" method="GET" class="mb-0">
             <select class="form-control" name="category" onchange="this.form.submit()" style="border: 2px solid #d4af37; border-radius: 5px; max-width: 250px;">
                 <option value="">All Categories</option>
                 @foreach($categories as $category)
@@ -193,7 +193,7 @@
         </form>
 
         <!-- زر Add Consultations على اليمين -->
-        <a href="{{ route('consultations.create') }}" class="btn btn-gold" style="padding: 8px 20px;">
+        <a href="{{ route('user.consultations.create') }}" class="btn btn-gold" style="padding: 8px 20px;">
             <i class="fas fa-plus-circle"></i> Add Consultations
         </a>
     </div>
@@ -225,7 +225,7 @@
                 <p class="card-text">{{ Str::limit($consultation->content, 50, '...') }}</p>
 
                 <!-- زر رؤية المزيد -->
-                <a href="{{ route('consultations.show', $consultation->id) }}" class="btn btn-gold">
+                <a href="{{ route('user.consultations.show', $consultation->id) }}" class="btn btn-gold">
                     See More
                 </a>
             </div>

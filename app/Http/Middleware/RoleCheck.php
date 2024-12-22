@@ -15,16 +15,13 @@ class RoleCheck
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle($request, Closure $next)
     {
         $user = Auth::user();
-
-        // Check if user role is admin or super_admin
-        if ($user && in_array($user->role, ['admin', 'super_admin'])) {
-            return $next($request);
+        if (!$user || !in_array($user->role, ['admin', 'super_admin'])) {
+            return redirect('/admin/login')->withErrors(['Access Denied']);
         }
 
-        // Redirect unauthorized users to the login page
-        return redirect('/login')->withErrors(['error' => 'Access denied. Only admins are allowed.']);
+        return $next($request);
     }
 }

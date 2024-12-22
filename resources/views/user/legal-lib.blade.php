@@ -39,8 +39,8 @@
                 <h2>legal-library</h2>
             </div>
             <div class="col-12">
-                <a href="{{ route('home') }}">Home</a>
-                <a href="{{ route('legal-library') }}">المكتبة القانونية</a>
+                <a href="{{ route('user.home') }}">Home</a>
+                <a href="{{ route('user.legal-library') }}">المكتبة القانونية</a>
             </div>
         </div>
     </div>

@@ -167,7 +167,7 @@
                     <h2>FAQ</h2>
                 </div>
                 <div class="col-12">
-                    <a href="{{ route('home') }}">Home</a> / <a href="{{ route('faq') }}">FAQ</a>
+                    <a href="{{ route('user.home') }}">Home</a> / <a href="{{ route('user.faq') }}">FAQ</a>
                 </div>
             </div>
         </div>
@@ -208,7 +208,7 @@
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
             <h2>Add a New Question</h2>
-            <form method="POST" action="{{ route('faq.store') }}">
+            <form method="POST" action="{{ route('user.faq.store') }}">
                 @csrf
                 <label for="questionTitle">Question Title</label>
                 <input type="text" id="questionTitle" name="question" placeholder="Enter your question title" maxlength="40" required>

@@ -81,8 +81,8 @@
                         <h2>Contact Us</h2>
                     </div>
                     <div class="col-12">
-                        <a href="{{ route('home') }}">Home</a>
-                        <a href="{{ route('contact') }}">Contact Us</a>
+                        <a href="{{ route('user.home') }}">Home</a>
+                        <a href="{{ route('user.contact') }}">Contact Us</a>
                     </div>
                 </div>
             </div>
@@ -148,7 +148,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="contact-form">
-                            <form action="{{ route('notifications.store') }}" method="POST">
+                            <form action="{{ route('user.notifications.store') }}" method="POST">
                                 @csrf
                                 <div class="form-group">
                                     <input type="text" class="form-control" name="name" value="{{ Auth::user()->name ?? '' }}" readonly />

@@ -12,7 +12,7 @@
     <ul class="nav">
         <!-- Dashboard -->
         <li class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('dashboard') }}">
+            <a class="nav-link" href="{{ route('admin.dashboard') }}">
                 <i class="icon-grid menu-icon"></i>
                 <span class="menu-title">Dashboard</span>
             </a>

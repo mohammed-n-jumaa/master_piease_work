@@ -75,19 +75,20 @@
           <!-- Filter Section -->
           <div class="row mb-4">
             <div class="col-md-12">
-              <form method="GET" action="{{ url('/dashboard') }}">
+              <form method="GET" action="{{ route('admin.dashboard') }}">
                 <div class="form-inline">
-                  <label for="month" class="mr-2">Filter by Month:</label>
-                  <select name="month" id="month" class="form-control mr-2" style="width: 200px;">
-                    @foreach(range(1, 12) as $month)
-                    <option value="{{ $month }}" {{ request('month') == $month ? 'selected' : '' }}>
-                      {{ date('F', mktime(0, 0, 0, $month, 10)) }}
-                    </option>
-                    @endforeach
-                  </select>
-                  <button type="submit" class="btn btn-primary">Filter</button>
+                    <label for="month" class="mr-2">Filter by Month:</label>
+                    <select name="month" id="month" class="form-control mr-2" style="width: 200px;">
+                        @foreach(range(1, 12) as $month)
+                            <option value="{{ $month }}" {{ request('month') == $month ? 'selected' : '' }}>
+                                {{ date('F', mktime(0, 0, 0, $month, 10)) }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <button type="submit" class="btn btn-primary">Filter</button>
                 </div>
-              </form>
+            </form>
+            
             </div>
           </div>
 

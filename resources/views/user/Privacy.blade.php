@@ -147,7 +147,7 @@
         </p>
         <ul>
             <li>By email: Mohammed.n.Jummaa@gmail.com</li>
-            <li>By visiting this page on our website: <a href="{{ route('contact') }}">Contact Us</a>
+            <li>By visiting this page on our website: <a href="{{ route('user.contact') }}">Contact Us</a>
             </li>
         </ul>
     </div>

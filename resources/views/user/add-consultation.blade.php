@@ -69,7 +69,7 @@
     <!-- Form Section -->
     <div class="card bg-dark text-white shadow">
         <div class="card-body">
-            <form action="{{ route('consultations.store') }}" method="POST">
+            <form action="{{ route('user.consultations.store') }}" method="POST">
                 @csrf
                 <div class="form-group">
                     <label for="title">Title</label>

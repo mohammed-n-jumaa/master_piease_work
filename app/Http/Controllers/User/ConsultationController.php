@@ -51,7 +51,7 @@ class ConsultationController extends Controller
             'user_id'     => auth()->id(),
         ]);
 
-        return redirect()->route('consultations.index')->with('success', 'Your consultation has been added successfully!');
+        return redirect()->route('user.consultations.index')->with('success', 'Your consultation has been added successfully!');
     }
 
     // عرض استشارة محددة مع التعليقات
