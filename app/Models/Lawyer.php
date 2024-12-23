@@ -69,4 +69,10 @@ class Lawyer extends Authenticatable
     {
         return $this->hasMany(Faq::class);
     }
+    // App\Models\Lawyer.php
+public function category()
+{
+    return $this->belongsTo(Category::class, 'specialization');
+}
+
 }

@@ -295,7 +295,19 @@
         <div class="right-panel">
             <h2>Sign In</h2>
             <p class="subtitle">Access your legal consultation portal</p>
-
+            @if (session('success'))
+            <div class="success-message" style="background: #16a34a; color: white; padding: 1rem; border-radius: 10px; text-align: center; margin-bottom: 1.5rem;">
+                {{ session('success') }}
+            </div>
+        @endif
+        
+        @if ($errors->has('login_error'))
+            <div class="error-message" style="background: #dc2626; color: white; padding: 1rem; border-radius: 10px; text-align: center; margin-bottom: 1.5rem;">
+                {{ $errors->first('login_error') }}
+            </div>
+        @endif
+        
+        
             <form action="{{ route('user.lawyer.login') }}" method="POST">
                 @csrf
                 <div class="input-group">

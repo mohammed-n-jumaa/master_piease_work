@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LawyerRequest extends FormRequest
+class lawyerRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -17,7 +17,7 @@ class LawyerRequest extends FormRequest
             'first_name' => 'required|string|max:191',
             'last_name' => 'required|string|max:191',
             'email' => 'required|email|unique:lawyers,email',
-            'phone_number' => 'required|regex:/^[0-9]{9}$/',
+            'phone_number' => 'required|regex:/^[0-12]{12}$/',
             'lawyer_certificate' => 'required|image|max:2048',
             'syndicate_card' => 'required|image|max:2048',
             'profile_picture' => 'nullable|image|max:2048',
@@ -44,7 +44,7 @@ class LawyerRequest extends FormRequest
             'email.required' => 'The email address is required.',
             'email.unique' => 'The email address is already in use.',
             'phone_number.required' => 'The phone number is required.',
-            'phone_number.regex' => 'The phone number must be exactly 9 digits.',
+            'phone_number.regex' => 'The phone number must be exactly 12 digits.',
             'lawyer_certificate.required' => 'The lawyer certificate is required.',
             'syndicate_card.required' => 'The syndicate card is required.',
             'gender.required' => 'The gender is required.',

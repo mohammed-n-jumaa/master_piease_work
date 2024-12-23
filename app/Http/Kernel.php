@@ -21,6 +21,8 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        \App\Http\Middleware\PreventBackHistory::class, // أضف هذا السطر
+
     ];
 
     /**
@@ -67,7 +69,7 @@ class Kernel extends HttpKernel
     ];
     protected $routeMiddleware = [
         'role.check' => \App\Http\Middleware\RoleCheck::class, // التأكد من دور الأدمن
-        'prevent.admin.access' => \App\Http\Middleware\PreventAdminAccess::class, // منع الأدمن من دخول صفحات المستخدم
+        'prevent.admin.access' => \App\Http\Middleware\PreventAdminAccess::class,
         'user.lawyer.only' => \App\Http\Middleware\UserLawyerOnly::class,
     ];
     

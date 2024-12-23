@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\{
     NotificationController,
     LegalLibraryController,
     SubscriptionController
+    
 };
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\HomeController;
@@ -24,6 +25,7 @@ use App\Http\Controllers\User\TestimonialController;
 use App\Http\Controllers\User\NotificationController as UserNotificationController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\User\LawyerProfileController;
 
 // Redirect root URL to the login page
 Route::get('/', fn() => redirect('/admin/login'));
@@ -73,7 +75,25 @@ Route::middleware(['auth:web,lawyer'])->prefix('user')->group(function () {
     // مكتبة القوانين
     Route::view('/legal-library', 'user.legal-lib')->name('user.legal-library');
     
+    
 });
+// Lawyer Profile Routes
+
+
+Route::prefix('lawyer')->middleware('auth:lawyer')->group(function () {
+    Route::get('/profile', [LawyerProfileController::class, 'index'])->name('lawyer.profile');
+    Route::get('/profile/edit', [LawyerProfileController::class, 'edit'])->name('lawyer.profile.edit');
+    Route::post('/profile/update', [LawyerProfileController::class, 'update'])->name('lawyer.profile.update');
+    Route::post('/profile/change-password', [LawyerProfileController::class, 'changePassword'])->name('lawyer.profile.change-password');
+});
+
+// User Profile Routes
+Route::middleware(['auth:web'])->prefix('user')->group(function () {
+    Route::get('/profile', [App\Http\Controllers\User\UserProfileController::class, 'index'])->name('user.profile');
+    Route::get('/profile/edit', [App\Http\Controllers\User\UserProfileController::class, 'edit'])->name('user.profile.edit');
+    Route::post('/profile/update', [App\Http\Controllers\User\UserProfileController::class, 'update'])->name('user.profile.update');
+});
+
 Route::get('/get-updated-counts', [HomeController::class, 'getUpdatedCounts'])->name('statistics.update');
 
 ### **2. مسارات الأدمن فقط**
@@ -155,6 +175,8 @@ Route::get('/register/lawyer', [AuthController::class, 'showLawyerRegisterForm']
 
 Route::post('/register/user', [AuthController::class, 'registerUser'])->name('register.user.submit');
 Route::post('/register/lawyer', [AuthController::class, 'registerLawyer'])->name('register.lawyer.submit');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 // تسجيل الدخول للأدمن فقط
 Route::get('/admin/login', [AuthenticatedSessionController::class, 'create'])->name('admin.login');
 Route::post('/admin/login', [AuthenticatedSessionController::class, 'store'])->name('admin.authenticate');

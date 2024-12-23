@@ -28,6 +28,12 @@ class Category extends Model
         return $this->hasMany(LegalLibrary::class, 'category_id');
     }
 
+    // علاقة الفئة مع المحامين (Lawyers)
+    public function lawyers()
+    {
+        return $this->hasMany(Lawyer::class, 'specialization', 'id'); // الحقل الخاص بـ specialization
+    }
+
     /**
      * Scope لتصفية الفئات النشطة
      */

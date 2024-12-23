@@ -15,15 +15,14 @@ class PreventAdminAccess
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next): mixed
+    public function handle(Request $request, Closure $next)
     {
-        $user = Auth::user();
-
-        // Check if the user is an admin or super_admin
-        if ($user && in_array($user->role, ['admin', 'super_admin'])) {
-            return redirect('/admin/dashboard')->withErrors(['error' => 'Admins cannot access user pages.']);
+        // تحقق إذا كان المستخدم مسجل كـ "أدمن" أو "سوبر أدمن"
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('admin.dashboard')->with('error', 'Admins are not allowed to access user pages.');
         }
 
-        return $next($request); // Allow access for non-admin users
+        // السماح للمحامين والمستخدمين العاديين
+        return $next($request);
     }
 }
