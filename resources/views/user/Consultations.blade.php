@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <title>Consultations</title>
@@ -12,145 +11,240 @@
 
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,600;1,700;1,800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-  
+
   <!-- CSS Libraries -->
-  <link href="{{ asset('user/css/bootstrap.min.css') }}" rel="stylesheet">
   <link href="{{ asset('user/css/font-awesome.min.css') }}" rel="stylesheet">
-  <link href="{{ asset('user/lib/animate/animate.min.css') }}" rel="stylesheet">
-  <link href="{{ asset('user/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
-  
-  <!-- Template Stylesheet -->
-  <link href="{{ asset('user/css/style.css') }}" rel="stylesheet">
-  <link href="{{ asset('user/css/index.css') }}" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-  <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  
-    <!-- Custom Styles -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+<!-- Favicon -->
+<link href="{{ asset('user/img/favicon.ico') }}" rel="icon">
+<!-- CSS Libraries -->
+<link href="{{ asset('user/css/bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ asset('user/css/font-awesome.min.css') }}" rel="stylesheet">
+<link href="{{ asset('user/lib/animate/animate.min.css') }}" rel="stylesheet">
+<link href="{{ asset('user/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+
+<!-- Template Stylesheet -->
+<link href="{{ asset('user/css/style.css') }}" rel="stylesheet">
+<link href="{{ asset('user/css/index.css') }}" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
+        :root {
+            --primary-color: #aa9166;
+            --secondary-color: #1b1b1b;
+            --hover-color: #c29d2d;
+        }
+
         body {
             background-color: #f8f9fa;
+            font-family: 'Roboto', sans-serif;
         }
 
-        .filter-section {
-            margin: 30px 0;
-        }
-
-        /* تصميم البطاقة */
-        .card {
-            background-color: #1b1b1b;
-            color: #d4af37;
-            border-radius: 8px;
+        /* Header Section - Keeping as per image */
+        .page-header {
+            background-color: #aa9166;
+            padding: 100px 0;
             text-align: center;
-            padding: 20px;
             position: relative;
-            height: 100%;
-            border: none;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        /* صورة المستخدم */
-        .card img {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            margin-bottom: 10px;
-            object-fit: cover;
-        }
-
-        /* الكاتيجوري في الزاوية */
-        .badge-category {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: #d4af37;
-            color: #1b1b1b;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-weight: bold;
-            font-size: 12px;
-        }
-
-        /* اسم المستخدم */
-        .card-title {
-            font-size: 18px;
+        .page-header h2 {
+            font-family: 'EB Garamond', serif;
+            font-size: 48px;
             font-style: italic;
-            font-weight: bold;
-            color: #d4af37;
-            margin-bottom: 5px;
+            color: #1b1b1b;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
         }
 
-        /* الزر */
-        .btn-gold {
-            background-color: #d4af37;
+        .page-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background-color: #1b1b1b;
+        }
+
+        .breadcrumb-links {
+            margin-top: 20px;
+        }
+
+        .breadcrumb-links a {
             color: #1b1b1b;
-            font-weight: bold;
-            border: none;
+            text-decoration: none;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .breadcrumb-links a:hover {
+            color: #ffffff;
+        }
+
+        .breadcrumb-links a:not(:last-child):after {
+            content: '/';
+            margin: 0 10px;
+            color: #1b1b1b;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            margin: -50px auto 40px;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            max-width: 1100px;
+        }
+
+        .filter-section .form-control {
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            padding: 12px 20px;
+            color: var(--secondary-color);
+            background: #ffffff;
+            font-size: 16px;
+        }
+
+        /* Card Design */
+        .consultation-card {
+            background: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            height: 100%;
+            border: 1px solid rgba(170, 145, 102, 0.1);
+        }
+
+        .consultation-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(170, 145, 102, 0.2);
+        }
+
+        .card-image-wrapper {
+            position: relative;
+            padding: 30px;
+            background: linear-gradient(145deg, #aa9166 0%, #c29d2d 100%);
+        }
+
+        .consultation-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid #ffffff;
+            margin: 0 auto;
+            display: block;
+            object-fit: cover;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .category-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #ffffff;
+            color: var(--primary-color);
             padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 500;
             font-size: 14px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .card-content {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .card-title {
+            color: var(--secondary-color);
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-family: 'EB Garamond', serif;
+        }
+
+        .card-text {
+            color: #666666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .btn-gold {
+            background: linear-gradient(145deg, #aa9166 0%, #c29d2d 100%);
+            color: #ffffff;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 5px 15px rgba(170, 145, 102, 0.3);
         }
 
         .btn-gold:hover {
-            background-color: #c29d2d;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(170, 145, 102, 0.4);
             color: #ffffff;
         }
+
+        /* Pagination */
+        .pagination {
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+
         .pagination .page-link {
-            background-color: #1b1b1b;
-            color: #d4af37;
-            border: 1px solid #333;
+            border: none;
+            padding: 12px 20px;
+            margin: 0 5px;
+            color: var(--secondary-color);
+            border-radius: 10px;
+            transition: all 0.3s ease;
         }
 
         .pagination .page-item.active .page-link {
-            background-color: #d4af37;
-            color: #1b1b1b;
-            border-color: #d4af37;
+            background: linear-gradient(145deg, #aa9166 0%, #c29d2d 100%);
+            color: #ffffff;
+            box-shadow: 0 5px 15px rgba(170, 145, 102, 0.3);
         }
 
         .pagination .page-link:hover {
-            background-color: #c29d2d;
-            color: #fff;
+            background: linear-gradient(145deg, #aa9166 0%, #c29d2d 100%);
+            color: #ffffff;
+            transform: translateY(-2px);
         }
-        .filter-section {
-        margin-bottom: 40px; /* مسافة واضحة بين الفلتر والبطاقات */
-    }
 
-    .filter-section .form-control {
-        max-width: 250px;
-        border: 2px solid #d4af37;
-        border-radius: 5px;
-    }
+        @media (max-width: 768px) {
+            .page-header {
+                padding: 60px 0;
+            }
 
-    .btn-gold {
-        background-color: #d4af37;
-        color: #1b1b1b;
-        font-weight: bold;
-        padding: 8px 20px;
-        border: none;
-        border-radius: 5px;
-        transition: background-color 0.3s ease;
-    }
+            .page-header h2 {
+                font-size: 36px;
+            }
 
-    .btn-gold:hover {
-        background-color: #c29d2d;
-        color: #ffffff;
-    }
+            .filter-section {
+                margin-top: -30px;
+                padding: 20px;
+            }
 
-    /* تحسين المسافة بين القسم العلوي والبطاقات */
-    .mt-4 {
-        margin-top: 20px !important;
-    }
-
-    /* مسافة بين البطاقة والعناصر المحيطة */
-    .mb-4 {
-        margin-bottom: 20px;
-    }
-
+            .consultation-card {
+                margin-bottom: 30px;
+            }
+        }
     </style>
 </head>
 
@@ -163,90 +257,76 @@
         <!-- Page Header Start -->
         <div class="page-header">
             <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <h2>Consultations</h2>
-                    </div>
-                    <div class="col-12">
-                        <a href="{{ route('user.home') }}">Home</a> 
-                        <a href="{{ route('user.consultations.index') }}">Consultations</a> 
-                        
-                    </div>
+                <h2>Consultations</h2>
+                <div class="breadcrumb-links">
+                    <a href="{{ route('user.home') }}">Home</a>
+                    <a href="{{ route('user.consultations.index') }}">Consultations</a>
                 </div>
             </div>
         </div>
         <!-- Page Header End -->
 
- <!-- Filter and Button Section Start -->
-<div class="container mb-4">
-    <div class="d-flex justify-content-between align-items-start">
-        <!-- الفلتر على اليسار -->
-        <form action="{{ route('user.consultations.index') }}" method="GET" class="mb-0">
-            <select class="form-control" name="category" onchange="this.form.submit()" style="border: 2px solid #d4af37; border-radius: 5px; max-width: 250px;">
-                <option value="">All Categories</option>
-                @foreach($categories as $category)
-                    <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
-                        {{ $category->name }}
-                    </option>
+        <!-- Main Content Start -->
+        <div class="container">
+            <div class="filter-section">
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                    <form action="{{ route('user.consultations.index') }}" method="GET" class="mb-0">
+                        <select class="form-control" name="category" onchange="this.form.submit()">
+                            <option value="">All Categories</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </form>
+                    <a href="{{ route('user.consultations.create') }}" class="btn btn-gold">
+                        <i class="fas fa-plus-circle"></i> Add Consultation
+                    </a>
+                </div>
+            </div>
+
+            <!-- Consultations Grid -->
+            <div class="row">
+                @foreach($consultations as $consultation)
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="consultation-card">
+                        <div class="card-image-wrapper">
+                            <span class="category-badge">{{ $consultation->category->name ?? 'Uncategorized' }}</span>
+                            <img src="{{ asset('user_profiles/' . ($user->profile_picture ?? 'default-profile-picture.jpg')) }}"
+                            onerror="this.onerror=null; this.src='https://www.w3schools.com/w3images/avatar2.png';"
+                            alt="User profile picture">
+                       
+                       
+                       
+                        </div>
+                        
+                        <div class="card-content">
+                            <h3 class="card-title">{{ $consultation->user->name ?? 'Client' }}</h3>
+                            <p class="card-text">{{ Str::limit($consultation->content, 50, '...') }}</p>
+                            <a href="{{ route('user.consultations.show', $consultation->id) }}" class="btn btn-gold">
+                                See More
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 @endforeach
-            </select>
-        </form>
+            </div>
 
-        <!-- زر Add Consultations على اليمين -->
-        <a href="{{ route('user.consultations.create') }}" class="btn btn-gold" style="padding: 8px 20px;">
-            <i class="fas fa-plus-circle"></i> Add Consultations
-        </a>
-    </div>
-</div>
-<!-- Filter and Button Section End -->
-
-
-
-<!-- Consultations List Start -->
-<div class="container">
-    <div class="row mt-4">
-        @foreach($consultations as $consultation)
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card">
-                <!-- الكاتيجوري -->
-                <span class="badge-category">{{ $consultation->category->name ?? 'Uncategorized' }}</span>
-
-                <!-- صورة المستخدم -->
-                <img src="{{ asset($consultation->user->image ?? 'user/img/default-user.jpg') }}" 
-                     onerror="this.onerror=null; this.src='https://www.w3schools.com/w3images/avatar2.png';" 
-                     alt="User profile picture">
-
-                <!-- اسم المستخدم -->
-                <h5 class="card-title">
-                    {{ $consultation->user->name ?? 'Client' }}
-                </h5>
-
-                <!-- محتوى مختصر -->
-                <p class="card-text">{{ Str::limit($consultation->content, 50, '...') }}</p>
-
-                <!-- زر رؤية المزيد -->
-                <a href="{{ route('user.consultations.show', $consultation->id) }}" class="btn btn-gold">
-                    See More
-                </a>
+            <!-- Pagination -->
+            <div class="d-flex justify-content-center">
+                {{ $consultations->links('pagination::bootstrap-4') }}
             </div>
         </div>
-        @endforeach
-    </div>
-
-    <!-- Pagination Links -->
-    <div class="d-flex justify-content-center mt-4">
-        {{ $consultations->links('pagination::bootstrap-4') }}
-    </div>
-</div>
-<!-- Consultations List End -->
+        <!-- Main Content End -->
 
         <!-- Footer Start -->
         @include('layouts.User-Footer')
         <!-- Footer End -->
     </div>
+
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

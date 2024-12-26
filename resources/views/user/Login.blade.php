@@ -49,7 +49,7 @@
             font-weight: bold;
             padding: 8px 15px;
             color: #1b1b1b;
-            background-color: #d4af37;
+            background-color: #aa9166;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s, color 0.3s;
@@ -66,7 +66,7 @@
         }
 
         .form-group label {
-            color: #d4af37;
+            color: #aa9166;
             font-size: 14px;
         }
 
@@ -80,7 +80,7 @@
         }
 
         .btn-gold {
-            background-color: #d4af37;
+            background-color: #aa9166;
             color: #1b1b1b;
             font-weight: bold;
             width: 100%;
@@ -94,7 +94,7 @@
         }
 
         .toggle-form-link {
-            color: #d4af37;
+            color: #aa9166;
             cursor: pointer;
         }
 

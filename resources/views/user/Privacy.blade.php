@@ -28,7 +28,7 @@
         .page-header {
             background-color: #1b1b1b;
             padding: 50px 0;
-            color: #d4af37;
+            color: #aa9166;
             text-align: center;
         }
 
@@ -39,14 +39,14 @@
         }
 
         .page-header a {
-            color: #d4af37;
+            color: #aa9166;
             text-decoration: none;
         }
 
         .policy-content {
             padding: 40px;
             background-color: #1b1b1b;
-            color: #d4af37;
+            color: #aa9166;
             border: 1px solid #333;
             border-radius: 8px;
             margin-top: 20px;
@@ -54,7 +54,7 @@
 
         .policy-content h3 {
             font-size: 24px;
-            color: #d4af37;
+            color: #aa9166;
             margin-bottom: 10px;
         }
 
@@ -74,7 +74,7 @@
         }
 
         .policy-content a {
-            color: #d4af37;
+            color: #aa9166;
             text-decoration: underline;
         }
 

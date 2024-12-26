@@ -34,6 +34,12 @@ class Lawyer extends Authenticatable
         'date_of_birth' => 'date',
     ];
 
+    // علاقة مع التعليقات (comments)
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'lawyer_id');
+    }
+
     // علاقة مع المواعيد (appointments)
     public function appointments()
     {
@@ -69,10 +75,22 @@ class Lawyer extends Authenticatable
     {
         return $this->hasMany(Faq::class);
     }
-    // App\Models\Lawyer.php
-public function category()
-{
-    return $this->belongsTo(Category::class, 'specialization');
-}
 
+    // علاقة مع الفئة (Category)
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'specialization');
+    }
+
+    // علاقة مع المراجعات (reviews)
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    // وظيفة لجلب الاسم الكامل
+    public function getFullNameAttribute()
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
 }

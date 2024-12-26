@@ -24,6 +24,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="{{ asset('user/css/style.css') }}" rel="stylesheet">
+<link href="{{ asset('user/css/profile.css') }}" rel="stylesheet">
 
 </head>
 <body>
@@ -33,7 +34,7 @@
             <div class="header-banner"></div>
             <div class="profile-content">
                 <div class="profile-picture">
-                    <img src="{{ asset('storage/' . $user->profile_picture) }}" alt="Profile Picture">
+                    <img src="{{ $user->profile_picture ? asset($user->profile_picture) : asset('default-profile-picture.jpg') }}" alt="Profile Picture">
                 </div>
                 <div class="profile-info">
                     <h1 class="profile-name">{{ $user->name }}</h1>
@@ -63,10 +64,13 @@
                 </div>
                 
                 <div class="actions">
-                    <a href="{{ route('user.profile.edit') }}" class="btn">
-                        <i class="fas fa-edit"></i> Edit Profile
-                    </a>
+                    @if(auth()->id() === $user->id)
+                        <a href="{{ route('user.profile.edit') }}" class="btn">
+                            <i class="fas fa-edit"></i> Edit Profile
+                        </a>
+                    @endif
                 </div>
+                
             </div>
         </div>
     </div>

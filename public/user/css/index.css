@@ -24,12 +24,12 @@
 }
 
 .navbar .nav-link:hover, .navbar .btn-register:hover {
-    color: #d4af37 !important; /* لون الروابط عند التمرير */
+    color: #aa9166 !important; /* لون الروابط عند التمرير */
 }
 
 .btn-register {
     display: inline-block !important;
-    background-color: #d4af37;
+    background-color: #aa9166;
     color: #1b1b1b;
     padding: 8px 16px;
     border-radius: 4px;
@@ -65,7 +65,7 @@
 }
 
 .nav-item .dropdown-item {
-    color: #d4af37; /* لون النص */
+    color: #aa9166; /* لون النص */
     padding: 10px 20px;
     font-size: 14px;
     text-transform: uppercase;
@@ -93,7 +93,7 @@
 }
 
 .stat-item {
-    color: #d4af37;
+    color: #aa9166;
     text-align: center;
     flex: 1;
     padding: 20px;
@@ -103,7 +103,7 @@
 .stat-icon {
     width: 80px;
     height: 80px;
-    background-color: #d4af37;
+    background-color: #aa9166;
     color: #1b1b1b;
     font-size: 36px;
     line-height: 80px;
@@ -154,7 +154,7 @@
     padding: 20px;
     text-align: center;
     background-color: #1b1b1b;
-    color: #d4af37;
+    color: #aa9166;
     border: 1px solid #333;
     transition: transform 0.3s ease;
     margin: 10px; /* فراغ صغير حول كل بطاقة */
@@ -162,7 +162,7 @@
 
 .service-icon {
     font-size: 40px;
-    color: #d4af37;
+    color: #aa9166;
     margin-bottom: 15px;
 }
 
@@ -181,7 +181,7 @@
 }
 
 .service-item .btn {
-    background-color: #d4af37;
+    background-color: #aa9166;
     color: #1b1b1b;
     padding: 8px 16px;
     text-transform: uppercase;
@@ -262,7 +262,7 @@
 .contact .contact-info,
 .contact .contact-form {
     background-color: #1b1b1b;
-    color: #d4af37;
+    color: #aa9166;
     border: 1px solid #333;
     padding: 20px;
     height: 100%;

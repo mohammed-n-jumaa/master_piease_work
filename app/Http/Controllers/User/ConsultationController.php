@@ -14,17 +14,29 @@ class ConsultationController extends Controller
     public function index(Request $request)
     {
         $categories = Category::all(); // جلب جميع التصنيفات
-        $query = Consultation::with('user', 'category'); // جلب الاستشارات مع المستخدم والتصنيف
+    
+        // تعديل الاستعلام لاختيار الحقول المطلوبة فقط من المستخدم والتصنيف
+        $query = Consultation::with([
+            'user' => function ($query) {
+                $query->select('id', 'name', 'profile_picture'); // تحديد الحقول المطلوبة من المستخدم
+            },
+            'category' => function ($query) {
+                $query->select('id', 'name'); // تحديد الحقول المطلوبة من التصنيف
+            }
+        ]);
         
-        // فلترة حسب التصنيف
+        // فلترة حسب التصنيف إذا كان موجودًا في الطلب
         if ($request->has('category') && $request->category != '') {
             $query->where('category_id', $request->category);
         }
     
+        // جلب الاستشارات مع التصنيفات والمستخدمين مع الصفحات
         $consultations = $query->paginate(15);
     
+        // تمرير البيانات إلى العرض
         return view('user.consultations', compact('consultations', 'categories'));
     }
+    
 
     // عرض صفحة إضافة استشارة جديدة
     public function create()

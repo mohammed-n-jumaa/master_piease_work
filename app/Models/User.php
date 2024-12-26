@@ -115,4 +115,13 @@ class User extends Authenticatable
    {
        return $this->hasMany(Faq::class);
    }
+   public function reviews()
+{
+    return $this->hasMany(Review::class);
+}
+
+public function appointments()
+{
+    return $this->hasMany(Appointment::class);
+}
 }

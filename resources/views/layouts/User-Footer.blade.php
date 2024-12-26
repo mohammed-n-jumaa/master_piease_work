@@ -1,6 +1,6 @@
 <style>
     .footer-rights {
-        color: #d4af37; 
+        color: #aa9166; 
         font-size: 14px;
         margin-top: 10px;
         padding-top: 10px;

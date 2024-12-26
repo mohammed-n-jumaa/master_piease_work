@@ -8,83 +8,95 @@ use App\Models\Comment;
 
 class CommentController extends Controller
 {
-    // تخزين تعليق جديد
     public function store(Request $request)
     {
-        // التحقق من صحة البيانات المدخلة
+        // Ensure the request is POST
+        if ($request->method() !== 'POST') {
+            abort(405, 'Method Not Allowed');
+        }
+
+        // Validate input
         $validatedData = $request->validate([
             'consultation_id' => 'required|exists:consultations,id',
             'content' => 'required|string|max:1000',
         ]);
 
-        // إنشاء التعليق وحفظه في قاعدة البيانات
-        Comment::create([
+        // Prepare comment data
+        $commentData = [
             'consultation_id' => $validatedData['consultation_id'],
-            'user_id' => auth()->id(), // ربط التعليق بالمستخدم الحالي
             'content' => $validatedData['content'],
-        ]);
+        ];
 
-        // إعادة التوجيه مع رسالة نجاح
+        // Check user type
+        if (auth('lawyer')->check()) {
+            $commentData['lawyer_id'] = auth('lawyer')->id();
+        } elseif (auth('web')->check()) {
+            $commentData['user_id'] = auth('web')->id();
+        } else {
+            return redirect()->back()->withErrors(['error' => 'Unauthorized user']);
+        }
+
+        // Create comment
+        Comment::create($commentData);
+
+        // Redirect back with success message
         return redirect()->back()->with('success', 'Your comment has been added successfully!');
     }
 
-    // تحميل المزيد من التعليقات
-    public function loadComments(Request $request, $id)
+    public function softDelete(Request $request)
     {
-        $offset = $request->input('offset', 0);
+        $comment = Comment::findOrFail($request->comment_id);
 
-        // جلب التعليقات غير المحذوفة فقط
-        $comments = Comment::where('consultation_id', $id)
-            ->whereNull('deleted_at') // تجاهل التعليقات المحذوفة ناعماً
-            ->with('user') // تضمين بيانات المستخدم
-            ->skip($offset)
-            ->take(3)
-            ->get();
-
-        return response()->json($comments);
-    }
-
-    // حذف ناعم للتعليق
-    public function softDelete($id)
-    {
-        // إيجاد التعليق
-        $comment = Comment::findOrFail($id);
-
-        // التحقق من ملكية التعليق
-        if (auth()->id() !== $comment->user_id) {
+        if (
+            (auth('web')->check() && auth('web')->id() !== $comment->user_id) &&
+            (auth('lawyer')->check() && auth('lawyer')->id() !== $comment->lawyer_id)
+        ) {
             return response()->json(['error' => 'Unauthorized'], 403);
         }
 
-        // تنفيذ الحذف الناعم
         $comment->delete();
-
-        return response()->json(['success' => true, 'message' => 'Comment deleted successfully!']);
-    }
-    public function update(Request $request, $id)
-{
-    // التحقق من صحة البيانات
-    $validatedData = $request->validate([
-        'content' => 'required|string|max:1000',
-    ]);
-
-    // إيجاد التعليق
-    $comment = Comment::findOrFail($id);
-
-    // التحقق من صلاحية المستخدم
-    if (auth()->id() !== $comment->user_id) {
-        return response()->json(['error' => 'Unauthorized'], 403);
+        return response()->json(['message' => 'Comment deleted successfully']);
     }
 
-    // تحديث محتوى التعليق
-    $comment->update([
-        'content' => $validatedData['content'],
-    ]);
+    public function update(Request $request)
+    {
+        $comment = Comment::findOrFail($request->comment_id);
 
-    return response()->json([
-        'success' => true,
-        'message' => 'Comment updated successfully!',
-        'comment' => $comment
-    ]);
-}
+        if (
+            (auth('web')->check() && auth('web')->id() !== $comment->user_id) &&
+            (auth('lawyer')->check() && auth('lawyer')->id() !== $comment->lawyer_id)
+        ) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
 
+        $comment->content = $request->content;
+        $comment->save();
+
+        return response()->json(['message' => 'Comment updated successfully', 'content' => $comment->content]);
+    }
+
+    public function loadMore(Request $request)
+    {
+        logger('Load More function called with offset: ' . $request->offset . ', consultation_id: ' . $request->consultation_id);
+
+        $validated = $request->validate([
+            'consultation_id' => 'required|exists:consultations,id',
+            'offset' => 'required|integer|min:0',
+        ]);
+
+        $comments = Comment::where('consultation_id', $validated['consultation_id'])
+            ->with(['user', 'lawyer']) // Load user and lawyer relationships
+            ->orderBy('created_at', 'desc')
+            ->skip($validated['offset'])
+            ->take(3)
+            ->get();
+
+        if ($comments->isEmpty()) {
+            logger('No more comments to load.');
+            return response()->json(['comments' => []], 200);
+        }
+
+        logger('Comments loaded successfully: ' . $comments->count());
+        return response()->json(['comments' => $comments], 200);
+    }
 }

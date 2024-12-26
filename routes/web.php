@@ -26,8 +26,7 @@ use App\Http\Controllers\User\NotificationController as UserNotificationControll
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\User\LawyerProfileController;
-
-// Redirect root URL to the login page
+use App\Http\Controllers\User\ReviewController;// Redirect root URL to the login page
 Route::get('/', fn() => redirect('/admin/login'));
 
 // Include Laravel Breeze routes
@@ -50,13 +49,17 @@ Route::middleware(['auth:web,lawyer'])->prefix('user')->group(function () {
         Route::get('/category/{category}', [UserConsultationController::class, 'categoryConsultations'])->name('category');
     });
 
-    // التعليقات
-    Route::prefix('comments')->name('user.comments.')->group(function () {
+    Route::prefix('comments')
+    ->name('user.comments.')
+    ->middleware(['auth:web,lawyer']) // تحقق من أن المستخدم مسجل الدخول
+    ->group(function () {
         Route::post('/store', [UserCommentController::class, 'store'])->name('store');
-        Route::post('/load/{id}', [UserCommentController::class, 'loadComments'])->name('load');
-        Route::delete('/{id}', [UserCommentController::class, 'softDelete'])->name('softDelete');
-        Route::put('/update/{id}', [UserCommentController::class, 'update'])->name('update');
+        Route::post('/load-more', [UserCommentController::class, 'loadMore'])->name('loadMore');
+        Route::post('/delete', [UserCommentController::class, 'softDelete'])->name('delete');
+        Route::post('/update', [UserCommentController::class, 'update'])->name('update');
     });
+
+    
 
     // صفحة الخصوصية
     Route::view('/privacy', 'user.Privacy')->name('user.privacy');
@@ -77,22 +80,55 @@ Route::middleware(['auth:web,lawyer'])->prefix('user')->group(function () {
     
     
 });
-// Lawyer Profile Routes
-
-
+// Lawyer Profile and Appointments Routes
 Route::prefix('lawyer')->middleware('auth:lawyer')->group(function () {
+    // Profile Routes
     Route::get('/profile', [LawyerProfileController::class, 'index'])->name('lawyer.profile');
     Route::get('/profile/edit', [LawyerProfileController::class, 'edit'])->name('lawyer.profile.edit');
     Route::post('/profile/update', [LawyerProfileController::class, 'update'])->name('lawyer.profile.update');
     Route::post('/profile/change-password', [LawyerProfileController::class, 'changePassword'])->name('lawyer.profile.change-password');
+    
+    // Route for canceling an appointment
+    Route::put('/appointments/cancel/{id}', [\App\Http\Controllers\User\AppointmentController::class, 'cancelAppointment'])->name('appointments.cancel');
+
+    // Appointment Management by Lawyer
+    Route::prefix('appointments')->group(function () {
+        // Optional: View for creating appointments
+        Route::get('/create', function () {
+            return view('lawyer.create-appointment');
+        })->name('appointments.create');
+
+        // Route to store available appointment slots
+        Route::post('/store', [\App\Http\Controllers\User\AppointmentController::class, 'createAvailableSlots'])->name('appointments.store');
+    });
 });
 
-// User Profile Routes
+
+
+
+// User Profile and Appointments Routes
 Route::middleware(['auth:web'])->prefix('user')->group(function () {
+    // Profile Routes
     Route::get('/profile', [App\Http\Controllers\User\UserProfileController::class, 'index'])->name('user.profile');
     Route::get('/profile/edit', [App\Http\Controllers\User\UserProfileController::class, 'edit'])->name('user.profile.edit');
     Route::post('/profile/update', [App\Http\Controllers\User\UserProfileController::class, 'update'])->name('user.profile.update');
+
+    // Appointment Booking by User
+    Route::prefix('appointments')->group(function () {
+        Route::get('/available', [\App\Http\Controllers\User\AppointmentController::class, 'showAvailableAppointments'])->name('user.appointments.available');
+        Route::post('/appointments/book', [\App\Http\Controllers\User\AppointmentController::class, 'bookAppointment'])->name('appointments.book');
+        Route::post('/reviews/store', [ReviewController::class, 'store'])->name('reviews.store');
+    });
 });
+
+Route::get('/search', [\App\Http\Controllers\User\SearchController::class, 'search'])->name('search');
+// عرض الملف الشخصي لأي مستخدم
+Route::get('/user/profile/{id}', [\App\Http\Controllers\User\UserProfileController::class, 'show'])
+    ->name('user.profile.show');
+
+// عرض الملف الشخصي لأي محامٍ
+Route::get('/lawyer/profile/{id}', [\App\Http\Controllers\User\LawyerProfileController::class, 'show'])
+    ->name('lawyer.profile.show');
 
 Route::get('/get-updated-counts', [HomeController::class, 'getUpdatedCounts'])->name('statistics.update');
 

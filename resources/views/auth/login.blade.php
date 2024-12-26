@@ -39,6 +39,7 @@
             }
             
             .logo {
+                
                 width: 150px !important;
                 height: 150px !important;
             }
@@ -66,7 +67,7 @@
             <div class="left-panel flex-1 bg-gradient-to-br from-[#121518] to-[#aa9166] p-12 flex flex-col justify-center items-center text-white relative overflow-hidden">
                 <div class="text-center relative z-10">
                     <div class="logo">
-                        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" width="200" height="200"  style="transform: translateX(100px);">
                             <style>
                                 @keyframes scaleBalance {
                                     0%, 100% { transform: scale(1) rotate(0deg); }
@@ -105,8 +106,8 @@
                             </text>
                         </svg>
                     </div>
-                    <h2 class="text-4xl font-bold text-white mb-2">Welcome to Mustashark</h2>
-                    <p class="text-lg text-white/80">Your Trusted Legal Consultation Platform</p>
+                    <h2 class="text-4xl font-bold text-white mb-2">Mustashark DashBoard</h2>
+                    <p class="text-xl font-bold text-white/80">Login as Admin</p>
                 </div>
             </div>
 

@@ -29,7 +29,7 @@
         .faq-section {
             padding: 60px 0;
             background-color: #1b1b1b;
-            color: #d4af37;
+            color: #aa9166;
             text-align: center;
         }
 
@@ -51,7 +51,7 @@
 
         .faq-item {
             background-color: #333;
-            color: #d4af37;
+            color: #aa9166;
             padding: 15px;
             margin-bottom: 10px;
             border-radius: 5px;
@@ -60,7 +60,7 @@
         .faq-item h3.question {
             font-size: 18px;
             font-weight: bold;
-            color: #d4af37;
+            color: #aa9166;
         }
 
         .faq-item p.answer {
@@ -71,7 +71,7 @@
 
         /* New Question Button */
         .btn-gold {
-            background-color: #d4af37;
+            background-color: #aa9166;
             color: #1b1b1b;
             padding: 10px 20px;
             font-weight: bold;
@@ -84,74 +84,107 @@
             background-color: #c29d2d;
             color: #fff;
         }
+        .faq-section {
+    background: linear-gradient(145deg, #1b1b1b 0%, #2a2a2a 100%);
+    padding: 80px 0;
+}
 
-        /* Modal Styling */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.8);
-        }
+.section-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
 
-        .modal-content {
-            background-color: #333;
-            color: #d4af37;
-            padding: 20px;
-            margin: 10% auto;
-            width: 50%;
-            border-radius: 5px;
-        }
+.section-header h2 {
+    color: #aa9166;
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    position: relative;
+    display: inline-block;
+}
 
-        .modal-content h2 {
-            color: #d4af37;
-            font-weight: bold;
-        }
+.section-header h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: #aa9166;
+}
 
-        .modal-content label {
-            display: block;
-            font-weight: bold;
-            margin: 15px 0 5px;
-            color: #fff;
-        }
+.section-header p {
+    color: #bfbfbf;
+    font-size: 1.1rem;
+}
 
-        .modal-content input,
-        .modal-content textarea {
-            width: 100%;
-            padding: 8px;
-            margin: 5px 0 20px;
-            background-color: #222;
-            color: #d4af37;
-            border: 1px solid #444;
-            border-radius: 4px;
-        }
+.faq-list {
+    background: transparent;
+}
 
-        .modal-content input:focus,
-        .modal-content textarea:focus {
-            outline: none;
-            border-color: #d4af37;
-        }
+.faq-item {
+    background: rgba(51, 51, 51, 0.7);
+    border: 1px solid rgba(170, 145, 102, 0.2);
+    border-radius: 15px;
+    padding: 25px;
+    height: 100%;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
 
-        .modal-content .btn {
-            width: 100%;
-        }
+.faq-item:hover {
+    transform: translateY(-5px);
+    background: rgba(51, 51, 51, 0.9);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
 
-        .close {
-            color: #d4af37;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
+.faq-item .icon {
+    color: #aa9166;
+    font-size: 24px;
+    margin-bottom: 15px;
+    display: block;
+}
 
-        .close:hover,
-        .close:focus {
-            color: #fff;
-            cursor: pointer;
-        }
+.faq-item h3.question {
+    color: #aa9166;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+.faq-item p.answer {
+    color: #e0e0e0;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.faq-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 0;
+    background: #aa9166;
+    transition: height 0.3s ease;
+}
+
+.faq-item:hover::before {
+    height: 100%;
+}
+
+@media (max-width: 768px) {
+    .section-header h2 {
+        font-size: 2rem;
+    }
+    
+    .faq-item {
+        margin-bottom: 20px;
+    }
+}
     </style>
 </head>
 <body>
@@ -174,78 +207,131 @@
     </div>
     <!-- Page Header End -->
 
-    <!-- FAQ Section Start -->
-    <div class="faq-section">
-        <div class="container">
-            <div class="section-header">
-                <h2>Frequently Asked Questions</h2>
-                <p>Find answers to common questions or submit your own.</p>
-            </div>
-
+   <!-- FAQ Section Start -->
+<div class="faq-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Frequently Asked Questions</h2>
+            <p>Find answers to common questions </p>
+        </div>
+        
         <!-- FAQ List -->
-<div class="faq-list">
-    <div class="row">
-        @foreach ($faqs as $faq)
-            <div class="col-md-4 mb-4"> <!-- تقسيم الصفحة إلى 3 أعمدة -->
-                <div class="faq-item">
-                    <h3 class="question">{{ $faq->question }}</h3>
-                    <p class="answer">{{ $faq->answer }}</p>
+        <div class="faq-list">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="faq-item">
+                        <span class="icon"><i class="fas fa-user-plus"></i></span>
+                        <h3 class="question">How do I create an account?</h3>
+                        <p class="answer">Click on the "Sign Up" button on the top-right corner and fill in the required details.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="faq-item">
+                        <span class="icon"><i class="fas fa-clipboard-list"></i></span>
+                        <h3 class="question">What are the subscription options?</h3>
+                        <p class="answer">You can subscribe for 3 months, 6 months, or 1 year.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="faq-item">
+                        <span class="icon"><i class="fas fa-ban"></i></span>
+                        <h3 class="question">Can I cancel my subscription?</h3>
+                        <p class="answer">Yes, you can cancel your subscription at any time, but no refunds are provided.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="faq-item">
+                        <span class="icon"><i class="fas fa-comments"></i></span>
+                        <h3 class="question">How do lawyers respond to questions?</h3>
+                        <p class="answer">Lawyers can respond through the comments section of each consultation.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="faq-item">
+                        <span class="icon"><i class="fas fa-coins"></i></span>
+                        <h3 class="question">Are consultations free?</h3>
+                        <p class="answer">The first consultation is free; subsequent ones may require payment.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="faq-item">
+                        <span class="icon"><i class="fas fa-key"></i></span>
+                        <h3 class="question">How do I reset my password?</h3>
+                        <p class="answer">Click on "Forgot Password" and follow the instructions.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="faq-item">
+                        <span class="icon"><i class="fas fa-user-secret"></i></span>
+                        <h3 class="question">Can I post anonymous consultations?</h3>
+                        <p class="answer">Yes, anonymous consultations are supported for privacy.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="faq-item">
+                        <span class="icon"><i class="fas fa-headset"></i></span>
+                        <h3 class="question">How do I contact support?</h3>
+                        <p class="answer">You can contact support via the <a href="{{ route('user.contact') }}" style="color: #aa9166; text-decoration: underline; text-decoration-color: #aa9166;">Contact Us</a> page.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="faq-item">
+                        <span class="icon"><i class="fas fa-shield-alt"></i></span>
+                        <h3 class="question">Is my data secure?</h3>
+                        <p class="answer">Yes, we use encryption to secure all user data.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="faq-item">
+                        <span class="icon"><i class="fas fa-edit"></i></span>
+                        <h3 class="question">Can I edit my posted consultation?</h3>
+                        <p class="answer">Yes, you can edit your consultation </p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="faq-item">
+                        <span class="icon"><i class="fas fa-briefcase"></i></span>
+                        <h3 class="question">How do lawyers register?</h3>
+                        <p class="answer">Lawyers can register by subscribing to a plan and completing the registration form.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="faq-item">
+                        <span class="icon"><i class="fas fa-star"></i></span>
+                        <h3 class="question">Can I rate a lawyer's response?</h3>
+                        <p class="answer">Yes, you can rate responses to improve service quality.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="faq-item">
+                        <span class="icon"><i class="fas fa-credit-card"></i></span>
+                        <h3 class="question">What payment methods are accepted?</h3>
+                        <p class="answer">We accept credit cards, PayPal, and bank transfers.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="faq-item">
+                        <span class="icon"><i class="fas fa-eye"></i></span>
+                        <h3 class="question">Can I view consultations posted by others?</h3>
+                        <p class="answer">Yes, consultations can be viewed by all users.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="faq-item">
+                        <span class="icon"><i class="fas fa-user-tie"></i></span>
+                        <h3 class="question">How do I subscribe as a lawyer?</h3>
+                        <p class="answer">Choose a plan, complete the payment, and register your profile.</p>
+                    </div>
                 </div>
             </div>
-        @endforeach
+        </div>
     </div>
 </div>
+<!-- FAQ Section End -->
 
-
-            <!-- Add New Question Button -->
-            <button class="btn btn-gold" onclick="openModal()">Add a New Question</button>
-        </div>
-    </div>
-    <!-- FAQ Section End -->
-
-    <!-- New Question Modal -->
-    <div id="questionModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2>Add a New Question</h2>
-            <form method="POST" action="{{ route('user.faq.store') }}">
-                @csrf
-                <label for="questionTitle">Question Title</label>
-                <input type="text" id="questionTitle" name="question" placeholder="Enter your question title" maxlength="40" required>
-                
-                <label for="questionContent">Content</label>
-                <textarea id="questionContent" name="answer" placeholder="Enter your question details" maxlength="40" required></textarea>
-                
-                <button type="submit" class="btn btn-gold">Submit Question</button>
-            </form>
-            
-            
-        </div>
-    </div>
 
     <!-- Include Footer -->
     @include('layouts.User-Footer')
-
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('lib/easing/easing.min.js') }}"></script>
-    <script src="{{ asset('lib/owlcarousel/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('lib/isotope/isotope.pkgd.min.js') }}"></script>
-
-    <!-- Template Javascript -->
-    <script src="{{ asset('js/main.js') }}"></script>
-
-    <script>
-        // Modal functionality
-        function openModal() {
-            document.getElementById('questionModal').style.display = 'block';
-        }
-
-        function closeModal() {
-            document.getElementById('questionModal').style.display = 'none';
-        }
-    </script>
 
 </body>
 </html>

@@ -25,45 +25,74 @@
     <link href="{{ asset('user/css/index.css') }}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
-        .contact-item {
-            display: flex;
-            margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid #d4af37;
-            border-radius: 5px;
-            background-color: #1b1b1b;
-            color: #d4af37;
-        }
-    
-        .icon-box {
-            width: 60px;
-            height: 60px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 2px solid #d4af37;
-            border-radius: 5px;
-            margin-right: 15px;
-            background-color: #1b1b1b;
-        }
-    
-        .icon-box i {
-            font-size: 28px;
-            color: #d4af37;
-        }
-    
-        .contact-text h2 {
-            margin-bottom: 5px;
-            font-size: 20px;
-            font-weight: bold;
-            color: #d4af37;
-        }
-    
-        .contact-text p {
-            margin: 0;
-            font-size: 14px;
-            color: #d4af37;
-        }
+       /* Form container styling */
+.contact-form {
+    background-color: #1b1b1b;
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid #aa9166;
+}
+
+/* Input fields styling */
+.contact-form .form-group {
+    margin-bottom: 20px;
+}
+
+.contact-form .form-control {
+    background-color: #232323;
+    border: 1px solid #aa9166;
+    color: #ffffff;
+    padding: 12px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.contact-form .form-control:focus {
+    background-color: #333333;
+    border-color: #d4b78c;
+    box-shadow: 0 0 5px rgba(170, 145, 102, 0.5);
+}
+
+/* Readonly fields styling */
+.contact-form .form-control[readonly] {
+    background-color: #252525;
+    border-color: #887346;
+    opacity: 0.8;
+}
+
+/* Textarea specific styling */
+.contact-form textarea.form-control {
+    min-height: 150px;
+    resize: vertical;
+}
+
+/* Submit button styling */
+.contact-form .btn-primary {
+    background-color: #aa9166;
+    border-color: #aa9166;
+    color: #1b1b1b;
+    padding: 12px 30px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.contact-form .btn-primary:hover {
+    background-color: #d4b78c;
+    border-color: #d4b78c;
+}
+
+/* Form labels */
+.contact-form .form-group label {
+    color: #aa9166;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+/* Placeholder text */
+.contact-form .form-control::placeholder {
+    color: #888888;
+    opacity: 0.7;
+}
     </style>
 </head>
 
@@ -151,11 +180,21 @@
                             <form action="{{ route('user.notifications.store') }}" method="POST">
                                 @csrf
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="name" value="{{ Auth::user()->name ?? '' }}" readonly />
+                                    @if(Auth::guard('lawyer')->check())
+                                        <input type="text" class="form-control" name="name" 
+                                               value="{{ Auth::guard('lawyer')->user()->first_name . ' ' . Auth::guard('lawyer')->user()->last_name }}" readonly />
+                                    @else
+                                        <input type="text" class="form-control" name="name" value="{{ Auth::user()->name ?? '' }}" readonly />
+                                    @endif
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control" name="email" value="{{ Auth::user()->email ?? '' }}" readonly />
+                                    @if(Auth::guard('lawyer')->check())
+                                        <input type="email" class="form-control" name="email" value="{{ Auth::guard('lawyer')->user()->email }}" readonly />
+                                    @else
+                                        <input type="email" class="form-control" name="email" value="{{ Auth::user()->email ?? '' }}" readonly />
+                                    @endif
                                 </div>
+                                
                                 <div class="form-group">
                                     <input type="text" class="form-control" placeholder="Subject" name="subject" required />
                                 </div>
@@ -166,13 +205,9 @@
                                     <button class="btn btn-primary" type="submit">Send Message</button>
                                 </div>
                             </form>
-                            
-                            
-                            
-                            
                         </div>
-                        
                     </div>
+                    
                 </div>
             </div>
         </div>

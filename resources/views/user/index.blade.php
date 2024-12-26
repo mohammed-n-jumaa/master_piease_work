@@ -33,7 +33,7 @@
     color: #000; /* تأكد من أن الأيقونات مرئية بلون مناسب */
 }
 .btn-gold {
-        background-color: #d4af37;
+        background-color: #aa9166;
         color: #1b1b1b;
         font-weight: bold;
         padding: 10px 20px;
@@ -58,7 +58,7 @@
 
     .modal-content {
         background-color: #333;
-        color: #d4af37;
+        color: #aa9166;
         padding: 20px;
         margin: 10% auto;
         width: 50%;
@@ -78,7 +78,7 @@
         margin: 5px 0 15px;
         border: 1px solid #555;
         background-color: #222;
-        color: #d4af37;
+        color: #aa9166;
     }
 
     .modal-content .btn {
@@ -87,7 +87,7 @@
     }
 
     .close {
-        color: #d4af37;
+        color: #aa9166;
         float: right;
         font-size: 28px;
         cursor: pointer;
@@ -96,6 +96,21 @@
     .close:hover {
         color: #fff;
     }
+    /* خلفية قسم "Feature" */
+.feature {
+    background-color: #ffffff;
+}
+
+/* خلفية قسم "FAQs" */
+.faqs {
+    background-color: #ffffff;
+}
+
+/* خلفية قسم "Testimonial" */
+.testimonial {
+    background-color: #ffffff;
+}
+
     </style>
 </head>
 
@@ -358,40 +373,99 @@
 
 
     <!-- FAQs Start -->
-    <div class="faqs">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-5">
-                    <div class="faqs-img">
-                        <img src="{{ asset('user/img/faqs.jpg') }}" alt="Image">
-                    </div>
+<div class="faqs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="faqs-img">
+                    <img src="{{ asset('user/img/faqs.jpg') }}" alt="Image">
                 </div>
-                <div class="col-md-7">
-                    <div class="section-header">
-                        <h2>Have a Question?</h2>
-                    </div>
-                    <div id="accordion">
-                        @foreach($faqs as $faq)
-                            <div class="card">
-                                <div class="card-header">
-                                    <a class="card-link collapsed" data-toggle="collapse" href="#collapse{{ $faq->id }}" aria-expanded="true">
-                                        <span>{{ $loop->iteration }}</span> {{ $faq->question }}
-                                    </a>
-                                </div>
-                                <div id="collapse{{ $faq->id }}" class="collapse" data-parent="#accordion">
-                                    <div class="card-body">
-                                        {{ $faq->answer }}
-                                    </div>
-                                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="section-header">
+                    <h2>Have a Question?</h2>
+                </div>
+                <div id="accordion">
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="card-link collapsed" data-toggle="collapse" href="#collapse1" aria-expanded="true">
+                                <span>1</span> How can I register as a lawyer on the platform?
+                            </a>
+                        </div>
+                        <div id="collapse1" class="collapse" data-parent="#accordion">
+                            <div class="card-body">
+                                Lawyers can register by subscribing to one of our plans (3 months, 6 months, or 1 year). Visit the registration page, fill in your details, and complete the payment process.
                             </div>
-                        @endforeach
+                        </div>
                     </div>
-                    <a class="btn" href="{{ route('user.faq') }}">Ask More Questions</a>
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="card-link collapsed" data-toggle="collapse" href="#collapse2">
+                                <span>2</span> What subscription plans are available for lawyers?
+                            </a>
+                        </div>
+                        <div id="collapse2" class="collapse" data-parent="#accordion">
+                            <div class="card-body">
+                                Lawyers can choose from three subscription plans: 3 months, 6 months, or 1 year. Each plan offers full access to user consultations and platform features.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="card-link collapsed" data-toggle="collapse" href="#collapse3">
+                                <span>3</span> How can users post their legal consultations?
+                            </a>
+                        </div>
+                        <div id="collapse3" class="collapse" data-parent="#accordion">
+                            <div class="card-body">
+                                Users can post their consultations by creating an account, navigating to the “Post Consultation” section, and submitting their query along with any supporting details.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="card-link collapsed" data-toggle="collapse" href="#collapse4">
+                                <span>4</span> How do lawyers respond to consultations?
+                            </a>
+                        </div>
+                        <div id="collapse4" class="collapse" data-parent="#accordion">
+                            <div class="card-body">
+                                Registered lawyers can view consultations posted by users and provide their legal advice directly through the comment section associated with each consultation.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="card-link collapsed" data-toggle="collapse" href="#collapse5">
+                                <span>5</span> Can I renew my subscription plan as a lawyer?
+                            </a>
+                        </div>
+                        <div id="collapse5" class="collapse" data-parent="#accordion">
+                            <div class="card-body">
+                                Yes, you can renew your subscription plan before it expires by visiting the subscription section in your account and choosing a renewal plan.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="card-link collapsed" data-toggle="collapse" href="#collapse6">
+                                <span>6</span> Is there a limit to how many consultations a lawyer can answer?
+                            </a>
+                        </div>
+                        <div id="collapse6" class="collapse" data-parent="#accordion">
+                            <div class="card-body">
+                                No, there is no limit. Registered lawyers can respond to as many consultations as they wish within their subscription period.
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <a class="btn" href="{{ route('user.faq') }}">See More Questions</a>
             </div>
         </div>
     </div>
-    <!-- FAQs End -->
+</div>
+<!-- FAQs End -->
+
 
 
     <!-- Testimonial Start -->
