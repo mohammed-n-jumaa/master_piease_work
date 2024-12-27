@@ -280,9 +280,12 @@
                             @endforeach
                         </select>
                     </form>
+                    @auth('web') {{-- تحقق إذا كان الجارد الحالي هو للمستخدم --}}
                     <a href="{{ route('user.consultations.create') }}" class="btn btn-gold">
                         <i class="fas fa-plus-circle"></i> Add Consultation
                     </a>
+                @endauth
+                
                 </div>
             </div>
 
@@ -293,12 +296,10 @@
                     <div class="consultation-card">
                         <div class="card-image-wrapper">
                             <span class="category-badge">{{ $consultation->category->name ?? 'Uncategorized' }}</span>
-                            <img src="{{ asset('user_profiles/' . ($user->profile_picture ?? 'default-profile-picture.jpg')) }}"
-                            onerror="this.onerror=null; this.src='https://www.w3schools.com/w3images/avatar2.png';"
-                            alt="User profile picture">
-                       
-                       
-                       
+                            <img src="{{ $consultation->user && $consultation->user->profile_picture ? asset($consultation->user->profile_picture) : asset('default-profile-picture.jpg') }}"
+                                 alt="User Profile"
+                                 onerror="this.onerror=null; this.src='https://www.w3schools.com/w3images/avatar2.png';"
+                                 class="rounded-circle border border-2 border-light">
                         </div>
                         
                         <div class="card-content">

@@ -70,7 +70,7 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'role.check' => \App\Http\Middleware\RoleCheck::class, // التأكد من دور الأدمن
         'prevent.admin.access' => \App\Http\Middleware\PreventAdminAccess::class,
-        'user.lawyer.only' => \App\Http\Middleware\UserLawyerOnly::class,
+        'user.or.lawyer.only' => \App\Http\Middleware\UserOrLawyerOnly::class,
     ];
     
     

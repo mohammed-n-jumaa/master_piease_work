@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-      <!-- Favicon -->
-<link href="{{ asset('user/img/favicon.ico') }}" rel="icon">
-
+    <meta charset="utf-8">
+    <title>Consultation Details</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Law Firm Website Template" name="keywords">
+    <meta content="Law Firm Website Template" name="description"><link href="{{ asset('user/img/favicon.ico') }}" rel="icon">
 <!-- Google Font -->
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@1,600;1,700;1,800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 
@@ -174,20 +176,22 @@
         }
 
         /* Form Controls */
-        .form-control {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--dark-gold);
-            border-radius: 8px;
-            color: var(--light);
-            padding: 1rem;
-        }
+       /* Form Controls */
+.form-control {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--dark-gold);
+    border-radius: 8px;
+    color: white; /* هذا يجعل النص داخل textarea باللون الأبيض */
+    padding: 1rem;
+}
 
-        .form-control:focus {
-            background: rgba(255,255,255,0.08);
-            border-color: var(--gold);
-            box-shadow: 0 0 15px rgba(170, 143, 97, 0.1);
-            outline: none;
-        }
+.form-control:focus {
+    background: rgba(255,255,255,0.08);
+    border-color: var(--gold);
+    box-shadow: 0 0 15px rgba(170, 143, 97, 0.1);
+    outline: none;
+    color: white; /* للتأكد من أن النص يظل أبيض أثناء التركيز */
+}
 
         /* Buttons */
         .custom-btn {
@@ -230,6 +234,24 @@
             padding-top: 2rem;
             border-top: 1px solid var(--dark-gold);
         }
+        .dropdown .btn-link i {
+    color: #aa8f61 !important;
+    
+}
+#confirmDeleteModal .modal-content {
+    background-color: #1a1a1a;
+    border-radius: 15px;
+    border: 1px solid #aa8f61;
+}
+
+#confirmDeleteModal .modal-title {
+    color: #aa8f61;
+}
+
+#confirmDeleteModal .btn {
+    border-radius: 10px;
+    padding: 10px 20px;
+}
 
         /* Responsive Design */
         @media (max-width: 768px) {
@@ -253,6 +275,18 @@
 <body>
     @include('layouts.User-Header')
 
+<!-- Toast Notification -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="toastMessage" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" style="opacity: 0.95;">
+        <div class="d-flex">
+            <div class="toast-body">
+                Action completed successfully.
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+  
     <!-- Page Header -->
     <div class="section-header text-center">
         <h2>Consultation Details</h2>
@@ -261,26 +295,35 @@
 
     <!-- Main Content -->
     <div class="consultation-container">
-        <!-- Consultation Card -->
-        <div class="consultation-card">
-            <div class="user-profile">
-                <div class="user-image">
-                    <img src="{{ asset($consultation->user->image ?? 'user/img/default-user.jpg') }}" 
-                         onerror="this.onerror=null; this.src='https://www.w3schools.com/w3images/avatar2.png';" 
-                         alt="User profile picture">
-                </div>
-                <div class="user-info">
-                    <h3>{{ $consultation->user->name ?? 'Anonymous User' }}</h3>
-                    <div class="consultation-category">
+   <!-- Consultation Card -->
+<div class="consultation-card">
+    <div class="user-profile">
+        <div class="user-info">
+            <div class="d-flex align-items-center gap-3 mb-3">
+                <a href="{{ route('user.profile.show', $consultation->user_id) }}" class="text-decoration-none">
+                    <img src="{{ $consultation->user->profile_picture ? asset($consultation->user->profile_picture) : asset('default-profile-picture.jpg') }}"
+                         alt="User Profile" 
+                         width="120" 
+                         height="120" 
+                         class="rounded-circle border border-2 border-gold"
+                         style="border-color: #aa8f61 !important;"
+                         onerror="this.onerror=null; this.src='https://www.w3schools.com/w3images/avatar2.png';">
+                </a>
+                <div>
+                    <a href="{{ route('user.profile.show', $consultation->user_id) }}" class="text-decoration-none">
+                        <h3 class="mb-0" style="color: #aa8f61;">{{ $consultation->user->name ?? 'Anonymous User' }}</h3>
+                    </a>
+                    <div class="consultation-category mt-2">
                         <i class="fas fa-folder me-2"></i>{{ $consultation->category->name ?? 'No Category' }}
-                    </div>
-                    <div class="consultation-content">
-                        {{ $consultation->content }}
                     </div>
                 </div>
             </div>
+            <div class="consultation-content">
+                {{ $consultation->content }}
+            </div>
         </div>
-
+    </div>
+</div>
        <!-- Comments Section -->
 <div class="comments-section">
     <div class="comments-header">
@@ -325,7 +368,7 @@
                     (auth('lawyer')->check() && auth('lawyer')->id() == $comment->lawyer_id)
                 )
                     <div class="dropdown">
-                        <button class="btn btn-link text-gold dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <button class="btn btn-link text-gold" type="button" data-bs-toggle="dropdown">
                             <i class="fas fa-ellipsis-v"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
@@ -341,6 +384,7 @@
                             </li>
                         </ul>
                     </div>
+                    
                 @endif
             </div>
         @endforeach
@@ -360,7 +404,7 @@
 
     <!-- Add Comment Form -->
     <div class="comment-form">
-        <h5><i class="fas fa-plus-circle me-2"></i>Add a Comment</h5>
+        <h5><i class="fas fa-plus-circle me-2" style="color:#aa8f61 "></i> <span style="color: #aa8f61;">Add a Comment</span></h5>
         <form id="comment-form" method="POST" action="{{ route('user.comments.store') }}">
             @csrf
             <input type="hidden" name="consultation_id" value="{{ $consultation->id }}">
@@ -373,7 +417,25 @@
         </form>
     </div>
 </div>
-
+<!-- Confirm Delete Modal -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="background-color: #1a1a1a; border-radius: 15px; border: 1px solid #aa8f61;">
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="confirmDeleteLabel" style="color: #aa8f61;">DELETE COMMENT</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center" style="color: #ffffff;">
+                Are you sure you want to DELETE this COMMENT?
+            </div>
+            <div class="modal-footer justify-content-center border-0">
+                <button type="button" class="btn" data-bs-dismiss="modal" style="background-color: #aa8f61; color: #ffffff; border-radius: 10px; padding: 10px 20px;">Close</button>
+                <button type="button" class="btn" id="confirmDeleteButton" style="background-color: #aa8f61; color: #1a1a1a; border-radius: 10px; padding: 10px 20px;">Confirm DELETE</button>
+            </div>
+        </div>
+    </div>
+</div>
+  
     </div>
 
     @include('layouts.User-Footer')
@@ -392,63 +454,80 @@
 <!-- Template Javascript -->
 <script src="{{ asset('user/js/main.js') }}"></script></body>
 <script>
-    
-    $(document).ready(function () {
-        $('#comment-form').on('submit', function (e) {
-    e.preventDefault();
+$(document).ready(function () {
+    let commentToDeleteId;
 
-    let formData = $(this).serialize();
+    // إضافة تعليق
+    $('#comment-form').on('submit', function (e) {
+        e.preventDefault();
 
-    $.ajax({
-        url: '{{ route("user.comments.store") }}',
-        type: 'POST',
-        data: formData,
-        success: function (response) {
-            alert('Comment added successfully!');
-            location.reload(); // إعادة تحميل الصفحة لعرض التعليق الجديد
-        },
-        error: function (xhr) {
-            console.error(xhr.responseText);
-            alert('Error adding comment.');
-        }
+        let formData = $(this).serialize();
+
+        $.ajax({
+            url: '{{ route("user.comments.store") }}',
+            type: 'POST',
+            data: formData,
+            success: function (response) {
+                showToast('Comment added successfully!');
+                location.reload(); // إعادة تحميل الصفحة لعرض التعليق الجديد
+            },
+            error: function (xhr) {
+                console.error(xhr.responseText);
+                showToast('Error adding comment.', 'danger');
+            }
+        });
     });
-});
 
-    // حذف تعليق
+    // حذف تعليق - عرض نافذة التأكيد
     $('.delete-comment').on('click', function (e) {
-    e.preventDefault();
-    let commentId = $(this).data('comment-id');
-    let commentElement = $(this).closest('.comment');
-
-    $.ajax({
-        url: '{{ route("user.comments.delete") }}',
-        type: 'POST',
-        data: {
-            _token: '{{ csrf_token() }}',
-            comment_id: commentId
-        },
-        success: function (response) {
-            commentElement.fadeOut(300, function () {
-                $(this).remove();
-            });
-            alert(response.message);
-        },
-        error: function (xhr) {
-            let errorMessage = xhr.responseJSON.error || 'Error deleting comment.';
-            alert(errorMessage);
-        }
+        e.preventDefault();
+        commentToDeleteId = $(this).data('comment-id');
+        $('#confirmDeleteModal').modal('show');
     });
-});
 
+    // تأكيد الحذف
+    $('#confirmDeleteButton').on('click', function () {
+        $.ajax({
+            url: '{{ route("user.comments.delete") }}',
+            type: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                comment_id: commentToDeleteId
+            },
+            success: function (response) {
+                $(`[data-comment-id="${commentToDeleteId}"]`).fadeOut(300, function () {
+                    $(this).remove();
+                });
+                $('#confirmDeleteModal').modal('hide');
+                showToast('Comment deleted successfully!', 'success', 5000);
+            },
+            error: function (xhr) {
+                let errorMessage = xhr.responseJSON?.error || 'Error deleting comment.';
+                showToast(errorMessage, 'danger', 5000);
+            }
+        });
+    });
 
-    // تعديل تعليق
-    $('.dropdown-item').on('click', function (e) {
+    // تعديل تعليق مباشرة داخل الحقل مع زر حفظ
+    $('.edit-comment').on('click', function (e) {
         e.preventDefault();
         let commentId = $(this).data('comment-id');
-        let commentContent = $(this).closest('.comment').find('p').text();
-        let newContent = prompt('Edit your comment:', commentContent);
+        let commentElement = $(`[data-comment-id="${commentId}"]`).find('p');
+        let currentContent = commentElement.text();
 
-        if (newContent) {
+        // استبدال النص بحقل إدخال مع زر حفظ
+        commentElement.replaceWith(`
+            <div class="edit-container">
+                <textarea class="form-control edit-input">${currentContent}</textarea>
+                <button class="btn btn-sm btn-success save-edit" data-comment-id="${commentId}" style="margin-top: 5px;">Save</button>
+            </div>
+        `);
+
+        // حفظ التعديل عند الضغط على زر حفظ
+        $('.save-edit').on('click', function () {
+            let newContent = $(this).siblings('.edit-input').val();
+            let saveButton = $(this);
+
             $.ajax({
                 url: '{{ route("user.comments.update") }}',
                 type: 'POST',
@@ -458,25 +537,23 @@
                     content: newContent
                 },
                 success: function (response) {
-                    $(`[data-comment-id="${commentId}"]`).closest('.comment').find('p').text(response.content);
-                    alert(response.message);
+                    saveButton.closest('.edit-container').replaceWith(`<p>${newContent}</p>`);
+                    showToast('Comment edited successfully!', 'success', 5000);
                 },
                 error: function () {
-                    alert('Error updating comment.');
+                    showToast('Error updating comment.', 'danger', 5000);
                 }
             });
-        }
+        });
     });
 
     // عرض المزيد من التعليقات
-   // عرض المزيد من التعليقات
-   $('#load-more-comments').on('click', function () {
-        console.log('Load More button clicked'); // للتحقق من تنفيذ الحدث
+    $('#load-more-comments').on('click', function () {
         let offset = $(this).data('offset');
         let consultationId = $(this).data('id');
 
         $.ajax({
-            url: '{{ route("user.comments.loadMore") }}', // تأكد أن الراوت صحيح
+            url: '{{ route("user.comments.loadMore") }}',
             type: 'POST',
             data: {
                 _token: '{{ csrf_token() }}',
@@ -484,7 +561,6 @@
                 consultation_id: consultationId
             },
             success: function (response) {
-                console.log(response); // عرض الرد القادم من السيرفر
                 if (response.comments && response.comments.length > 0) {
                     response.comments.forEach(comment => {
                         $('#comments-container').append(`
@@ -497,49 +573,80 @@
                         `);
                     });
 
-                    // تحديث قيمة الأوفست
                     let newOffset = offset + response.comments.length;
                     $('#load-more-comments').data('offset', newOffset);
 
-                    // عرض زر "Show Less" إذا كان عدد التعليقات أكثر من 3
                     if ($('#comments-container .comment').length > 3) {
                         $('#show-less-comments').removeClass('d-none');
                     }
                 } else {
-                    console.log('No more comments to load.');
-                    $('#load-more-comments').hide(); // إخفاء الزر إذا لم يعد هناك تعليقات
+                    $('#load-more-comments').hide();
                 }
             },
             error: function (xhr) {
-                console.error(xhr.responseText); // عرض أي خطأ في وحدة التحكم
-                alert('Error loading comments.');
+                console.error(xhr.responseText);
+                showToast('Error loading comments.', 'danger', 5000);
             }
         });
     });
 
     // تقليل عدد التعليقات
     $('#show-less-comments').on('click', function () {
-        // عدد التعليقات الإجمالي الحالي
         let totalComments = $('#comments-container .comment').length;
 
-        // التحقق إذا كان هناك أكثر من 3 تعليقات
         if (totalComments > 3) {
-            // حذف التعليقات الزائدة والإبقاء على أول 3 تعليقات فقط
             $('#comments-container .comment').slice(3).remove();
 
-            // تحديث قيمة الأوفست
             let newOffset = $('#load-more-comments').data('offset') - (totalComments - 3);
             $('#load-more-comments').data('offset', newOffset);
         }
 
-        // إذا كان عدد التعليقات المتبقية أقل من أو يساوي 3، قم بإخفاء زر "Show Less"
         if ($('#comments-container .comment').length <= 3) {
-            $(this).addClass('d-none'); // إخفاء زر "Show Less"
+            $(this).addClass('d-none');
         }
 
-        // إعادة عرض زر "Load More" إذا تم إخفاؤه
         $('#load-more-comments').removeClass('d-none');
     });
+
+    // Toast Function
+    function showToast(message, type = 'success', delay = 5000) {
+        let toastElement = $(
+            `<div class="toast align-items-center text-bg-${type} border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        ${message}
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>`
+        );
+
+        $('.toast-container').append(toastElement);
+        let toast = new bootstrap.Toast(toastElement[0], { delay: delay });
+        toast.show();
+
+        toastElement.on('hidden.bs.toast', function () {
+            $(this).remove();
+        });
+    }
+
+    // تعديل زر الحذف عند الهوفر
+    $('#confirmDeleteButton').hover(
+        function () {
+            $(this).css({
+                'background-color': 'red',
+                'color': '#ffffff',
+                'border': '2px solid red'
+            });
+        },
+        function () {
+            $(this).css({
+                'background-color': '#aa8f61',
+                'color': '#1a1a1a',
+                'border': 'none'
+            });
+        }
+    );
 });
 
 </script>
