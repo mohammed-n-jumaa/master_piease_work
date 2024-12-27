@@ -23,21 +23,18 @@ public function createAvailableSlots(Request $request)
 {
     $request->validate([
         'appointment_date' => 'required|date|after:now',
-        'appointment_time' => 'required|date_format:H:i', // التأكد من أن الوقت في تنسيق HH:MM
+        'appointment_time' => 'required|date_format:H:i', 
     ]);
 
-    // التحقق من تسجيل الدخول كمحامي
     $lawyer = auth()->guard('lawyer')->user();
 
-    // دمج التاريخ والوقت
     $appointmentDateTime = \Carbon\Carbon::createFromFormat('Y-m-d H:i', $request->appointment_date . ' ' . $request->appointment_time);
 
-    // إضافة موعد جديد
     Appointment::create([
         'lawyer_id' => $lawyer->id,
-        'user_id' => null, // الموعد غير محجوز بعد
+        'user_id' => null, 
         'appointment_date' => $appointmentDateTime,
-        'status' => 'pending', // الموعد متاح للحجز
+        'status' => 'pending', 
     ]);
 
     return back()->with('success', 'Appointment slot added successfully!');

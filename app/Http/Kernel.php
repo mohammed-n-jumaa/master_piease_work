@@ -71,6 +71,8 @@ class Kernel extends HttpKernel
         'role.check' => \App\Http\Middleware\RoleCheck::class, // التأكد من دور الأدمن
         'prevent.admin.access' => \App\Http\Middleware\PreventAdminAccess::class,
         'user.or.lawyer.only' => \App\Http\Middleware\UserOrLawyerOnly::class,
+        'user.only' => \App\Http\Middleware\UserOnly::class,
+
     ];
     
     

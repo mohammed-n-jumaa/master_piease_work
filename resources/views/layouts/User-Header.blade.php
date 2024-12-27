@@ -157,7 +157,9 @@ border-radius: 4px;
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Consultations</a>
                         <div class="dropdown-menu">
                             <a href="{{ route('user.consultations.index') }}" class="dropdown-item">All Consultations</a>
-                            <a href="{{ route('user.consultations.create') }}" class="dropdown-item">Add Consultation</a>
+                            @if(Auth::guard('web')->check()) <!-- تحقق من إذا كان اليوزر هو من سجل الدخول -->
+                                <a href="{{ route('user.consultations.create') }}" class="dropdown-item">Add Consultation</a>
+                            @endif
                         </div>
                     </div>
                     <a href="{{ route('user.legal-library') }}" class="nav-item nav-link">Legal Library</a>

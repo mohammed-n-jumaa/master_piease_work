@@ -175,13 +175,12 @@
             margin-bottom: 0;
         }
 
-        /* Form Controls */
        /* Form Controls */
 .form-control {
     background: rgba(255,255,255,0.05);
     border: 1px solid var(--dark-gold);
     border-radius: 8px;
-    color: white; /* هذا يجعل النص داخل textarea باللون الأبيض */
+    color: white; 
     padding: 1rem;
 }
 
@@ -190,7 +189,7 @@
     border-color: var(--gold);
     box-shadow: 0 0 15px rgba(170, 143, 97, 0.1);
     outline: none;
-    color: white; /* للتأكد من أن النص يظل أبيض أثناء التركيز */
+    color: white; 
 }
 
         /* Buttons */
@@ -469,7 +468,7 @@ $(document).ready(function () {
             data: formData,
             success: function (response) {
                 showToast('Comment added successfully!');
-                location.reload(); // إعادة تحميل الصفحة لعرض التعليق الجديد
+                location.reload(); 
             },
             error: function (xhr) {
                 console.error(xhr.responseText);

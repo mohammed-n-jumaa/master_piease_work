@@ -41,13 +41,18 @@ Route::middleware(['auth:web,lawyer'])->prefix('user')->group(function () {
     Route::view('/about', 'user.about')->name('user.about');
 
     // استشارات المستخدم
-    Route::prefix('consultations')->name('user.consultations.')->group(function () {
-        Route::get('/', [UserConsultationController::class, 'index'])->name('index');
+Route::prefix('consultations')->name('user.consultations.')->group(function () {
+    Route::get('/', [UserConsultationController::class, 'index'])->name('index');
+    Route::get('/show/{id}', [UserConsultationController::class, 'show'])->name('show');
+    Route::get('/category/{category}', [UserConsultationController::class, 'categoryConsultations'])->name('category');
+
+    // صفحة إضافة الاستشارة محمية بـ Middleware
+    Route::middleware(['user.only'])->group(function () {
         Route::get('/create', [UserConsultationController::class, 'create'])->name('create');
         Route::post('/', [UserConsultationController::class, 'store'])->name('store');
-        Route::get('/show/{id}', [UserConsultationController::class, 'show'])->name('show');
-        Route::get('/category/{category}', [UserConsultationController::class, 'categoryConsultations'])->name('category');
     });
+});
+
 
     Route::prefix('comments')
     ->name('user.comments.')
@@ -70,6 +75,7 @@ Route::middleware(['auth:web,lawyer'])->prefix('user')->group(function () {
 
     // المراجعات
     Route::post('/testimonials', [TestimonialController::class, 'store'])->name('user.testimonials.store');
+    Route::post('/testimonials/{id}/activate', [TestimonialController::class, 'activate'])->name('testimonials.activate');
 
     // صفحة "اتصل بنا"
     Route::view('/contact', 'user.ContactUs')->name('user.contact');

@@ -11,25 +11,28 @@ use App\Models\User;
 class UserProfileController extends Controller
 {
     /**
-     * عرض صفحة الملف الشخصي للمستخدم الحالي.
+     * view profile for current user
      */
-    public function index()
-    {
-        $user = Auth::user();
-        return view('user.profile', compact('user'));
-    }
+  public function index()
+{
+    $user = Auth::user();
+    $appointments = $user->appointments()->with('lawyer')->get();
+    $consultations = $user->consultations()->with('category')->get();
+
+    return view('user.profile', compact('user', 'appointments', 'consultations'));
+}
     public function show($id)
     {
-        // البحث عن المستخدم بناءً على ID
+        // id for search
         $user = User::findOrFail($id);
     
-        // عرض صفحة البروفايل
+        // view profile
         return view('user.profile', compact('user'));
     }
     
    
     /**
-     * عرض صفحة تعديل الملف الشخصي.
+     * view edit page
      */
     public function edit()
     {
@@ -38,55 +41,51 @@ class UserProfileController extends Controller
     }
 
     /**
-     * تحديث البيانات الشخصية وكلمة المرور.
+     * update password and person information
      */
     public function update(Request $request)
     {
         $user = Auth::user();
     
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'phone_number' => 'nullable|string|max:15',
-            'profile_picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        ]);
-    
-        // تحديث صورة البروفايل
-        if ($request->hasFile('profile_picture')) {
-            // حذف الصورة القديمة إن وجدت
-            if ($user->profile_picture && file_exists(public_path($user->profile_picture))) {
-                unlink(public_path($user->profile_picture));
-            }
-    
-            // إنشاء اسم فريد للملف
-            $fileName = time() . '_' . $request->file('profile_picture')->getClientOriginalName();
-    
-            // نقل الملف إلى مجلد user_profiles
-            $path = $request->file('profile_picture')->move(public_path('user_profiles'), $fileName);
-    
-            // حفظ المسار في قاعدة البيانات
-            $user->profile_picture = 'user_profiles/' . $fileName;
-        }
-    
-        // تحديث البيانات الشخصية
-        $user->update($request->only(['name', 'phone_number']));
-    
-        // تحديث كلمة المرور (إن وجدت)
-        if ($request->filled('current_password') && $request->filled('new_password')) {
+        if ($request->has('current_password')) {
             $request->validate([
                 'current_password' => 'required|string',
                 'new_password' => 'required|string|min:6|confirmed',
             ]);
     
             if (!Hash::check($request->current_password, $user->password)) {
-                return back()->withErrors(['current_password' => 'كلمة المرور الحالية غير صحيحة.']);
+                return back()->withErrors(['current_password' => 'The current password is incorrect.']);
             }
     
             $user->password = Hash::make($request->new_password);
             $user->save();
+    
+            return redirect()->route('user.profile')->with('success', 'Password updated successfully.');
         }
     
-        return redirect()->route('user.profile')->with('success', 'تم تحديث الملف الشخصي وكلمة المرور بنجاح.');
+        // validation
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'phone_number' => 'nullable|string|max:15',
+            'profile_picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+    
+        // user profile edit
+        if ($request->hasFile('profile_picture')) {
+            if ($user->profile_picture && file_exists(public_path($user->profile_picture))) {
+                unlink(public_path($user->profile_picture));
+            }
+    
+            $fileName = time() . '_' . $request->file('profile_picture')->getClientOriginalName();
+            $path = $request->file('profile_picture')->move(public_path('user_profiles'), $fileName);
+            $user->profile_picture = 'user_profiles/' . $fileName;
+        }
+    
+        $user->update($request->only(['name', 'phone_number']));
+    
+        return redirect()->route('user.profile')->with('success', 'Profile updated successfully.');
     }
+    
     
 
     /**

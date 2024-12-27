@@ -61,6 +61,27 @@
 </head>
 <body>
     @include('layouts.User-Header')
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+@if (session('success'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ session('success') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@elseif(session('error'))
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ session('error') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
     <div class="container">
         <div class="edit-card">
             <div class="header">
@@ -83,7 +104,7 @@
                     <label for="name">
                         <i class="fas fa-user"></i> Full Name
                     </label>
-                    <input type="text" id="name" name="name" value="{{ $user->name }}" required>
+                    <input type="text" id="name" name="name" value="{{ old('name', $user->name) }}" required>
                 </div>
                 
                 <div class="form-group">

@@ -22,7 +22,7 @@ class ReviewController extends Controller
         'user_id' => auth()->id(),
         'rating' => $request->rating,
         'comment' => $request->comment,
-        'status' => 'pending', // التقييم يبدأ بحالة غير مفعلة
+        'status' => 'pending', 
     ]);
 
     return back()->with('success', 'تم إرسال المراجعة بنجاح وهي بانتظار الموافقة.');

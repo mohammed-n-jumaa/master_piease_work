@@ -41,6 +41,52 @@
             color: #fff;
             line-height: 1.6;
         }
+        .btn-group {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px; 
+    gap: 10px;
+    position: relative;
+    top: -20px; 
+}
+
+
+    .btn-group .btn {
+        flex: 1;
+        padding: 10px 20px;
+        border-radius: 50px;
+        background-color: #aa9166;
+        color: black;
+        font-weight: bold;
+        border: none;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-group .btn:hover {
+        background-color: #7d684a;
+        color: white;
+    }
+
+    .btn-group .btn.active {
+        background-color: #121518;
+        color: #aa9166;
+        font-weight: bold;
+        border: 2px solid #aa9166;
+    }
+    .rating-item label {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    font-size: 15px !important;
+    font-weight: bold !important;
+    cursor: pointer !important;
+    text-align: center !important;
+}
+
     </style>
 </head>
 
@@ -60,20 +106,16 @@
         @endif
 
         <!-- Action Buttons -->
-        <div class="action-buttons">
-            <button class="action-button" id="appointment-button">
-                <i class="far fa-calendar-alt"></i>
-                Add an appointment
+        <div class="btn-group">
+            <button class="btn active" id="profile-button">
+                <i class="far fa-user"></i> Profile
             </button>
-            <button class="action-button" id="reviews-button">
-                <i class="far fa-star"></i>
-                Reviews
+            <button class="btn" id="appointment-button">
+                <i class="far fa-calendar-alt"></i> Add an appointment
             </button>
-            <button class="action-button" id="profile-button">
-                <i class="far fa-user"></i>
-                Profile
+            <button class="btn" id="reviews-button">
+                <i class="far fa-star"></i> Reviews
             </button>
-
         </div>
         <!-- Profile Section -->
         <div id="profile-section" class="content-section active">
@@ -115,7 +157,7 @@
                                 <div class="info-label">
                                     <i class="fas fa-calendar"></i> Date of Birth
                                 </div>
-                                <div class="info-value">{{ $lawyer->date_of_birth }}</div>
+                                <div class="info-value">{{ \Carbon\Carbon::parse($lawyer->date_of_birth)->format('Y-m-d') }}</div>
                             </div>
                         </div>
 
@@ -170,7 +212,7 @@
 @if (isset($appointments) && $appointments->count() > 0)
     <ul>
         @foreach ($appointments as $appointment)
-            @if ($appointment->status === 'pending') <!-- تأكد من أن الموعد متاح -->
+            @if ($appointment->status === 'pending')
                 <li class="appointment-item">
                     <div class="datetime-info">
                         <div class="date-time">
@@ -302,11 +344,10 @@
                     @if ($approvedReviews && count($approvedReviews) > 0)
                         @foreach ($approvedReviews as $index => $review)
                             @php
-                                $defaultImage =
-                                    'https://ui-avatars.com/api/?name=' .
-                                    urlencode($review->user->name) .
+                                $defaultImage = 'https://ui-avatars.com/api/?name=' . 
+                                    urlencode($review->user->name) . 
                                     '&background=aa9166&color=fff';
-                                $userImage = asset('storage/' . ($review->user->profile_picture ?? ''));
+                                $userImage = asset($review->user->profile_picture);
                             @endphp
                             <div class="review-slide text-center">
                                 <div class="reviewer-image">
@@ -431,6 +472,17 @@
                     const actionUrl = `{{ url('lawyer/appointments/cancel') }}/${appointmentId}`;
                     cancelForm.action = actionUrl;
                 });
+                const buttons = document.querySelectorAll('.btn-group .btn');
+
+buttons.forEach(button => {
+    button.addEventListener('click', () => {
+        // إزالة الكلاس 'active' من جميع الأزرار
+        buttons.forEach(btn => btn.classList.remove('active'));
+
+        // إضافة الكلاس 'active' للزر الذي تم الضغط عليه
+        button.classList.add('active');
+    });
+});
             </script>
 
 </body>

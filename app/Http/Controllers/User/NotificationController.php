@@ -17,7 +17,6 @@ class NotificationController extends Controller
         Notification::create([
             'user_id' => auth()->id(),
             'message' => "Subject: " . $request->input('subject') . " | Message: " . $request->input('message'),
-            'status' => 'unread',
         ]);
 
         return redirect()->back()->with('success', 'Your message has been successfully sent.');

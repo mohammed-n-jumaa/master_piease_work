@@ -9,9 +9,7 @@ use App\Models\Lawyer;
 
 class SearchController extends Controller
 {
-    /**
-     * تنفيذ البحث عن المستخدمين والمحامين.
-     */
+   
     public function search(Request $request)
     {
         try {
@@ -21,31 +19,28 @@ class SearchController extends Controller
                 return response()->json([]);
             }
 
-            // طباعة قيمة $query للتأكد من صحة البيانات المدخلة
             \Log::info('Search Query:', ['query' => $query]);
 
-            // البحث عن المستخدمين
+            // search for users 
             $users = User::where('name', 'like', '%' . $query . '%')
                 ->select('id', 'name', 'profile_picture')
                 ->get();
 
-            // طباعة بيانات المستخدمين
+            // print users information
             \Log::info('Users Found:', $users->toArray());
 
-            // البحث عن المحامين
+            // search for lawyers
             $lawyers = Lawyer::where('first_name', 'like', '%' . $query . '%')
                 ->orWhere('last_name', 'like', '%' . $query . '%')
                 ->select('id', 'first_name', 'last_name', 'profile_picture')
                 ->get();
 
-            // طباعة بيانات المحامين
+            // print lawyers information
             \Log::info('Lawyers Found:', $lawyers->toArray());
 
-            // ضمان تحويل البيانات إلى Collection
             $usersCollection = collect($users);
             $lawyersCollection = collect($lawyers);
 
-            // دمج نتائج البحث
             $results = $usersCollection->map(function ($user) {
                 return [
                     'name' => $user->name,
@@ -68,7 +63,7 @@ class SearchController extends Controller
 
             return response()->json($results);
         } catch (\Exception $e) {
-            // تسجيل رسالة الخطأ
+
             \Log::error('Search Error:', [
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),

@@ -14,19 +14,15 @@ use Illuminate\Support\Facades\Storage;
 
 class LawyerProfileController extends Controller
 {
-    /**
-     * عرض صفحة البروفايل الشخصي للمحامي الحالي.
-     */
+    
     public function index()
     {
         $lawyer = Auth::guard('lawyer')->user()->load('category');
         
-        // جلب المواعيد المرتبطة بالمحامي
         $appointments = Appointment::where('lawyer_id', $lawyer->id)
                                     ->orderBy('appointment_date', 'asc')
                                     ->get();
         
-        // جلب التقييمات الموافق عليها
         $approvedReviews = Review::where([
             'lawyer_id' => $lawyer->id,
             'status' => 'approved',
@@ -40,18 +36,15 @@ class LawyerProfileController extends Controller
     
     public function show($id)
     {
-        // جلب بيانات المحامي
         $lawyer = Lawyer::with('category')->findOrFail($id);
     
-        // جلب المواعيد المتاحة فقط (الحالة pending)
         $appointments = Appointment::where('lawyer_id', $lawyer->id)
-            ->where('status', 'pending') // التأكد من جلب المواعيد المتاحة فقط
+            ->where('status', 'pending') 
             ->orderBy('appointment_date', 'asc')
             ->get();
     
-        // جلب المراجعات الموافق عليها فقط
         $approvedReviews = Review::where('lawyer_id', $lawyer->id)
-            ->where('status', 'approved') // التأكد من جلب المراجعات الموافق عليها
+            ->where('status', 'approved') 
             ->orderBy('created_at', 'desc')
             ->get();
     
@@ -59,9 +52,7 @@ class LawyerProfileController extends Controller
     }
     
     
-    /**
-     * عرض صفحة التعديل.
-     */
+
     public function edit()
     {
         $lawyer = Auth::guard('lawyer')->user()->load('category');
@@ -70,9 +61,7 @@ class LawyerProfileController extends Controller
     }
     
 
-    /**
-     * معالجة طلب التعديل.
-     */
+ 
     public function update(Request $request)
 {
     $lawyer = Auth::guard('lawyer')->user();
@@ -88,39 +77,31 @@ class LawyerProfileController extends Controller
         'syndicate_card' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
     ]);
 
-    // تحديث صورة الملف الشخصي
     if ($request->hasFile('profile_picture')) {
         $fileName = time() . '_' . $request->file('profile_picture')->getClientOriginalName();
         $path = $request->file('profile_picture')->move(public_path('lawyer_profiles'), $fileName);
         $lawyer->profile_picture = 'lawyer_profiles/' . $fileName;
     }
 
-    // تحديث صورة الشهادة
 if ($request->hasFile('lawyer_certificate')) {
-    // حذف الملف القديم إذا كان موجودًا
     if ($lawyer->lawyer_certificate && file_exists(public_path($lawyer->lawyer_certificate))) {
         unlink(public_path($lawyer->lawyer_certificate));
     }
 
-    // حفظ الملف الجديد داخل مجلد "lawyer_certificates"
     $certificateName = time() . '_certificate_' . $request->file('lawyer_certificate')->getClientOriginalName();
     $lawyer->lawyer_certificate = $request->file('lawyer_certificate')->move('lawyer_certificates', $certificateName);
 }
 
-// تحديث صورة كرت النقابة
 if ($request->hasFile('syndicate_card')) {
-    // حذف الملف القديم إذا كان موجودًا
     if ($lawyer->syndicate_card && file_exists(public_path($lawyer->syndicate_card))) {
         unlink(public_path($lawyer->syndicate_card));
     }
 
-    // حفظ الملف الجديد داخل مجلد "syndicate_cards"
     $cardName = time() . '_syndicate_' . $request->file('syndicate_card')->getClientOriginalName();
     $lawyer->syndicate_card = $request->file('syndicate_card')->move('syndicate_cards', $cardName);
 }
 
 
-    // تحديث باقي الحقول
     $lawyer->update($request->only([
         'first_name',
         'last_name',
@@ -133,9 +114,7 @@ if ($request->hasFile('syndicate_card')) {
 }
 
 
-    /**
-     * معالجة طلب تغيير كلمة المرور.
-     */
+ 
     public function changePassword(Request $request)
     {
         $request->validate([
