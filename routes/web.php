@@ -26,7 +26,12 @@ use App\Http\Controllers\User\NotificationController as UserNotificationControll
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\User\LawyerProfileController;
-use App\Http\Controllers\User\ReviewController;// Redirect root URL to the login page
+use App\Http\Controllers\User\ReviewController;
+use App\Http\Controllers\Admin\TestimonialController as AdminTestimonialController;
+use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
+
+
+// Redirect root URL to the login page
 Route::get('/', fn() => redirect('/admin/login'));
 
 // Include Laravel Breeze routes
@@ -181,8 +186,18 @@ Route::middleware(['auth', 'role.check'])->prefix('admin')->name('admin.')->grou
     Route::post('categories/{id}/restore', [CategoryController::class, 'restore'])->name('categories.restore');
     Route::delete('categories/{id}/force-delete', [CategoryController::class, 'forceDelete'])->name('categories.forceDelete');
     
+// Testimonial Management
+Route::get('/testimonials', [AdminTestimonialController::class, 'index'])->name('testimonials.index');
+Route::patch('/testimonials/{id}/update-status', [AdminTestimonialController::class, 'updateStatus'])->name('testimonials.update-status');
+Route::resource('testimonials', AdminTestimonialController::class);
 
- 
+
+
+    // Manage Reviews
+    Route::get('/reviews', [AdminReviewController::class, 'index'])->name('reviews.index');
+    Route::patch('/reviews/{id}/update-status', [AdminReviewController::class, 'updateStatus'])->name('reviews.update-status');
+
+
     
     // Feedback Management
     Route::resource('feedback', FeedbackController::class);
@@ -194,7 +209,9 @@ Route::middleware(['auth', 'role.check'])->prefix('admin')->name('admin.')->grou
     Route::resource('messages', MessageController::class);
 
     // Notification Management
-    Route::resource('notifications', NotificationController::class);
+// Notification Management
+Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+Route::resource('notifications', NotificationController::class);
 
     // Legal Library Management
     Route::resource('legal-library', LegalLibraryController::class);

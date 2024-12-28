@@ -22,101 +22,244 @@
     <link href="{{ asset('user/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('user/css/profile.css') }}" rel="stylesheet">
     <style>
-      .content-section {
-            display: none;
-        }
+     /* Base styles */
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
 
-        .content-section.active {
-            display: block;
-        }
+.container {
+    padding: 15px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
 
-        .btn-group {
-        margin: 20px 0;
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-    }
-
-    .btn-group .btn {
-        flex: 1;
-        padding: 10px 20px;
-        border-radius: 50px;
-        background-color: #aa9166;
-        color: #1c1f23;
-        font-weight: bold;
-        border: 2px solid transparent;
-        text-align: center;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .btn-group .btn i {
-        margin-right: 8px;
-        font-size: 16px;
-    }
-
-    .btn-group .btn:hover {
-        background-color: #7d684a;
-        color: #fff;
-    }
-
-    .btn-group .btn.active {
-        background-color: #1c1f23;
-        color: #aa9166;
-        border: 2px solid #aa9166; /* حدود ذهبية للزر النشط */
-    }
-
-    .btn-group .btn:focus {
-        outline: none;
-        box-shadow: none; /* إزالة التأثير الأزرق */
-    }
-
-        h2.section-title {
-            text-align: center !important;
-            color: #aa9166 !important;
-            font-weight: bold !important;
-        }
-
-        .table th, .table td {
-            color: #aa9166 !important;
-        }
-        .btn-gold {
-        background-color: #aa9166;
-        color: #1c1f23;
-        padding: 5px 10px;
-        border: none;
-        border-radius: 5px;
-        text-decoration: none;
-        font-weight: bold;
-        transition: all 0.3s ease;
-    }
-
-    .btn-gold:hover {
-        background-color: #7d684a;
-        color: #fff;
-    }
-    .info-grid {
+/* Button group responsive styles */
+.btn-group {
+    margin: 20px 0;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 20px; 
-    margin-top: 20px; 
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 0 15px;
+}
+
+.btn-group .btn {
+    flex: 1;
+    min-width: 150px;
+    padding: 12px 20px;
+    border-radius: 50px;
+    background-color: #aa9166;
+    color: #1c1f23;
+    font-weight: bold;
+    border: 2px solid transparent;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-group .btn i {
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+.btn-group .btn:hover {
+    background-color: #7d684a;
+    color: #fff;
+}
+
+.btn-group .btn.active {
+    background-color: #1c1f23;
+    color: #aa9166;
+    border: 2px solid #aa9166;
+}
+
+/* Profile card responsive styles */
+.profile-card {
+    background: #1c1f23;
+    border-radius: 15px;
+    overflow: hidden;
+    margin: 20px auto;
+    max-width: 100%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.header-banner {
+    height: 150px;
+    background: linear-gradient(135deg, #aa9166 0%, #7d684a 100%);
+}
+
+.profile-content {
+    padding: 20px;
+    position: relative;
+    text-align: center;
+}
+
+.profile-picture {
+    position: relative;
+    margin: -75px auto 20px;
+    width: 150px;
+    height: 150px;
+}
+
+.profile-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #aa9166;
+}
+
+.profile-name {
+    color: #aa9166;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Info grid responsive styles */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
 }
 
 .info-item {
-    flex: 1;
-    text-align: center; 
-    border-left: 2px solid #aa9166; 
-    padding-left: 15px; 
+    padding: 15px;
+    border: none;
+    border-bottom: 2px solid #aa9166;
+    text-align: center;
 }
 
-.info-item:first-child {
-    border-left: none; 
+.info-label {
+    color: #aa9166;
+    font-weight: bold;
+    margin-bottom: 8px;
 }
 
+.info-value {
+    color: #ffffff;
+}
+
+/* Table responsive styles */
+.table-responsive {
+    overflow-x: auto;
+    margin: 20px 0;
+}
+
+.table {
+    width: 100%;
+    min-width: 600px;
+}
+
+.table th, 
+.table td {
+    color: #aa9166;
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid rgba(170, 145, 102, 0.2);
+}
+
+.table thead th {
+    background-color: rgba(170, 145, 102, 0.1);
+    font-weight: bold;
+}
+
+.btn-gold {
+    background-color: #aa9166;
+    color: #1c1f23;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.btn-gold:hover {
+    background-color: #7d684a;
+    color: #fff;
+}
+
+/* Alert styles */
+.alert {
+    margin: 20px 0;
+    padding: 12px 20px;
+    border-radius: 8px;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 991px) {
+    .btn-group {
+        flex-direction: column;
+    }
+
+    .btn-group .btn {
+        width: 100%;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .info-item {
+        border-left: none;
+        border-bottom: 1px solid #aa9166;
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-picture {
+        width: 120px;
+        height: 120px;
+        margin: -60px auto 15px;
+    }
+
+    .profile-name {
+        font-size: 20px;
+    }
+
+    .header-banner {
+        height: 120px;
+    }
+
+    .table {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        padding: 10px;
+    }
+
+    .profile-content {
+        padding: 15px;
+    }
+
+    .btn-group .btn {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+
+    .info-label {
+        font-size: 14px;
+    }
+
+    .info-value {
+        font-size: 13px;
+    }
+
+    .table th,
+    .table td {
+        padding: 8px;
+    }
+}
 </style>
 
     </style>

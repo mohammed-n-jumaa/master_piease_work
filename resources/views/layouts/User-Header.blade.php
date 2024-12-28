@@ -1,163 +1,304 @@
 <style>
-    .navbar {
+  /* Base navbar styles */
+.nav-bar {
+    width: 100%;
+    background-color: #000000;
+}
+
+.navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0.5rem 1rem;
     position: relative;
 }
 
 .navbar-brand {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
     display: flex;
     align-items: center;
 }
 
-.navbar-brand svg {
-    width: auto;
-    height: 50px;
-    max-width: 500px;
-    max-height: 50px;
+.logo {
+    width: 200px;
+    height: auto;
 }
 
+/* Navbar toggle button */
+.navbar-toggler {
+    padding: 0.25rem 0.75rem;
+    background-color: transparent;
+    border: 1px solid #aa9166;
+    border-radius: 4px;
+    display: none;
+}
+
+.navbar-toggler-icon {
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(170, 145, 102, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Navigation items */
 .navbar-nav {
     display: flex;
+    align-items: center;
     gap: 20px;
 }
 
-.navbar-collapse {
-    display: flex;
-    justify-content: flex-end;
+.nav-link {
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.nav-link:hover {
+    color: #aa9166;
+}
+
+/* Search bar styles */
+.dropdown {
+    position: relative;
+    margin: 0 1rem;
+}
+
+#searchDropdown {
+    background-color: #121518;
+    border: 1px solid #aa9166;
+    color: #ffffff;
+    border-radius: 4px;
+    padding: 6px 12px;
+    width: 220px;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+#searchDropdown::placeholder {
+    color: #aa9166;
+    opacity: 0.7;
+}
+
+#searchDropdown:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(170, 145, 102, 0.25);
+    border-color: #aa9166;
+}
+
+/* Search results */
+#searchResults {
+    background-color: #121518;
+    border: 1px solid #aa9166;
+    border-radius: 4px;
+    margin-top: 4px;
+    max-height: 350px;
+    overflow-y: auto;
+    width: 100%;
+    position: absolute;
+    z-index: 1000;
+}
+
+#searchResults .dropdown-item {
+    color: #ffffff;
+    padding: 8px 12px;
+    transition: background-color 0.2s ease;
+    font-size: 14px;
+}
+
+#searchResults .dropdown-item:hover {
+    background-color: #aa9166;
+    color: #121518;
+}
+
+#searchResults img {
+    border: 2px solid #aa9166;
+    object-fit: cover;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+/* User/Auth styles */
+.username {
+    color: #a99065;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 .btn-auth {
     margin-left: 10px;
+    padding: 0.375rem 1rem;
+    border: 1px solid #aa9166;
+    border-radius: 4px;
+    color: #aa9166;
+    text-decoration: none;
+    transition: all 0.3s ease;
 }
 
+.btn-auth:hover {
+    background-color: #aa9166;
+    color: #121518;
+}
+
+/* Dropdown menus */
+.dropdown-menu {
+    background-color: #121518;
+    border: 1px solid #aa9166;
+    border-radius: 4px;
+    min-width: 200px;
+}
+
+.dropdown-item {
+    color: #ffffff;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.dropdown-item:hover {
+    background-color: #aa9166;
+    color: #121518;
+}
+
+/* Responsive styles */
 @media (max-width: 991px) {
-    .navbar-brand {
-        position: relative;
-        left: 0;
-        top: 0;
+    .navbar {
+        flex-wrap: wrap;
+        padding: 0.5rem;
+    }
+
+    .navbar-toggler {
+        display: block;
+        order: 2;
+    }
+
+    .navbar-collapse {
+        display: none;
+        width: 100%;
+        order: 4;
+    }
+
+    .navbar-collapse.show {
+        display: block;
+    }
+
+    .navbar-nav {
+        flex-direction: column;
+        width: 100%;
+        gap: 0;
+        padding: 1rem 0;
+    }
+
+    .nav-item {
+        width: 100%;
+    }
+
+    .nav-link {
+        padding: 0.75rem 1rem;
+        display: block;
+        text-align: center;
+        border-bottom: 1px solid rgba(170, 145, 102, 0.1);
+    }
+
+    .dropdown {
+        width: 100%;
+        margin: 0.5rem 0;
+        order: 3;
+    }
+
+    #searchDropdown {
+        width: 100%;
+    }
+
+    .dropdown-menu {
+        position: static !important;
+        width: 100%;
+        margin-top: 0;
+        padding: 0;
+    }
+
+    .btn-auth {
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin: 0.25rem 0;
+    }
+
+    .username {
+        text-align: center;
+        padding: 0.5rem;
+        display: block;
     }
 }
 
-.logo {
-    width: 200px;
+@media (max-width: 576px) {
+    .logo {
+        width: 150px;
+    }
+
+    .navbar-brand {
+        max-width: 50%;
+    }
+
+    .nav-link {
+        font-size: 14px;
+    }
+
+    #searchDropdown {
+        font-size: 13px;
+        padding: 4px 8px;
+    }
+
+    .dropdown-item {
+        font-size: 13px;
+        padding: 6px 12px;
+    }
 }
 
-.username {
-    color: #a99065;
-    font-weight: bold;
-    margin-left: 10px;
-    cursor: pointer;
-}
-.dropdown {
-position: relative;
-}
-
-/* تنسيق حقل البحث */
-#searchDropdown {
-background-color: #121518;
-border: 1px solid #aa9166;
-color: #ffffff;
-border-radius: 4px;
-padding: 6px 12px;  /* تقليل padding */
-width: 220px;      /* تقليل العرض */
-transition: all 0.3s ease;
-font-size: 14px;   /* تقليل حجم الخط */
-}
-
-#searchDropdown::placeholder {
-color: #aa9166;
-opacity: 0.7;
-}
-
-#searchDropdown:focus {
-outline: none;
-box-shadow: 0 0 0 2px rgba(170, 145, 102, 0.25);
-border-color: #aa9166;
-}
-
-/* تنسيق قائمة نتائج البحث */
-#searchResults {
-background-color: #121518;
-border: 1px solid #aa9166;
-border-radius: 4px;
-margin-top: 4px;
-max-height: 350px;    /* تقليل الارتفاع الأقصى */
-overflow-y: auto;
-width: 100%;
-}
-
-/* تنسيق عناصر نتائج البحث */
-#searchResults .dropdown-item {
-color: #ffffff;
-padding: 8px 12px;    /* تقليل padding */
-transition: background-color 0.2s ease;
-font-size: 14px;      /* تقليل حجم الخط */
-}
-
-#searchResults .dropdown-item:hover {
-background-color: #aa9166;
-color: #121518;
-}
-
-/* تنسيق رسالة عدم وجود نتائج */
-#searchResults .text-muted {
-color: #aa9166 !important;
-padding: 8px 12px;
-}
-
-/* تنسيق صور المستخدمين في نتائج البحث */
-#searchResults img {
-border: 2px solid #aa9166;
-object-fit: cover;
-width: 32px;         /* تقليل حجم الصور */
-height: 32px;
-}
-
-/* تخصيص scrollbar */
+/* Scrollbar customization */
 #searchResults::-webkit-scrollbar {
-width: 6px;          /* تقليل عرض scrollbar */
+    width: 6px;
 }
 
 #searchResults::-webkit-scrollbar-track {
-background: #121518;
+    background: #121518;
 }
 
 #searchResults::-webkit-scrollbar-thumb {
-background-color: #aa9166;
-border-radius: 4px;
+    background-color: #aa9166;
+    border-radius: 4px;
 }
 </style>
 <!-- Nav Bar Start -->
 <div class="nav-bar">
     <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #000000;">
+        <nav class="navbar navbar-expand-lg navbar-dark">
             <!-- Logo -->
             <a href="{{ route('user.home') }}" class="logo-container">
                 <img src="{{ asset('user/img/logo.png') }}" class="logo" alt="logo">
             </a>
 
+            <!-- Mobile Toggle Button -->
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
-           <!-- Search Bar -->
-             <div class="dropdown mx-3">
-           <input class="form-control dropdown-toggle" type="text" id="searchDropdown" data-toggle="dropdown" placeholder="Search users or lawyers..." aria-haspopup="true" aria-expanded="false">
-           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="searchDropdown" id="searchResults"></div>
-             </div>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
-                <!-- Links -->
+
+            <!-- Search Bar -->
+            <div class="dropdown">
+                <input class="form-control" type="text" id="searchDropdown" 
+                       data-toggle="dropdown" placeholder="Search users or lawyers..." 
+                       aria-haspopup="true" aria-expanded="false">
+                <div class="dropdown-menu" aria-labelledby="searchDropdown" id="searchResults"></div>
+            </div>
+
+            <!-- Navigation Items -->
+            <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav">
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Consultations</a>
                         <div class="dropdown-menu">
                             <a href="{{ route('user.consultations.index') }}" class="dropdown-item">All Consultations</a>
-                            @if(Auth::guard('web')->check()) <!-- تحقق من إذا كان اليوزر هو من سجل الدخول -->
+                            @if(Auth::guard('web')->check())
                                 <a href="{{ route('user.consultations.create') }}" class="dropdown-item">Add Consultation</a>
                             @endif
                         </div>
@@ -167,16 +308,16 @@ border-radius: 4px;
                     <a href="{{ route('user.contact') }}" class="nav-item nav-link">Contact Us</a>
                 </div>
 
-                <!-- User Auth -->
+                <!-- Authentication Links -->
                 @if(Auth::guard('lawyer')->check())
+                    <!-- Lawyer Auth -->
                     <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle username" href="#" id="lawyerDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle username" href="#" id="lawyerDropdown" 
+                           role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ explode(' ', Auth::guard('lawyer')->user()->first_name)[0] }}
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="lawyerDropdown">
-                            <!-- Lawyer Profile Link -->
+                        <div class="dropdown-menu dropdown-menu-right">
                             <a class="dropdown-item" href="{{ route('lawyer.profile', ['lawyer_id' => Auth::guard('lawyer')->user()->id]) }}">Profile</a>
-                            <!-- Logout Form -->
                             <form id="logout-form-lawyer" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
                                 <input type="hidden" name="guard" value="lawyer">
@@ -187,14 +328,14 @@ border-radius: 4px;
                         </div>
                     </div>
                 @elseif(Auth::guard('web')->check())
+                    <!-- User Auth -->
                     <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle username" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle username" href="#" id="userDropdown" 
+                           role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ explode(' ', Auth::user()->name)[0] }}
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                            <!-- User Profile Link -->
+                        <div class="dropdown-menu dropdown-menu-right">
                             <a class="dropdown-item" href="{{ route('user.profile') }}">Profile</a>
-                            <!-- Logout Form -->
                             <form id="logout-form-user" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
                                 <input type="hidden" name="guard" value="web">
@@ -205,8 +346,11 @@ border-radius: 4px;
                         </div>
                     </div>
                 @else
-                    <a href="{{ route('login') }}" class="btn btn-auth">Login</a>
-                    <a href="{{ route('register') }}" class="btn btn-auth">Register</a>
+                    <!-- Guest Auth Links -->
+                    <div class="auth-buttons">
+                        <a href="{{ route('login') }}" class="btn btn-auth">Login</a>
+                        <a href="{{ route('register') }}" class="btn btn-auth">Register</a>
+                    </div>
                 @endif
             </div>
         </nav>

@@ -20,4 +20,8 @@ class Notification extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function lawyer()
+{
+    return $this->belongsTo(Lawyer::class, 'user_id');
+}
 }

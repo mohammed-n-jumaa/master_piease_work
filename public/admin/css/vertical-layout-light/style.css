@@ -30591,5 +30591,50 @@ div.tagsinput span.tag a {
     display: none;
   }
 }
+/* Custom scrollbar styles */
+/* For Webkit browsers (Chrome, Safari, etc.) */
+::-webkit-scrollbar {
+  width: 12px;
+}
 
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #aa9166;
+  border-radius: 6px;
+  border: 3px solid #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8f7954;
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #aa9166 #f1f1f1;
+}
+
+/* Specific styling for the PDF viewer scrollbar */
+#pdfViewer::-webkit-scrollbar {
+  width: 12px;
+}
+
+#pdfViewer::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 6px;
+}
+
+#pdfViewer::-webkit-scrollbar-thumb {
+  background: #aa9166;
+  border-radius: 6px;
+  border: 3px solid #f1f1f1;
+}
+
+#pdfViewer::-webkit-scrollbar-thumb:hover {
+  background: #8f7954;
+}
 /*# sourceMappingURL=../maps/vertical-layout-light/style.css.map */

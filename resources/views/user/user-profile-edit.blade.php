@@ -57,6 +57,100 @@
             text-align: center;
             margin-bottom: 2rem;
         }
+        /* Tablet styles */
+@media screen and (max-width: 768px) {
+    .edit-card {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+
+    .tab-buttons {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .tab-button {
+        min-width: 100%;
+        padding: 0.5rem 1rem;
+    }
+
+    .header h1 {
+        font-size: 1.75rem;
+    }
+
+    .actions {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .actions .btn {
+        width: 100%;
+        margin-right: 0;
+    }
+}
+
+/* Mobile styles */
+@media screen and (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+
+    .edit-card {
+        padding: 1rem;
+        margin: 0.5rem;
+    }
+
+    .header h1 {
+        font-size: 1.5rem;
+    }
+
+    .form-group label {
+        font-size: 0.9rem;
+    }
+
+    .form-group input {
+        padding: 0.5rem;
+    }
+
+    .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    /* Improve form spacing on mobile */
+    .form-section {
+        margin-top: 1rem;
+    }
+
+    /* Make alerts more compact on mobile */
+    .alert {
+        padding: 0.75rem;
+        margin: 0.5rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Utility classes for better spacing */
+.mt-2 {
+    margin-top: 2rem;
+}
+
+.mb-2 {
+    margin-bottom: 2rem;
+}
+
+/* Improve input accessibility on mobile */
+input[type="file"] {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+}
+
+/* Improve button touch targets on mobile */
+button, 
+.btn {
+    min-height: 44px;
+}
     </style>
 </head>
 <body>
