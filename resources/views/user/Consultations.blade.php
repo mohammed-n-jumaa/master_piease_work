@@ -32,220 +32,9 @@
 <!-- Font Awesome -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="{{ asset('user/css/consultation.css') }}" rel="stylesheet">
 
-    <style>
-        :root {
-            --primary-color: #aa9166;
-            --secondary-color: #1b1b1b;
-            --hover-color: #c29d2d;
-        }
-
-        body {
-            background-color: #f8f9fa;
-            font-family: 'Roboto', sans-serif;
-        }
-
-        /* Header Section - Keeping as per image */
-        .page-header {
-            background-color: #aa9166;
-            padding: 100px 0;
-            text-align: center;
-            position: relative;
-        }
-
-        .page-header h2 {
-            font-family: 'EB Garamond', serif;
-            font-size: 48px;
-            font-style: italic;
-            color: #1b1b1b;
-            margin-bottom: 20px;
-            position: relative;
-            display: inline-block;
-        }
-
-        .page-header h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 2px;
-            background-color: #1b1b1b;
-        }
-
-        .breadcrumb-links {
-            margin-top: 20px;
-        }
-
-        .breadcrumb-links a {
-            color: #1b1b1b;
-            text-decoration: none;
-            font-size: 18px;
-            transition: all 0.3s ease;
-        }
-
-        .breadcrumb-links a:hover {
-            color: #ffffff;
-        }
-
-        .breadcrumb-links a:not(:last-child):after {
-            content: '/';
-            margin: 0 10px;
-            color: #1b1b1b;
-        }
-
-        /* Filter Section */
-        .filter-section {
-            margin: -50px auto 40px;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            position: relative;
-            max-width: 1100px;
-        }
-
-        .filter-section .form-control {
-            border: 2px solid var(--primary-color);
-            border-radius: 10px;
-            padding: 12px 20px;
-            color: var(--secondary-color);
-            background: #ffffff;
-            font-size: 16px;
-        }
-
-        /* Card Design */
-        .consultation-card {
-            background: #ffffff;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-            height: 100%;
-            border: 1px solid rgba(170, 145, 102, 0.1);
-        }
-
-        .consultation-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(170, 145, 102, 0.2);
-        }
-
-        .card-image-wrapper {
-            position: relative;
-            padding: 30px;
-            background: linear-gradient(145deg, #aa9166 0%, #c29d2d 100%);
-        }
-
-        .consultation-card img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 4px solid #ffffff;
-            margin: 0 auto;
-            display: block;
-            object-fit: cover;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .category-badge {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: #ffffff;
-            color: var(--primary-color);
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-weight: 500;
-            font-size: 14px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
-
-        .card-content {
-            padding: 30px;
-            text-align: center;
-        }
-
-        .card-title {
-            color: var(--secondary-color);
-            font-size: 22px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            font-family: 'EB Garamond', serif;
-        }
-
-        .card-text {
-            color: #666666;
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
-
-        .btn-gold {
-            background: linear-gradient(145deg, #aa9166 0%, #c29d2d 100%);
-            color: #ffffff;
-            padding: 12px 30px;
-            border-radius: 25px;
-            font-weight: 500;
-            text-transform: uppercase;
-            font-size: 14px;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            border: none;
-            box-shadow: 0 5px 15px rgba(170, 145, 102, 0.3);
-        }
-
-        .btn-gold:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(170, 145, 102, 0.4);
-            color: #ffffff;
-        }
-
-        /* Pagination */
-        .pagination {
-            margin-top: 50px;
-            margin-bottom: 50px;
-        }
-
-        .pagination .page-link {
-            border: none;
-            padding: 12px 20px;
-            margin: 0 5px;
-            color: var(--secondary-color);
-            border-radius: 10px;
-            transition: all 0.3s ease;
-        }
-
-        .pagination .page-item.active .page-link {
-            background: linear-gradient(145deg, #aa9166 0%, #c29d2d 100%);
-            color: #ffffff;
-            box-shadow: 0 5px 15px rgba(170, 145, 102, 0.3);
-        }
-
-        .pagination .page-link:hover {
-            background: linear-gradient(145deg, #aa9166 0%, #c29d2d 100%);
-            color: #ffffff;
-            transform: translateY(-2px);
-        }
-
-        @media (max-width: 768px) {
-            .page-header {
-                padding: 60px 0;
-            }
-
-            .page-header h2 {
-                font-size: 36px;
-            }
-
-            .filter-section {
-                margin-top: -30px;
-                padding: 20px;
-            }
-
-            .consultation-card {
-                margin-bottom: 30px;
-            }
-        }
-    </style>
+   
 </head>
 
 <body>
@@ -271,23 +60,30 @@
             <div class="filter-section">
                 <div class="d-flex justify-content-between align-items-center flex-wrap">
                     <form action="{{ route('user.consultations.index') }}" method="GET" class="mb-0">
-                        <select class="form-control" name="category" onchange="this.form.submit()">
-                            <option value="">All Categories</option>
-                            @foreach($categories as $category)
-                                <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
-                                    {{ $category->name }}
-                                </option>
-                            @endforeach
-                        </select>
+                        <div class="position-relative" style="display: inline-block; width: 100%;">
+                            <i class="fas fa-filter" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 16px; color: #aa9166;"></i>
+                            <select class="form-control" name="category" onchange="this.form.submit()" 
+                                    style="padding-left: 35px; width: 100%;">
+                                <option value="">All Categories</option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
                     </form>
                     @auth('web') {{-- تحقق إذا كان الجارد الحالي هو للمستخدم --}}
                     <a href="{{ route('user.consultations.create') }}" class="btn btn-gold">
                         <i class="fas fa-plus-circle"></i> Add Consultation
                     </a>
-                @endauth
-                
+                    @endauth
                 </div>
             </div>
+            
+            
+</div>
+
 
             <!-- Consultations Grid -->
             <div class="row">

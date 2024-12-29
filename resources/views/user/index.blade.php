@@ -198,21 +198,36 @@
                 <div class="text-center" style="position: relative;">
                     <h1 class="animated fadeInLeft">Empowering Your Legal Rights</h1>
                     <p class="animated fadeInRight">We provide free and professional legal consultations across all fields of law.</p>
-                    @if(auth('lawyer')->check())
-                        <a class="btn btn-primary animated fadeInUp" href="{{ route('user.consultations.index') }}" 
+                    @auth('lawyer')
+                        <a class="btn btn-primary animated fadeInUp" href="{{ route('user.consultations.index') }}"
                            style="z-index: 11; position: relative; display: inline-block;"
                            onmouseover="this.style.backgroundColor='#a99065'" 
                            onmouseout="this.style.backgroundColor='#121518'">
                             Provide Your Consultation to Users
                         </a>
-                    @else
-                        <a class="btn btn-primary animated fadeInUp" href="{{ route('user.consultations.create') }}" 
+                    @endauth
+                    @auth('web')
+                        <a class="btn btn-primary animated fadeInUp" href="{{ route('user.consultations.create') }}"
                            style="z-index: 11; position: relative; display: inline-block;"
                            onmouseover="this.style.backgroundColor='#a99065'" 
                            onmouseout="this.style.backgroundColor='#121518'">
                             Get Your Free Consultation
                         </a>
-                    @endif
+                    @endauth
+                    @guest
+                        <a class="btn btn-primary animated fadeInUp" href="{{ route('user.lawyer.login.form') }}"
+                           style="z-index: 11; position: relative; display: inline-block;"
+                           onmouseover="this.style.backgroundColor='#a99065'" 
+                           onmouseout="this.style.backgroundColor='#121518'">
+                            Login to Get Started
+                        </a>
+                        <a class="btn btn-primary animated fadeInUp" href="{{ route('register.user') }}"
+                           style="z-index: 11; position: relative; display: inline-block;"
+                           onmouseover="this.style.backgroundColor='#a99065'" 
+                           onmouseout="this.style.backgroundColor='#121518'">
+                            Register Now
+                        </a>
+                    @endguest
                 </div>
             </div>
         </div>
@@ -224,21 +239,36 @@
                 <div class="text-center" style="position: relative;">
                     <h1 class="animated fadeInLeft">Expert Advice, Anytime, Anywhere</h1>
                     <p class="animated fadeInRight">Our platform connects you with top lawyers for reliable legal guidance.</p>
-                    @if(auth('lawyer')->check())
-                        <a class="btn btn-primary animated fadeInUp" href="{{ route('lawyer.profile') }}" 
+                    @auth('lawyer')
+                        <a class="btn btn-primary animated fadeInUp" href="{{ route('lawyer.profile') }}"
                            style="z-index: 11; position: relative; display: inline-block;"
                            onmouseover="this.style.backgroundColor='#a99065'" 
                            onmouseout="this.style.backgroundColor='#121518'">
                             Add Your Available Appointments
                         </a>
-                    @else
-                        <a class="btn btn-primary animated fadeInUp" href="{{ route('user.consultations.create') }}" 
+                    @endauth
+                    @auth('web')
+                        <a class="btn btn-primary animated fadeInUp" href="{{ route('user.consultations.create') }}"
                            style="z-index: 11; position: relative; display: inline-block;"
                            onmouseover="this.style.backgroundColor='#a99065'" 
                            onmouseout="this.style.backgroundColor='#121518'">
                             Start Your Consultation
                         </a>
-                    @endif
+                    @endauth
+                    @guest
+                        <a class="btn btn-primary animated fadeInUp" href="{{ route('user.lawyer.login.form') }}"
+                           style="z-index: 11; position: relative; display: inline-block;"
+                           onmouseover="this.style.backgroundColor='#a99065'" 
+                           onmouseout="this.style.backgroundColor='#121518'">
+                            Login to Access
+                        </a>
+                        <a class="btn btn-primary animated fadeInUp" href="{{ route('register.user') }}"
+                           style="z-index: 11; position: relative; display: inline-block;"
+                           onmouseover="this.style.backgroundColor='#a99065'" 
+                           onmouseout="this.style.backgroundColor='#121518'">
+                            Register Now
+                        </a>
+                    @endguest
                 </div>
             </div>
         </div>
@@ -250,21 +280,36 @@
                 <div class="text-center" style="position: relative;">
                     <h1 class="animated fadeInLeft">Your Trusted Legal Companion</h1>
                     <p class="animated fadeInRight">Access our network of experienced attorneys to protect your rights.</p>
-                    @if(auth('lawyer')->check())
-                        <a class="btn btn-primary animated fadeInUp" href="{{ route('user.legal-library') }}" 
+                    @auth('lawyer')
+                        <a class="btn btn-primary animated fadeInUp" href="{{ route('user.legal-library') }}"
                            style="z-index: 11; position: relative; display: inline-block;"
                            onmouseover="this.style.backgroundColor='#a99065'" 
                            onmouseout="this.style.backgroundColor='#121518'">
                             Search the Jordanian Constitution
                         </a>
-                    @else
-                        <a class="btn btn-primary animated fadeInUp" href="{{ route('user.consultations.create') }}" 
+                    @endauth
+                    @auth('web')
+                        <a class="btn btn-primary animated fadeInUp" href="{{ route('user.consultations.create') }}"
                            style="z-index: 11; position: relative; display: inline-block;"
                            onmouseover="this.style.backgroundColor='#a99065'" 
                            onmouseout="this.style.backgroundColor='#121518'">
                             Connect with a Lawyer
                         </a>
-                    @endif
+                    @endauth
+                    @guest
+                        <a class="btn btn-primary animated fadeInUp" href="{{ route('user.lawyer.login.form') }}"
+                           style="z-index: 11; position: relative; display: inline-block;"
+                           onmouseover="this.style.backgroundColor='#a99065'" 
+                           onmouseout="this.style.backgroundColor='#121518'">
+                            Login to Explore More
+                        </a>
+                        <a class="btn btn-primary animated fadeInUp" href="{{ route('register.user') }}"
+                           style="z-index: 11; position: relative; display: inline-block;"
+                           onmouseover="this.style.backgroundColor='#a99065'" 
+                           onmouseout="this.style.backgroundColor='#121518'">
+                            Join Us Now
+                        </a>
+                    @endguest
                 </div>
             </div>
         </div>
@@ -282,6 +327,7 @@
     </button>
 </div>
 <!-- Carousel End -->
+
 
 
 
@@ -385,12 +431,17 @@
                         @endphp
                         <i class="{{ $icons[$category->name] ?? $defaultIcon }}"></i>
                     </div>
-                    <!-- اسم التصنيف -->
                     <h3>{{ $category->name }}</h3>
-                    <!-- وصف التصنيف -->
                     <p>{{ $category->description ?? 'Explore this category for more details.' }}</p>
-                    <!-- زر يوجه إلى صفحة إضافة الاستشارة مع تمرير category_id -->
-                    <a class="btn" href="{{ route('user.consultations.create', ['category_id' => $category->id]) }}">Add Consultation</a>
+                    
+                    @auth('lawyer') <!-- تحقق إذا كان المستخدم محامياً -->
+                        <a class="btn" href="{{ route('user.consultations.index') }}">Answer the consultations</a>
+                    @elseauth('web') <!-- تحقق إذا كان المستخدم مسجلاً كـ User -->
+                        <a class="btn" href="{{ route('user.consultations.create', ['category_id' => $category->id]) }}">Add Consultation</a>
+                    @endauth
+                    @guest
+                        <a class="btn" href="{{ route('user.lawyer.login.form') }}">Login to Access</a>
+                    @endguest
                 </div>
             </div>
             @endforeach
@@ -399,10 +450,7 @@
 </div>
 <!-- Service End -->
 
-
-
     </div>
-
     <!-- Feature Start -->
     <div class="feature">
         <div class="container">
@@ -563,97 +611,103 @@
             <h2>Client Reviews</h2>
         </div>
         
-        <!-- Testimonials Carousel -->
-        <div class="owl-carousel testimonials-carousel">
-            @foreach($testimonials as $testimonial)
-                <div class="testimonial-item">
-                    <i class="fa fa-quote-right"></i>
-                    <div class="row align-items-center">
-                        <!-- Image with proper source based on user type -->
-                        <div class="col-3">
-                            @php
-                                // المسار الافتراضي للصورة
-                                $profilePicture = asset('default-profile-picture.jpg');
-                        
-                                // التحقق من نوع المستخدم ووجود الملف الشخصي
-                                if ($testimonial->user_type == 'user' && $testimonial->user && $testimonial->user->profile_picture) {
-                                    $profilePicture = $testimonial->user->profile_picture 
-                                        ? asset('user_profiles/' . $testimonial->user->profile_picture) 
-                                        : $profilePicture;
-                                } elseif ($testimonial->user_type == 'lawyer' && $testimonial->lawyer && $testimonial->lawyer->profile_picture) {
-                                    $profilePicture = $testimonial->lawyer->profile_picture 
-                                        ? asset('lawyer_profiles/' . $testimonial->lawyer->profile_picture) 
-                                        : $profilePicture;
-                                }
-                            @endphp
-                        
-                            <!-- صورة الملف الشخصي -->
-                            <img src="{{ $profilePicture }}"
-                                 alt="{{ $testimonial->user_type == 'user' ? 'User Profile' : 'Lawyer Profile' }}"
-                                 class="rounded-circle"
-                                 width="80"
-                                 height="80"
-                                 style="border: 2px solid #aa8f61; object-fit: cover;"
-                                 onerror="this.onerror=null; this.src='{{ asset('default-profile-picture.jpg') }}';">
-                        </div>
-                        
+      <!-- Testimonials Carousel -->
+<div class="owl-carousel testimonials-carousel">
+    @foreach($testimonials as $testimonial)
+        <div class="testimonial-item">
+            <i class="fa fa-quote-right"></i>
+            <div class="row align-items-center">
+                <!-- Image with proper source based on user type -->
+                <div class="col-3">
+                    @php
+                        // Default profile picture
+                        $profilePicture = asset('default-profile-picture.jpg');
 
-                        <!-- Name and Profession -->
-                        <div class="col-9">
-                            <h2>{{ $testimonial->name }}</h2>
-                            <p>{{ $testimonial->profession }}</p>
-                        </div>
-                        <!-- Message -->
-                        <div class="col-12">
-                            <p>{{ $testimonial->message }}</p>
-                        </div>
-                    </div>
+                        // Check user type and profile picture existence
+                        if ($testimonial->user_type == 'user' && $testimonial->user && $testimonial->user->profile_picture) {
+                            $profilePicture = asset('user_profiles/' . $testimonial->user->profile_picture);
+                        } elseif ($testimonial->user_type == 'lawyer' && $testimonial->lawyer && $testimonial->lawyer->profile_picture) {
+                            $profilePicture = asset('lawyer_profiles/' . $testimonial->lawyer->profile_picture);
+                        }
+                    @endphp
+
+                    <!-- Profile Picture -->
+                    <img src="{{ $profilePicture }}"
+                         alt="{{ $testimonial->user_type == 'user' ? 'User Profile' : 'Lawyer Profile' }}"
+                         class="rounded-circle"
+                         width="80"
+                         height="80"
+                         style="border: 2px solid #aa8f61; object-fit: cover;"
+                         onerror="this.onerror=null; this.src='{{ asset('default-profile-picture.jpg') }}';">
                 </div>
-            @endforeach
-        </div>
 
-        <!-- Add Review Button -->
-        @if(Auth::guard('web')->check() || Auth::guard('lawyer')->check())
-            <div class="text-center mt-4">
-                <button class="btn btn-gold" onclick="openReviewModal()">Add Your Review</button>
-            </div>
-        @endif
-
-        <!-- Modal for Adding Testimonial - Without Image -->
-        <div id="reviewModal" class="modal" style="display: none;">
-            <div class="modal-content">
-                <!-- Close Button -->
-                <span class="close" onclick="closeReviewModal()">&times;</span>
-                <h2>Add Your Review</h2>
-                
-                <!-- Form for Submitting Review -->
-                <form method="POST" action="{{ route('user.testimonials.store') }}">
-                    @csrf
-                    <!-- Name -->
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name"
-                           value="{{ Auth::guard('web')->check() ? Auth::guard('web')->user()->name : Auth::guard('lawyer')->user()->full_name }}"
-                           readonly>
-                    
-                    <!-- Profession -->
-                    <label for="profession">Profession</label>
-                    <input type="text" id="profession" name="profession"
-                           value="{{ Auth::guard('web')->check() ? 'User' : 'Lawyer' }}"
-                           readonly>
-                    
-                    <!-- Message -->
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" placeholder="Write your review..." maxlength="200" required></textarea>
-                    
-                    <!-- Submit Button -->
-                    <button type="submit" class="btn btn-gold">Submit Review</button>
-                </form>
+                <!-- Name and Profession -->
+                <div class="col-9">
+                    <h2>{{ $testimonial->name }}</h2>
+                    <p>{{ $testimonial->profession }}</p>
+                </div>
+                <!-- Message -->
+                <div class="col-12">
+                    <p>{{ $testimonial->message }}</p>
+                </div>
             </div>
         </div>
+    @endforeach
+</div>
+
+<!-- Add Review Button -->
+@if(Auth::guard('web')->check() || Auth::guard('lawyer')->check())
+    <div class="text-center mt-4">
+        <button class="btn btn-gold" onclick="openReviewModal()">Add Your Review</button>
+    </div>
+@else
+    <p class="text-center mt-4">Login to add your review!</p>
+    <div class="text-center">
+        <a href="{{ route('user.lawyer.login.form') }}" 
+        style="background-color: #aa9166; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 5px; display: inline-block; font-size: 16px; font-weight: bold; border: none; transition: background-color 0.3s, transform 0.2s;" 
+        onmouseover="this.style.backgroundColor='#967c59'; this.style.transform='scale(1.05)';" 
+        onmouseout="this.style.backgroundColor='#aa9166'; this.style.transform='scale(1)';" 
+        onmousedown="this.style.backgroundColor='#7e694e'; this.style.transform='scale(0.98)';" 
+        onmouseup="this.style.backgroundColor='#967c59'; this.style.transform='scale(1.05)';">
+        Login Now
+     </a>
+         </div>
+@endif
+
+<!-- Modal for Adding Testimonial -->
+@if(Auth::guard('web')->check() || Auth::guard('lawyer')->check())
+<div id="reviewModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <!-- Close Button -->
+        <span class="close" onclick="closeReviewModal()">&times;</span>
+        <h2>Add Your Review</h2>
         
+        <!-- Form for Submitting Review -->
+        <form method="POST" action="{{ route('user.testimonials.store') }}">
+            @csrf
+            <!-- Name -->
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name"
+                   value="{{ Auth::guard('web')->check() ? Auth::guard('web')->user()->name : (Auth::guard('lawyer')->check() ? Auth::guard('lawyer')->user()->full_name : '') }}"
+                   readonly>
+            
+            <!-- Profession -->
+            <label for="profession">Profession</label>
+            <input type="text" id="profession" name="profession"
+                   value="{{ Auth::guard('web')->check() ? 'User' : 'Lawyer' }}"
+                   readonly>
+            
+            <!-- Message -->
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Write your review..." maxlength="200" required></textarea>
+            
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-gold">Submit Review</button>
+        </form>
     </div>
 </div>
-<!-- Testimonial End -->
+@endif
+
 
 
 

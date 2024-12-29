@@ -32,18 +32,21 @@ use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
 
 
 // Redirect root URL to the login page
-Route::get('/', fn() => redirect('/admin/login'));
+// صفحة الجذر (الرئيسية): تجعل صفحة `/home` الصفحة الافتراضية.
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// صفحة `/home` مفتوحة للجميع
+Route::get('/home', [HomeController::class, 'index'])->name('user.home');
+    // صفحة "من نحن"
+Route::view('/about', 'user.about')->name('user.about');
+//الاسئلة الشائعة
+Route::get('/faq', [FAQController::class, 'index'])->name('user.faq');
 
 // Include Laravel Breeze routes
 require __DIR__ . '/auth.php';
 
 ### **1. مسارات المستخدمين والمحامين فقط**
 Route::middleware(['auth:web,lawyer'])->prefix('user')->group(function () {
-    Route::get('/home', [HomeController::class, 'index'])->name('user.home');
-
-
-    // صفحة "من نحن"
-    Route::view('/about', 'user.about')->name('user.about');
 
     // استشارات المستخدم
 Route::prefix('consultations')->name('user.consultations.')->group(function () {
@@ -75,7 +78,6 @@ Route::prefix('consultations')->name('user.consultations.')->group(function () {
     Route::view('/privacy', 'user.Privacy')->name('user.privacy');
 
     // الأسئلة الشائعة
-    Route::get('/faq', [FAQController::class, 'index'])->name('user.faq');
     Route::post('/faq/store', [FAQController::class, 'store'])->name('user.faq.store');
 
     // المراجعات

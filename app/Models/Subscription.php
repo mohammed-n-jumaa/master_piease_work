@@ -9,8 +9,9 @@ class Subscription extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['lawyer_id', 'plan', 'start_date', 'end_date', 'price'];
-
+    protected $fillable = [
+        'lawyer_id', 'plan', 'start_date', 'end_date', 'price'
+    ];
     public function lawyer()
     {
         return $this->belongsTo(Lawyer::class, 'lawyer_id');
