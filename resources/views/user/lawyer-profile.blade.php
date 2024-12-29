@@ -319,13 +319,14 @@
                         @csrf
                         <div class="form-group">
                             <label for="appointment_date">Select Date</label>
-                            <input type="date" id="appointment_date" name="appointment_date" class="form-control"
-                                required>
+                            <input type="date" id="appointment_date" name="appointment_date" class="form-control" required min="{{ \Carbon\Carbon::today()->toDateString() }}">
+
                         </div>
                         <div class="form-group">
                             <label for="appointment_time">Select Time</label>
-                            <input type="time" id="appointment_time" name="appointment_time" class="form-control" required>
-                        </div>
+                            <input type="time" id="appointment_time" name="appointment_time" class="form-control" required 
+                            min="{{ \Carbon\Carbon::now()->format('H:i') }}">
+                                             </div>
                         
                         <button type="submit" class="btn btn-primary">Add Appointment</button>
                     </form>
@@ -483,7 +484,10 @@ buttons.forEach(button => {
         button.classList.add('active');
     });
 });
+ window.onload = function() {
+        var currentTime = new Date().toTimeString().substr(0,5);
+        document.getElementById("appointment_time").setAttribute("min", currentTime);
+    };
             </script>
-
 </body>
 </html>

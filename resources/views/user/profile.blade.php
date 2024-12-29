@@ -260,6 +260,7 @@ body {
         padding: 8px;
     }
 }
+
 </style>
 
     </style>
@@ -283,15 +284,18 @@ body {
             <button class="btn btn-primary" id="profile-button">
                 <i class="far fa-user"></i> Profile
             </button>
+            <!-- زر الحجز يظهر فقط إذا كان المستخدم الحالي هو صاحب الصفحة -->
+            @if(auth('web')->id() === $user->id)
             <button class="btn btn-primary" id="appointments-button">
                 <i class="far fa-calendar-alt"></i> Booked Appointments
             </button>
+        @endif
             <button class="btn btn-primary" id="consultations-button">
                 <i class="far fa-comments"></i> Consultations
             </button>
         </div>
 
-        <!-- Profilev Section-->
+        <!-- Profile Section-->
         <div id="profile-section" class="content-section active">
             <div class="profile-card">
                 <div class="header-banner"></div>
@@ -337,30 +341,33 @@ body {
                 </div>
             </div>
         </div>
-                  <!-- appointments section-->
-       <div id="appointments-section" class="content-section">
-            <h2 class="section-title">Booked Appointments</h2>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Lawyer</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($appointments as $appointment)
-                    <tr>
-                        <td>{{ $appointment->id }}</td>
-                        <td>{{ $appointment->lawyer->full_name }}</td> 
-                        <td>{{ $appointment->appointment_date }}</td>
-                        <td>{{ $appointment->status }}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+        
+          <!-- Appointments Section يظهر فقط لصاحب الصفحة -->
+          @if(auth('web')->id() === $user->id)
+          <div id="appointments-section" class="content-section">
+              <h2 class="section-title">Booked Appointments</h2>
+              <table class="table">
+                  <thead>
+                      <tr>
+                          <th>ID</th>
+                          <th>Lawyer</th>
+                          <th>Date</th>
+                          <th>Status</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      @foreach ($appointments as $appointment)
+                      <tr>
+                          <td>{{ $appointment->id }}</td>
+                          <td>{{ $appointment->lawyer->full_name }}</td> 
+                          <td>{{ $appointment->appointment_date }}</td>
+                          <td>{{ $appointment->status }}</td>
+                      </tr>
+                      @endforeach
+                  </tbody>
+              </table>
+          </div>
+          @endif
         
         
                   <!-- consultations section-->
@@ -404,38 +411,64 @@ body {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('user/js/main.js') }}"></script>
     <script>
-        // تبديل الأقسام
-        document.getElementById('profile-button').addEventListener('click', function () {
-            switchSection('profile-section');
-        });
-
-        document.getElementById('appointments-button').addEventListener('click', function () {
-            switchSection('appointments-section');
-        });
-
-        document.getElementById('consultations-button').addEventListener('click', function () {
-            switchSection('consultations-section');
-        });
-
+        // Function to switch sections
         function switchSection(sectionId) {
+            // Remove 'active' class from all sections
             document.querySelectorAll('.content-section').forEach(function (section) {
                 section.classList.remove('active');
             });
-            document.getElementById(sectionId).classList.add('active');
+    
+            // Add 'active' class to the targeted section
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
         }
+    
+        // Add event listeners to buttons if they exist
+        const profileButton = document.getElementById('profile-button');
+        if (profileButton) {
+            profileButton.addEventListener('click', function () {
+                switchSection('profile-section');
+            });
+        }
+    
+        const appointmentsButton = document.getElementById('appointments-button');
+        if (appointmentsButton) {
+            appointmentsButton.addEventListener('click', function () {
+                switchSection('appointments-section');
+            });
+        }
+    
+        const consultationsButton = document.getElementById('consultations-button');
+        if (consultationsButton) {
+            consultationsButton.addEventListener('click', function () {
+                switchSection('consultations-section');
+            });
+        }
+    
+        // Highlight the active button and switch sections accordingly
         const buttons = document.querySelectorAll('.btn-group .btn');
-    const sections = document.querySelectorAll('.content-section');
-
-    buttons.forEach(button => {
-        button.addEventListener('click', () => {
-            buttons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-
-            const sectionId = button.id.replace('-button', '-section');
-            sections.forEach(section => section.classList.remove('active'));
-            document.getElementById(sectionId).classList.add('active');
+        const sections = document.querySelectorAll('.content-section');
+    
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove 'active' class from all buttons
+                buttons.forEach(btn => btn.classList.remove('active'));
+    
+                // Add 'active' class to the clicked button
+                button.classList.add('active');
+    
+                // Switch to the corresponding section
+                const sectionId = button.id.replace('-button', '-section');
+                sections.forEach(section => section.classList.remove('active'));
+                const targetSection = document.getElementById(sectionId);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                }
+            });
         });
-    });
     </script>
+    
 </body>
 </html>

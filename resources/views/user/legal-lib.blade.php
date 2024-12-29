@@ -283,15 +283,16 @@
             </div>
             
             <div class="page-controls">
-                <button id="prevPage" class="page-button" disabled>
-                    <i class="fas fa-chevron-right"></i>Previous page
+                <button id="nextPage" class="page-button">
+                    Next Page <i class="fas fa-chevron-right"></i>
                 </button>
                 <div class="page-info">
                     page <span id="currentPage">1</span> from <span id="totalPages">-</span>
                 </div>
-                <button id="nextPage" class="page-button">
-                    Next Page <i class="fas fa-chevron-left"></i>
+                <button id="prevPage" class="page-button" disabled>
+                    <i class="fas fa-chevron-left"></i> Previous page
                 </button>
+                
             </div>
 
             <div id="pdfViewer"></div>

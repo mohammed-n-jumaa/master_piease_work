@@ -22,13 +22,17 @@ class UserProfileController extends Controller
     return view('user.profile', compact('user', 'appointments', 'consultations'));
 }
     public function show($id)
-    {
-        // id for search
-        $user = User::findOrFail($id);
+{
+    $user = User::findOrFail($id);
     
-        // view profile
-        return view('user.profile', compact('user'));
-    }
+    // Fetch the appointments and consultations for the user
+    $appointments = $user->appointments()->with('lawyer')->get();
+    $consultations = $user->consultations()->with('category')->get();
+
+    // Pass all variables to the view
+    return view('user.profile', compact('user', 'appointments', 'consultations'));
+}
+
     
    
     /**

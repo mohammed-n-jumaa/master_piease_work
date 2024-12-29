@@ -7,6 +7,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Law Firm Website Template" name="keywords">
     <meta content="Law Firm Website Template" name="description">
+    
   <!-- Favicon -->
 <link href="{{ asset('user/img/favicon.ico') }}" rel="icon">
 
@@ -26,6 +27,7 @@
 <!-- Font Awesome -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
 
 <style>
     i.fa {
@@ -46,24 +48,30 @@
     }
 
     .modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.8);
-    }
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* لضبط المحاذاة إلى الأعلى */
+    padding-top: 100px; /* المسافة من الأعلى */
+}
 
-    .modal-content {
-        background-color: #333;
-        color: #aa9166;
-        padding: 20px;
-        margin: 10% auto;
-        width: 50%;
-        border-radius: 5px;
-    }
+
+.modal-content {
+    background-color: #333;
+    color: #aa9166;
+    padding: 20px;
+    width: 90%; /* عرض مناسب للشاشات الصغيرة */
+    max-width: 500px; /* أقصى عرض للمودال */
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+}
 
     .modal-content label {
         color: #fff;
@@ -642,6 +650,7 @@
                 </form>
             </div>
         </div>
+        
     </div>
 </div>
 <!-- Testimonial End -->
@@ -663,6 +672,7 @@
 <script src="{{ asset('user/lib/owlcarousel/owl.carousel.min.js') }}"></script>
 <script src="{{ asset('user/lib/isotope/isotope.pkgd.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 <!-- Template Javascript -->
 <script src="{{ asset('user/js/main.js') }}"></script>
@@ -707,10 +717,7 @@ window.onload = function() {
     updateCounters();
 }
 
-</script>
-
-<script>
-    // Function to Open Modal
+  // Function to Open Modal
     function openReviewModal() {
         document.getElementById('reviewModal').style.display = 'block';
     }
@@ -720,5 +727,7 @@ window.onload = function() {
         document.getElementById('reviewModal').style.display = 'none';
     }
 </script>
+
+
 </body>
 </html>
