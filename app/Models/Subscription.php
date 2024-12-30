@@ -10,7 +10,11 @@ class Subscription extends Model
     use HasFactory;
 
     protected $fillable = [
-        'lawyer_id', 'plan', 'start_date', 'end_date', 'price'
+        'lawyer_id',
+        'plan',
+        'start_date',
+        'end_date',
+        'price',
     ];
     public function lawyer()
     {

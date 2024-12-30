@@ -22,35 +22,52 @@ class AuthController extends Controller
     /**
      * معالجة تسجيل الدخول
      */
-    public function authenticate(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+    /**
+ * معالجة تسجيل الدخول
+ */
+public function authenticate(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required',
+    ]);
 
-        $credentials = $request->only('email', 'password');
+    $credentials = $request->only('email', 'password');
 
-        // تحقق إذا كان المستخدم العادي
-        if (Auth::guard('web')->attempt($credentials)) {
-            return redirect()->route('user.home')->with('success', 'Login successful!');
-        }
-
-        // تحقق إذا كان المستخدم محامي
-        if (Auth::guard('lawyer')->attempt($credentials)) {
-            return redirect()->route('user.home')->with('success', 'Login successful!');
-        }
-
-        // تحقق إذا كان المستخدم أدمن
-        if (Auth::guard('admin')->attempt($credentials)) {
-            return redirect()->route('admin.dashboard');
-        }
-
-        // إذا فشلت جميع المحاولات
-        return back()->withErrors([
-            'login_error' => 'Invalid email or password.',
-        ])->withInput();
+    // تحقق إذا كان المستخدم العادي
+    if (Auth::guard('web')->attempt($credentials)) {
+        return redirect()->route('user.home')->with('success', 'Login successful!');
     }
+
+    // تحقق إذا كان المستخدم محامي
+    if (Auth::guard('lawyer')->attempt($credentials)) {
+        $lawyer = Auth::guard('lawyer')->user();
+
+        // التحقق من الاشتراك النشط
+        $subscription = \App\Models\Subscription::where('lawyer_id', $lawyer->id)
+            ->where('end_date', '>=', now())
+            ->first();
+
+        if (!$subscription) {
+            // توجيه المحامي إلى صفحة الاشتراك
+            return redirect()->route('lawyer.subscription')->with('error', 'You need an active subscription to access the platform.');
+        }
+
+        // إذا كان لديه اشتراك نشط
+        return redirect()->route('lawyer.profile')->with('success', 'Login successful!');
+    }
+
+    // تحقق إذا كان المستخدم أدمن
+    if (Auth::guard('admin')->attempt($credentials)) {
+        return redirect()->route('admin.dashboard');
+    }
+
+    // إذا فشلت جميع المحاولات
+    return back()->withErrors([
+        'login_error' => 'Invalid email or password.',
+    ])->withInput();
+}
+
 
     /**
      * تسجيل الخروج

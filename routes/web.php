@@ -44,35 +44,30 @@ Route::get('/faq', [FAQController::class, 'index'])->name('user.faq');
 
 // Include Laravel Breeze routes
 require __DIR__ . '/auth.php';
-
 ### **1. مسارات المستخدمين والمحامين فقط**
-Route::middleware(['auth:web,lawyer'])->prefix('user')->group(function () {
+Route::middleware(['auth:web,lawyer', 'check.lawyer.subscription'])->prefix('user')->group(function () { // إضافة الحماية هنا
 
     // استشارات المستخدم
-Route::prefix('consultations')->name('user.consultations.')->group(function () {
-    Route::get('/', [UserConsultationController::class, 'index'])->name('index');
-    Route::get('/show/{id}', [UserConsultationController::class, 'show'])->name('show');
-    Route::get('/category/{category}', [UserConsultationController::class, 'categoryConsultations'])->name('category');
+    Route::prefix('consultations')->name('user.consultations.')->group(function () {
+        Route::get('/', [UserConsultationController::class, 'index'])->name('index');
+        Route::get('/show/{id}', [UserConsultationController::class, 'show'])->name('show');
+        Route::get('/category/{category}', [UserConsultationController::class, 'categoryConsultations'])->name('category');
 
-    // صفحة إضافة الاستشارة محمية بـ Middleware
-    Route::middleware(['user.only'])->group(function () {
-        Route::get('/create', [UserConsultationController::class, 'create'])->name('create');
-        Route::post('/', [UserConsultationController::class, 'store'])->name('store');
+        // صفحة إضافة الاستشارة محمية بـ Middleware
+        Route::middleware(['user.only'])->group(function () {
+            Route::get('/create', [UserConsultationController::class, 'create'])->name('create');
+            Route::post('/', [UserConsultationController::class, 'store'])->name('store');
+        });
     });
-});
-
 
     Route::prefix('comments')
-    ->name('user.comments.')
-    ->middleware(['auth:web,lawyer']) // تحقق من أن المستخدم مسجل الدخول
-    ->group(function () {
-        Route::post('/store', [UserCommentController::class, 'store'])->name('store');
-        Route::post('/load-more', [UserCommentController::class, 'loadMore'])->name('loadMore');
-        Route::post('/delete', [UserCommentController::class, 'softDelete'])->name('delete');
-        Route::post('/update', [UserCommentController::class, 'update'])->name('update');
-    });
-
-    
+        ->name('user.comments.')
+        ->group(function () {
+            Route::post('/store', [UserCommentController::class, 'store'])->name('store');
+            Route::post('/load-more', [UserCommentController::class, 'loadMore'])->name('loadMore');
+            Route::post('/delete', [UserCommentController::class, 'softDelete'])->name('delete');
+            Route::post('/update', [UserCommentController::class, 'update'])->name('update');
+        });
 
     // صفحة الخصوصية
     Route::view('/privacy', 'user.Privacy')->name('user.privacy');
@@ -90,37 +85,54 @@ Route::prefix('consultations')->name('user.consultations.')->group(function () {
 
     // مكتبة القوانين
     Route::view('/legal-library', 'user.legal-lib')->name('user.legal-library');
-    
-    
 });
+
 // Lawyer Profile and Appointments Routes
-Route::prefix('lawyer')->middleware('auth:lawyer')->group(function () {
-    // Profile Routes
-    Route::get('/profile', [LawyerProfileController::class, 'index'])->name('lawyer.profile');
-    Route::get('/profile/edit', [LawyerProfileController::class, 'edit'])->name('lawyer.profile.edit');
-    Route::post('/profile/update', [LawyerProfileController::class, 'update'])->name('lawyer.profile.update');
-    Route::post('/profile/change-password', [LawyerProfileController::class, 'changePassword'])->name('lawyer.profile.change-password');
-    
-    // Route for canceling an appointment
-    Route::put('/appointments/cancel/{id}', [\App\Http\Controllers\User\AppointmentController::class, 'cancelAppointment'])->name('appointments.cancel');
+Route::prefix('lawyer')->middleware(['auth:lawyer', 'check.lawyer.subscription'])->group(function () { // إضافة الحماية هنا
+    // مسارات الاشتراك (مستثناة من التحقق من الاشتراك)
+    Route::get('/subscription', [\App\Http\Controllers\User\SubscriptionController::class, 'show'])
+        ->name('lawyer.subscription')
+        ->withoutMiddleware('check.lawyer.subscription');
+    Route::post('/subscription', [\App\Http\Controllers\User\SubscriptionController::class, 'store'])
+        ->name('lawyer.subscription.store')
+        ->withoutMiddleware('check.lawyer.subscription');
 
-    // Appointment Management by Lawyer
-    Route::prefix('appointments')->group(function () {
-        // Optional: View for creating appointments
-        Route::get('/create', function () {
-            return view('lawyer.create-appointment');
-        })->name('appointments.create');
+    // حماية جميع المسارات الأخرى بالتحقق من الاشتراك
+    Route::middleware('check.lawyer.subscription')->group(function () {
+        // Profile Routes
+        Route::get('/profile', [\App\Http\Controllers\User\LawyerProfileController::class, 'index'])
+            ->name('lawyer.profile');
+        Route::get('/profile/edit', [\App\Http\Controllers\User\LawyerProfileController::class, 'edit'])
+            ->name('lawyer.profile.edit');
+        Route::post('/profile/update', [\App\Http\Controllers\User\LawyerProfileController::class, 'update'])
+            ->name('lawyer.profile.update');
+        Route::post('/profile/change-password', [\App\Http\Controllers\User\LawyerProfileController::class, 'changePassword'])
+            ->name('lawyer.profile.change-password');
 
-        // Route to store available appointment slots
-        Route::post('/store', [\App\Http\Controllers\User\AppointmentController::class, 'createAvailableSlots'])->name('appointments.store');
+        // Route for canceling an appointment
+        Route::put('/appointments/cancel/{id}', [\App\Http\Controllers\User\AppointmentController::class, 'cancelAppointment'])
+            ->name('appointments.cancel');
+
+        // Appointment Management by Lawyer
+        Route::prefix('appointments')->group(function () {
+            // View for creating appointments
+            Route::get('/create', function () {
+                return view('lawyer.create-appointment');
+            })->name('appointments.create');
+
+            // Route to store available appointment slots
+            Route::post('/store', [\App\Http\Controllers\User\AppointmentController::class, 'createAvailableSlots'])
+                ->name('appointments.store');
+        });
+
+        // يمكنك إضافة أي مسارات إضافية تحتاج الحماية هنا
     });
 });
 
 
 
-
 // User Profile and Appointments Routes
-Route::middleware(['auth:web'])->prefix('user')->group(function () {
+Route::middleware(['auth:web', 'check.lawyer.subscription'])->prefix('user')->group(function () { // إضافة الحماية هنا
     // Profile Routes
     Route::get('/profile', [App\Http\Controllers\User\UserProfileController::class, 'index'])->name('user.profile');
     Route::get('/profile/edit', [App\Http\Controllers\User\UserProfileController::class, 'edit'])->name('user.profile.edit');
@@ -144,7 +156,6 @@ Route::get('/lawyer/profile/{id}', [\App\Http\Controllers\User\LawyerProfileCont
     ->name('lawyer.profile.show');
 
 Route::get('/get-updated-counts', [HomeController::class, 'getUpdatedCounts'])->name('statistics.update');
-
 ### **2. مسارات الأدمن فقط**
 Route::middleware(['auth', 'role.check'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');

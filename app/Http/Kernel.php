@@ -72,7 +72,8 @@ class Kernel extends HttpKernel
         'prevent.admin.access' => \App\Http\Middleware\PreventAdminAccess::class,
         'user.or.lawyer.only' => \App\Http\Middleware\UserOrLawyerOnly::class,
         'user.only' => \App\Http\Middleware\UserOnly::class,
-
+        'check.lawyer.subscription' => \App\Http\Middleware\CheckLawyerSubscription::class,
+        
     ];
     
     

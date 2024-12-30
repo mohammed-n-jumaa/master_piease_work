@@ -8,6 +8,7 @@
         text-align: left;
         margin-left: 250px; 
     }
+    
 </style>
 
 <!-- Footer Start -->
@@ -64,10 +65,10 @@
     <!-- Footer Menu -->
     <div class="container footer-menu text-center py-2">
         <div class="f-menu">
-            <a href="/terms">Terms of Use</a> |
             <a href="{{ route('user.privacy') }}">Privacy Policy</a>
+            <a href="{{ route('user.faq') }}">Help</a>  
             <a href="/cookies">Cookies</a> |
-            <a href="{{ route('user.faq') }}">Help</a> 
+
         </div>
         <div class="text-center footer-rights mt-3">
             <p>© 2024 Mustashark. All rights reserved.</p>

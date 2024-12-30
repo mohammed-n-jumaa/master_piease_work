@@ -38,6 +38,7 @@
             <div class="requirements-list">
                 <h3>Requirements</h3>
                 <ul>
+                    <li><i class="fas fa-check-circle"></i>You Must Subscribe To log in</li>
                     <li><i class="fas fa-check-circle"></i> Valid Lawyer Certificate</li>
                     <li><i class="fas fa-check-circle"></i> Syndicate Card</li>
                     <li><i class="fas fa-check-circle"></i> Legal Specialization</li>

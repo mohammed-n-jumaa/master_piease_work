@@ -239,7 +239,7 @@
         @endforeach
     </ul>
 @else
-    <p style="color: #fff;">No appointments available at the moment.</p>
+    <p style="color: #aa9166;">No appointments available at the moment.</p>
 @endif
 
             <!-- Confirmed Appointments (Visible to lawyers only) -->
@@ -283,7 +283,7 @@
                         </table>
                     </div>
                 @else
-                    <p style="color: #fff;">No confirmed appointments yet.</p>
+                    <p style="color: #aa9166;">No confirmed appointments yet.</p>
                 @endif
             @endif
             <!-- Cancel Modal -->
@@ -366,7 +366,7 @@
                             </div>
                         @endforeach
                     @else
-                        <p class="text-center text-muted">No reviews yet</p>
+                    <p class="text-center text-muted" style="color: #aa9166 !important;">No reviews yet</p>
                     @endif
                 </div>
             </div>
