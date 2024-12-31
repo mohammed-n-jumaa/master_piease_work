@@ -335,9 +335,7 @@
                 </div>
             </form>
 
-            <div class="forgot-password">
-                <a href="#">Forgot your password?</a>
-            </div>
+           
         </div>
     </div>
 </body>

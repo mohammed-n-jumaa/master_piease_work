@@ -518,7 +518,7 @@ $(document).ready(function () {
         commentElement.replaceWith(`
             <div class="edit-container">
                 <textarea class="form-control edit-input">${currentContent}</textarea>
-                <button class="btn btn-sm btn-success save-edit" data-comment-id="${commentId}" style="margin-top: 5px;">Save</button>
+<button class="btn btn-sm btn-success save-edit" data-comment-id="${commentId}" style="margin-top: 5px; background-color: #aa9166;">Save</button>
             </div>
         `);
 

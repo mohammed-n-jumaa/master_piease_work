@@ -158,14 +158,7 @@
                     </div>
                 </form>
 
-                <div class="text-center mt-8">
-                    @if (Route::has('password.request'))
-                        <a href="{{ route('password.request') }}" 
-                           class="text-[#aa9166] hover:text-[#121518] hover:underline transition-all">
-                            Forgot your password?
-                        </a>
-                    @endif
-                </div>
+               
             </div>
         </div>
     </div>

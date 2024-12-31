@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar">
-
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <title>مستشارك</title>
@@ -179,7 +178,25 @@
 
 <body>
     <div class="wrapper">
-
+        @if (session('success'))
+        <div class="custom-alert alert-success" role="alert">
+            <i class="fas fa-check-circle alert-icon"></i>
+            <p class="alert-message">{{ session('success') }}</p>
+            <button type="button" class="alert-close" onclick="dismissAlert(this.parentElement)">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    @endif
+    
+    @if(session('error'))
+        <div class="custom-alert alert-danger" role="alert">
+            <i class="fas fa-exclamation-circle alert-icon"></i>
+            <p class="alert-message">{{ session('error') }}</p>
+            <button type="button" class="alert-close" onclick="dismissAlert(this.parentElement)">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    @endif
         <!-- Nav Bar Start -->
         @include('layouts.User-Header')
         <!-- Nav Bar End -->
@@ -193,7 +210,7 @@
     <div class="carousel-inner">
         <!-- Slide 1 -->
         <div class="carousel-item active">
-            <img src="{{ asset('user/img/carousel-1.jpg') }}" class="d-block w-100" alt="Carousel Image">
+            <img src="{{ asset('user/img/carousel-1.webp') }}" class="d-block w-100" alt="Carousel Image">
             <div class="carousel-caption d-flex justify-content-center align-items-center" style="z-index: 10;">
                 <div class="text-center" style="position: relative;">
                     <h1 class="animated fadeInLeft">Empowering Your Legal Rights</h1>
@@ -707,13 +724,6 @@
     </div>
 </div>
 @endif
-
-
-
-
-    <!-- Footer Start -->
-    <!-- Footer End -->
-
 
     <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 </div>

@@ -15,11 +15,11 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if ($request->is('user/*')) {
-            return route('user.lawyer.login.form'); // إعادة التوجيه إلى صفحة تسجيل دخول المستخدمين والمحامين
+            return route('user.lawyer.login.form'); 
         }
     
         if ($request->is('admin/*')) {
-            return route('admin.login'); // إعادة التوجيه إلى صفحة تسجيل دخول الأدمن
+            return route('admin.login'); 
         }
     
         return route('user.lawyer.login.form');

@@ -104,3 +104,21 @@
     
 })(jQuery);
 
+function dismissAlert(alert) {
+    alert.classList.add('fade-out');
+    setTimeout(() => {
+        alert.remove();
+    }, 500);
+}
+
+// Auto-dismiss alerts after 5 seconds
+document.addEventListener('DOMContentLoaded', function() {
+    const alerts = document.querySelectorAll('.custom-alert');
+    alerts.forEach(alert => {
+        setTimeout(() => {
+            if (alert && alert.parentElement) {
+                dismissAlert(alert);
+            }
+        }, 5000);
+    });
+});

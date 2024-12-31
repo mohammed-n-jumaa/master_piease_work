@@ -39,6 +39,25 @@
 
 <body>
     <div class="wrapper">
+            @if (session('success'))
+        <div class="custom-alert alert-success" role="alert">
+            <i class="fas fa-check-circle alert-icon"></i>
+            <p class="alert-message">{{ session('success') }}</p>
+            <button type="button" class="alert-close" onclick="dismissAlert(this.parentElement)">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    @endif
+    
+    @if(session('error'))
+        <div class="custom-alert alert-danger" role="alert">
+            <i class="fas fa-exclamation-circle alert-icon"></i>
+            <p class="alert-message">{{ session('error') }}</p>
+            <button type="button" class="alert-close" onclick="dismissAlert(this.parentElement)">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    @endif
         <!-- Nav Bar Start -->
         @include('layouts.User-Header')
         <!-- Nav Bar End -->
@@ -125,5 +144,7 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('user/js/main.js') }}"></script>
+
 </body>
 </html>
