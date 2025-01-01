@@ -50,11 +50,11 @@ class UserProfileController extends Controller
     public function update(Request $request)
     {
         $user = Auth::user();
-    
+        
         if ($request->has('current_password')) {
             $request->validate([
                 'current_password' => 'required|string',
-                'new_password' => 'required|string|min:6|confirmed',
+                'new_password' => 'required|string|min:6|confirmed|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|regex:/[@$!%*?&]/',
             ]);
     
             if (!Hash::check($request->current_password, $user->password)) {
@@ -67,14 +67,27 @@ class UserProfileController extends Controller
             return redirect()->route('user.profile')->with('success', 'Password updated successfully.');
         }
     
-        // validation
+        // التحقق من الحقول
         $request->validate([
             'name' => 'required|string|max:255',
             'phone_number' => 'nullable|string|max:15',
             'profile_picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
     
-        // user profile edit
+        // إضافة رمز الدولة 962 في بداية الرقم إذا لم يكن موجودًا
+        $phone_number = $request->phone_number;
+    
+        // تأكد من أن رقم الهاتف يحتوي على 9 أرقام بعد رمز الدولة 962
+        if (strlen($phone_number) == 9 && !str_starts_with($phone_number, '962')) {
+            $phone_number = '962' . $phone_number;
+        }
+    
+        // تحقق أن رقم الهاتف بعد "962" يحتوي على 9 أرقام فقط
+        if (strlen($phone_number) != 12 || !preg_match('/^962[0-9]{9}$/', $phone_number)) {
+            return back()->withErrors(['phone_number' => 'Phone number must start with 962 followed by 9 digits.']);
+        }
+    
+        // تحديث صورة الملف إذا تم اختيار صورة جديدة
         if ($request->hasFile('profile_picture')) {
             if ($user->profile_picture && file_exists(public_path($user->profile_picture))) {
                 unlink(public_path($user->profile_picture));
@@ -85,10 +98,16 @@ class UserProfileController extends Controller
             $user->profile_picture = 'user_profiles/' . $fileName;
         }
     
-        $user->update($request->only(['name', 'phone_number']));
+        // تحديث بيانات المستخدم
+        $user->update([
+            'name' => $request->name,
+            'phone_number' => $phone_number,
+        ]);
     
         return redirect()->route('user.profile')->with('success', 'Profile updated successfully.');
     }
+    
+    
     
     
 

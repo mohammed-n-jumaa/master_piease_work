@@ -637,25 +637,26 @@
                 <!-- Image with proper source based on user type -->
                 <div class="col-3">
                     @php
-                        // Default profile picture
-                        $profilePicture = asset('default-profile-picture.jpg');
-
-                        // Check user type and profile picture existence
-                        if ($testimonial->user_type == 'user' && $testimonial->user && $testimonial->user->profile_picture) {
-                            $profilePicture = asset('user_profiles/' . $testimonial->user->profile_picture);
-                        } elseif ($testimonial->user_type == 'lawyer' && $testimonial->lawyer && $testimonial->lawyer->profile_picture) {
-                            $profilePicture = asset('lawyer_profiles/' . $testimonial->lawyer->profile_picture);
+                        $imagePath = null;
+                        $name = $testimonial->name;
+                        
+                        if ($testimonial->user_type == 'lawyer' && $testimonial->lawyer && $testimonial->lawyer->profile_picture) {
+                            $imagePath = 'lawyer_profiles/' . $testimonial->lawyer->profile_picture;
+                        } elseif ($testimonial->user_type == 'user' && $testimonial->user && $testimonial->user->profile_picture) {
+                            $imagePath = 'user_profiles/' . $testimonial->user->profile_picture;
                         }
+                        
+                        $defaultImage = 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&background=aa9166&color=fff';
+                        $displayName = $testimonial->user_type == 'user' ? 'User' : 'Lawyer';
                     @endphp
-
-                    <!-- Profile Picture -->
-                    <img src="{{ $profilePicture }}"
-                         alt="{{ $testimonial->user_type == 'user' ? 'User Profile' : 'Lawyer Profile' }}"
+                    
+                    <img src="{{ $imagePath && file_exists(public_path($imagePath)) ? asset($imagePath) : $defaultImage }}"
+                         alt="{{ $displayName }} - {{ $name }}"
                          class="rounded-circle"
                          width="80"
                          height="80"
                          style="border: 2px solid #aa8f61; object-fit: cover;"
-                         onerror="this.onerror=null; this.src='{{ asset('default-profile-picture.jpg') }}';">
+                         onerror="this.src='{{ $defaultImage }}'">
                 </div>
 
                 <!-- Name and Profession -->

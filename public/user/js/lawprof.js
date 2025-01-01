@@ -44,16 +44,19 @@ const cancelModal = document.getElementById('cancelModal');
 const cancelForm = document.getElementById('cancel-form');
 
 cancelModal.addEventListener('show.bs.modal', function(event) {
-    // Button that triggered the modal
+    // الزر الذي فتح المودال
     const button = event.relatedTarget;
 
-    // Extract the appointment ID from data attributes
+    // استخراج معرف الموعد من خصائص البيانات (data attributes)
     const appointmentId = button.getAttribute('data-appointment-id');
 
-    // Update the form action with the correct URL
-    const actionUrl = `{{ url('lawyer/appointments/cancel') }}/${appointmentId}`;
+    // تحديث رابط الفورم مع URL الصحيح
+    const actionUrl = `/lawyer/appointments/cancel/${appointmentId}`;
     cancelForm.action = actionUrl;
+    cancelForm.method = 'POST'; // هذه ليست الطريقة الصحيحة بل يجب أن تكون PUT
+    
 });
+
 const buttons = document.querySelectorAll('.btn-group .btn');
 
 buttons.forEach(button => {

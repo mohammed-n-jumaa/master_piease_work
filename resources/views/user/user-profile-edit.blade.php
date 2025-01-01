@@ -40,117 +40,7 @@
             background-color: #aa9166;
             color: #1a1b1c;
         }
-        .form-section {
-            display: none;
-        }
-        .form-section.active {
-            display: block;
-        }
-        .actions {
-            margin-top: 2rem;
-        }
-        .btn {
-            padding: 0.75rem 1.5rem;
-            margin-right: 1rem;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        /* Tablet styles */
-@media screen and (max-width: 768px) {
-    .edit-card {
-        padding: 1.5rem;
-        margin: 1rem;
-    }
-
-    .tab-buttons {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-
-    .tab-button {
-        min-width: 100%;
-        padding: 0.5rem 1rem;
-    }
-
-    .header h1 {
-        font-size: 1.75rem;
-    }
-
-    .actions {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    .actions .btn {
-        width: 100%;
-        margin-right: 0;
-    }
-}
-
-/* Mobile styles */
-@media screen and (max-width: 480px) {
-    .container {
-        padding: 10px;
-    }
-
-    .edit-card {
-        padding: 1rem;
-        margin: 0.5rem;
-    }
-
-    .header h1 {
-        font-size: 1.5rem;
-    }
-
-    .form-group label {
-        font-size: 0.9rem;
-    }
-
-    .form-group input {
-        padding: 0.5rem;
-    }
-
-    .btn {
-        padding: 0.5rem 1rem;
-        font-size: 0.9rem;
-    }
-
-    /* Improve form spacing on mobile */
-    .form-section {
-        margin-top: 1rem;
-    }
-
-    /* Make alerts more compact on mobile */
-    .alert {
-        padding: 0.75rem;
-        margin: 0.5rem;
-        font-size: 0.9rem;
-    }
-}
-
-/* Utility classes for better spacing */
-.mt-2 {
-    margin-top: 2rem;
-}
-
-.mb-2 {
-    margin-bottom: 2rem;
-}
-
-/* Improve input accessibility on mobile */
-input[type="file"] {
-    font-size: 0.9rem;
-    padding: 0.5rem;
-}
-
-/* Improve button touch targets on mobile */
-button, 
-.btn {
-    min-height: 44px;
-}
+       
     </style>
 </head>
 <body>
@@ -205,8 +95,12 @@ button,
                     <label for="phone_number">
                         <i class="fas fa-phone"></i> Phone Number
                     </label>
-                    <input type="text" id="phone_number" name="phone_number" value="{{ $user->phone_number }}">
+                    <input type="text" id="phone_number" name="phone_number" value="{{ old('phone_number', $user->phone_number) }}" 
+                           oninput="validatePhoneNumber()" pattern="^962[0-9]{9}$" maxlength="12" required>
+                    <div id="phone-error" class="text-danger" style="display:none;"></div> <!-- هنا تظهر رسائل الخطأ -->
                 </div>
+                
+                
                 
                 <div class="form-group">
                     <label for="profile_picture">
@@ -240,14 +134,17 @@ button,
             <i class="fas fa-lock"></i> New Password
         </label>
         <input type="password" name="new_password" id="new_password" class="form-control" required>
+        <div id="password-error" class="text-danger" style="display:none;"></div>
     </div>
-
+    
     <div class="form-group">
         <label for="new_password_confirmation">
             <i class="fas fa-check-circle"></i> Confirm New Password
         </label>
         <input type="password" name="new_password_confirmation" id="new_password_confirmation" class="form-control" required>
+        <div id="confirm-password-error" class="text-danger" style="display:none;"></div>
     </div>
+    
 
     <div class="actions">
         <button type="submit" class="btn btn-primary">
@@ -265,25 +162,6 @@ button,
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('user/js/main.js') }}"></script>
-    
-    <script>
-        function showSection(sectionId) {
-            // Hide all forms
-            document.querySelectorAll('.form-section').forEach(form => {
-                form.classList.remove('active');
-            });
-            
-            // Remove active class from all buttons
-            document.querySelectorAll('.tab-button').forEach(button => {
-                button.classList.remove('active');
-            });
-            
-            // Show selected form
-            document.getElementById(sectionId).classList.add('active');
-            
-            // Add active class to clicked button
-            event.target.classList.add('active');
-        }
-    </script>
+    <script src="{{ asset('user/js/userprof.js') }}"></script>
 </body>
 </html>

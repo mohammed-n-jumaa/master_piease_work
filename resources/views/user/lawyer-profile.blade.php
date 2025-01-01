@@ -190,11 +190,10 @@
                                         <td>{{ optional($appointment->user)->phone_number ?? 'N/A' }}</td>
                                         <td>
                                             <!-- Cancel Button -->
-                                            <button type="button" class="btn btn-danger btn-sm"
-                                                data-bs-toggle="modal" data-bs-target="#cancelModal"
-                                                data-appointment-id="{{ $appointment->id }}">
+                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#cancelModal" data-appointment-id="{{ $appointment->id }}">
                                                 Cancel
                                             </button>
+                                            
 
                                         </td>
                                     </tr>
@@ -217,8 +216,7 @@
                         @method('PUT')
                         <div class="modal-header">
                             <h5 class="modal-title" id="cancelModalLabel">Cancel Appointment</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <p>Are you sure you want to cancel this appointment?</p>
@@ -228,6 +226,7 @@
                             <button type="submit" class="btn btn-danger">Confirm Cancel</button>
                         </div>
                     </form>
+                    
                 </div>
             </div>
         </div>

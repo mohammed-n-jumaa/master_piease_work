@@ -63,55 +63,69 @@ class LawyerProfileController extends Controller
 
  
     public function update(Request $request)
-{
-    $lawyer = Auth::guard('lawyer')->user();
-
-    $request->validate([
-        'first_name' => 'required|string|max:255',
-        'last_name' => 'required|string|max:255',
-        'phone_number' => 'nullable|string|max:15',
-        'specialization' => 'nullable|string|max:255',
-        'date_of_birth' => 'nullable|date',
-        'profile_picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        'lawyer_certificate' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        'syndicate_card' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-    ]);
-
-    if ($request->hasFile('profile_picture')) {
-        $fileName = time() . '_' . $request->file('profile_picture')->getClientOriginalName();
-        $path = $request->file('profile_picture')->move(public_path('lawyer_profiles'), $fileName);
-        $lawyer->profile_picture = 'lawyer_profiles/' . $fileName;
+    {
+        $lawyer = Auth::guard('lawyer')->user();
+    
+        // التحقق من الحقول
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'phone_number' => 'nullable|string|max:15|regex:/^962[0-9]{9}$/',  // تحقق من رقم الهاتف
+            'specialization' => 'nullable|string|max:255',
+            'date_of_birth' => 'nullable|date',
+            'profile_picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'lawyer_certificate' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'syndicate_card' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+    
+        // تحقق إذا كانت كلمة السر قد تم تحديثها
+        if ($request->filled('new_password')) {
+            $request->validate([
+                'new_password' => 'required|string|min:6|confirmed|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|regex:/[@$!%*?&]/',
+            ]);
+    
+            $lawyer->password = Hash::make($request->new_password);
+        }
+    
+        // معالجة صورة الملف الشخصي إذا تم رفعها
+        if ($request->hasFile('profile_picture')) {
+            $fileName = time() . '_' . $request->file('profile_picture')->getClientOriginalName();
+            $path = $request->file('profile_picture')->move(public_path('lawyer_profiles'), $fileName);
+            $lawyer->profile_picture = 'lawyer_profiles/' . $fileName;
+        }
+    
+        // معالجة شهادة المحامي إذا تم رفعها
+        if ($request->hasFile('lawyer_certificate')) {
+            if ($lawyer->lawyer_certificate && file_exists(public_path($lawyer->lawyer_certificate))) {
+                unlink(public_path($lawyer->lawyer_certificate));
+            }
+    
+            $certificateName = time() . '_certificate_' . $request->file('lawyer_certificate')->getClientOriginalName();
+            $lawyer->lawyer_certificate = $request->file('lawyer_certificate')->move('lawyer_certificates', $certificateName);
+        }
+    
+        // معالجة بطاقة النقابة إذا تم رفعها
+        if ($request->hasFile('syndicate_card')) {
+            if ($lawyer->syndicate_card && file_exists(public_path($lawyer->syndicate_card))) {
+                unlink(public_path($lawyer->syndicate_card));
+            }
+    
+            $cardName = time() . '_syndicate_' . $request->file('syndicate_card')->getClientOriginalName();
+            $lawyer->syndicate_card = $request->file('syndicate_card')->move('syndicate_cards', $cardName);
+        }
+    
+        // تحديث باقي الحقول
+        $lawyer->update($request->only([
+            'first_name',
+            'last_name',
+            'phone_number',
+            'specialization',
+            'date_of_birth',
+        ]));
+    
+        return redirect()->route('lawyer.profile')->with('success', 'Profile updated successfully.');
     }
-
-if ($request->hasFile('lawyer_certificate')) {
-    if ($lawyer->lawyer_certificate && file_exists(public_path($lawyer->lawyer_certificate))) {
-        unlink(public_path($lawyer->lawyer_certificate));
-    }
-
-    $certificateName = time() . '_certificate_' . $request->file('lawyer_certificate')->getClientOriginalName();
-    $lawyer->lawyer_certificate = $request->file('lawyer_certificate')->move('lawyer_certificates', $certificateName);
-}
-
-if ($request->hasFile('syndicate_card')) {
-    if ($lawyer->syndicate_card && file_exists(public_path($lawyer->syndicate_card))) {
-        unlink(public_path($lawyer->syndicate_card));
-    }
-
-    $cardName = time() . '_syndicate_' . $request->file('syndicate_card')->getClientOriginalName();
-    $lawyer->syndicate_card = $request->file('syndicate_card')->move('syndicate_cards', $cardName);
-}
-
-
-    $lawyer->update($request->only([
-        'first_name',
-        'last_name',
-        'phone_number',
-        'specialization',
-        'date_of_birth',
-    ]));
-
-    return redirect()->route('lawyer.profile')->with('success', 'Profile updated successfully.');
-}
+    
 
 
  
