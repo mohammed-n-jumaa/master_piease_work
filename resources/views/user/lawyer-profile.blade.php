@@ -72,13 +72,17 @@
                             <div class="info-value">{{ $lawyer->category->name ?? 'Not Specified' }}</div>
                         </div>
 
+                        @if(Auth::check() && Auth::user()->id == $lawyer->id)
                         <div class="info-item">
                             <div class="info-label">
                                 <i class="fas fa-calendar"></i> Date of Birth
                             </div>
-                            <div class="info-value">{{ \Carbon\Carbon::parse($lawyer->date_of_birth)->format('Y-m-d') }}
+                            <div class="info-value">
+                                {{ \Carbon\Carbon::parse($lawyer->date_of_birth)->format('Y-m-d') }}
                             </div>
                         </div>
+                    @endif
+                    
                     </div>
 
                     <div class="document-section">

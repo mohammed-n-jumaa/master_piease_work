@@ -36,7 +36,11 @@
 
    
 </head>
-
+<style>
+    .row{
+        margin-left: 20px;
+    }
+</style>
 <body>
     <div class="wrapper">
             @if (session('success'))

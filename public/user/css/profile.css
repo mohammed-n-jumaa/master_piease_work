@@ -213,14 +213,14 @@ box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 
 .owl-carousel .review-slide .reviewer-image {
     position: relative;
-    width: 60px; /* حجم الصور الصغيرة */
-    height: 60px;
+    width: 50px; 
+    height: 50px; 
     margin: 0 auto;
 }
 
 .owl-carousel .owl-item.center .reviewer-image {
-    width: 90px; /* حجم الصورة في المنتصف */
-    height: 90px;
+    width: 80px; 
+    height: 80px;
 }
 
 .owl-carousel .review-slide .reviewer-image img {
@@ -233,13 +233,13 @@ box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 
 .owl-carousel .review-slide .rating-badge {
     position: absolute;
-    top: -10px;
-    right: -10px;
+    top: -8px;
+    right: -8px;
     background: #aa9166;
     color: #fff;
-    padding: 3px 7px;
+    padding: 3px 6px; 
     border-radius: 50%;
-    font-size: 0.8rem;
+    font-size: 0.7rem; 
 }
 
 /* Customizing the navigation arrows */
@@ -259,7 +259,7 @@ box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     background: none;
     border: none;
     color: #aa9166;
-    font-size: 2rem; /* Increased size for better visibility */
+    font-size: 1.5rem; 
     cursor: pointer;
     transition: color 0.3s;
 }
@@ -270,17 +270,27 @@ box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 
 /* Review item in center */
 .owl-carousel .owl-item.center .review-slide {
-    transform: scale(1.2); /* تكبير العنصر في المنتصف */
+    transform: scale(1.1); 
     opacity: 1;
-    margin-top: 30px; /* مسافة إضافية للعنصر المركزي */
+    margin-top: 30px; 
 }
 
 /* Non-centered reviews */
 .owl-carousel .owl-item:not(.center) .review-slide {
-    opacity: 0.5; /* تخفيض شفافية العناصر الجانبية */
-    transform: scale(0.8); /* تصغير العناصر الجانبية */
-    margin-top: 50px; /* خفض العناصر الجانبية أكثر من العنصر المركزي */
+    opacity: 0.5; 
+    transform: scale(0.7); 
+    margin-top: 50px; 
 }
+
+/* تصغير النصوص */
+.owl-carousel .review-slide .review-content h3 {
+    font-size: 20px; /* تصغير حجم الاسم */
+}
+
+.owl-carousel .review-slide .review-content p {
+    font-size: 15px; /* تصغير حجم النص */
+}
+
 
 /* Customizing the pagination dots */
 .owl-carousel .owl-dots {

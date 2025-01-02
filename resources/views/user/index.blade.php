@@ -114,13 +114,39 @@
 }
 
 /* خلفية قسم "Testimonial" */
-.testimonial {
-    background-color: #ffffff;
+.testimonial-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 350px;  /* يمكنك ضبط الارتفاع حسب الحجم المطلوب */
+    padding: 20px;
+    background: #f4f4f4;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 .testimonial-item img {
-    border: 3px solid #aa8f61;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
     object-fit: cover;
+    margin-bottom: 20px;
 }
+
+.testimonial-item h2 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.testimonial-item p {
+    font-size: 14px;
+    color: #666;
+}
+
+.testimonial-item .col-12 {
+    margin-top: auto;
+}
+
 
 .modal-content {
     max-width: 500px;
@@ -620,6 +646,7 @@
     </div>
 </div>
 <!-- FAQs End -->
+
  <!-- Testimonial Start -->
 <div class="testimonial">
     <div class="container">

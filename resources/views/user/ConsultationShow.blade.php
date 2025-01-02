@@ -269,6 +269,10 @@
                 padding: 1.5rem;
             }
         }
+        textarea::placeholder {
+    color: #aa9166 !important;
+}
+
     </style>
 </head>
 <body>
@@ -373,7 +377,7 @@
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
                                 <a href="#" class="dropdown-item edit-comment" data-comment-id="{{ $comment->id }}">
-                                    <i class="fas fa-edit me-2"></i>Edit
+                                    <i class="fas fa-edit me-67"></i>Edit
                                 </a>
                             </li>
                             <li>
@@ -402,6 +406,8 @@
     @endif
 
     <!-- Add Comment Form -->
+            @if(auth('lawyer')->check())
+
     <div class="comment-form">
         <h5><i class="fas fa-plus-circle me-2" style="color:#aa8f61 "></i> <span style="color: #aa8f61;">Add a Comment</span></h5>
         <form id="comment-form" method="POST" action="{{ route('user.comments.store') }}">
@@ -414,6 +420,8 @@
                 <i class="fas fa-paper-plane me-2"></i>Submit Comment
             </button>
         </form>
+    @endif
+    
     </div>
 </div>
 <!-- Confirm Delete Modal -->
